@@ -1,0 +1,30 @@
+{
+  "name": "bc-project-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bunrithbuth/bc-project-2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bunrithbuth/bc-project-2/issues"
+  },
+  "homepage": "https://github.com/bunrithbuth/bc-project-2#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-react-views": "^0.10.5",
+    "mysql2": "^1.6.3",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
+    "sequelize": "^4.41.0"
+  }
+}
