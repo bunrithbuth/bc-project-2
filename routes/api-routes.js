@@ -2,20 +2,26 @@ var db = require("../models");
 
 module.exports = function(app) {
     app.get('/api/polls', (req, res) => {
-        res.render('index')
+        db.Todo.findAll({}).then(function(dbTodo) {
+            // We have access to the todos as an argument inside of the callback function
+            res.json(dbTodo);
+        });res.render('index')
     })
 
     app.get('/api/migrate', (req, res) => {
+        db.users.create({
+            name: 'mearat',
+        })
+
         db.users.create({
             name: 'bunrith',
         })
         .then( _users => {
             db.polls.create({
                 type: 'star',
-                user_id: (_users).id,
+                user_name: (_users).name,
                 is_private: 0
             }).then( _polls => {
-                console.log(' yoooo ' + (_polls).id)
                 db.poll_entry.create({
                     poll_id: (_polls).id,
                     name: 'McDonalds',
@@ -23,15 +29,13 @@ module.exports = function(app) {
                     star_rating: 3.5,
                     star_rating_count: 1,
                     votes: null
-                })
-
-                db.poll_entry.create({
-                    poll_id: (_polls).id,
-                    name: 'Burger King',
-                    description: 'Have It Your Way',
-                    star_rating: 2.5,
-                    star_rating_count: 2,
-                    votes: null
+                }).then( _pollEntry => {
+                    db.user_votes.create({
+                        user_name: 'mearat',
+                        poll_entry_id: (_pollEntry).id,
+                        star_rating: 3.5,
+                        vote: null
+                    })    
                 })
             })
         })
