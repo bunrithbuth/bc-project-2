@@ -3,9 +3,11 @@ const Fragment = React.Fragment
 
 const Footer = props =>
   <Fragment>
-    <div className="row align-bottom large-12" id="footer">
-      <div className="column text-center"><h1>Footer</h1></div>
-      <div className="column text-center"><h2>More footer</h2></div>
+    <div className="grid-container fluid footer">
+      <div className="row large-12">
+        <div className="column text-center"><a href="https://github.com/bunrithbuth/bc-project-2">Github</a></div>
+        <div className="column text-center">© Shookboyz 2018</div>
+      </div>
     </div>
   </Fragment>
 
