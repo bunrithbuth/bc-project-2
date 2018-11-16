@@ -2,6 +2,8 @@ const React = require('react')
 const Nav = require('./components/nav')
 const Content = require('./components/content')
 const Footer = require('./components/footer')
+const Head = require('./components/head')
+const Script = require('./components/script')
 
 const Page = () =>
     <html lang='en'>
@@ -18,8 +20,7 @@ const Page = () =>
             <Nav />
             <Content />
             <Footer />
-            <script src='/js/app.js' />
-            <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.0/dist/js/foundation.min.js" integrity="sha256-GZq6aeugpWo25iH//1eKmeK6FHCf+6KXTfoUpkCqPCA= sha384-vjxUQtbGw5FJMigaaFpXYyxoHHLb7LbvRywnMZOiPJeh5j9sl2rnmQ3iucuegRm8 sha512-h7tIMIX/opZXfWkcTDbkO+nT0LePyAAwDacfYhWtgGUidV+Kkh3eesW52fPSxKEsw3rgywKhQvghNLT4eDuUyw==" crossOrigin="anonymous" />
+            <Script />
         </body>
     </html>
 

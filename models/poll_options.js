@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var poll_entry = sequelize.define("poll_entry", {
+    var poll_options = sequelize.define("poll_options", {
       poll_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -34,6 +34,6 @@ module.exports = function(sequelize, DataTypes) {
     //     })
     // }
 
-    return poll_entry;
+    return poll_options;
   };
   

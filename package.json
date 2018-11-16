@@ -23,6 +23,7 @@
     "express": "^4.16.4",
     "express-react-views": "^0.10.5",
     "mysql2": "^1.6.3",
+    "node-moment": "^2.5.1",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
     "sequelize": "^4.41.0"

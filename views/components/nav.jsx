@@ -1,5 +1,4 @@
 const React = require('react')
-const Fragment = React.Fragment
 
 const Nav = props =>
 <Fragment>
@@ -18,6 +17,6 @@ const Nav = props =>
       </ul>
     </div>
   </div>
-</Fragment>
+
 
 module.exports = Nav
