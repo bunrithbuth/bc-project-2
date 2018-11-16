@@ -6,7 +6,7 @@ const StarRating = () =>
           <div className="grid-x grid-padding-x">
             <div className="medium-6 cell">
               <label>
-                <input className="input-group-rounded" type="text" placeholder="Input your statement here" />
+                <input id="statement" className="input-group-rounded" type="text" placeholder="Input your statement here" />
               </label>
             </div>
           </div>
@@ -25,13 +25,14 @@ const StarRating = () =>
           <div>
             <p>Make it private?</p>
             <div className="switch large">
-              <input className="switch-input" id="yes-no" type="checkbox" name="exampleSwitch" />
-              <label className="switch-paddle" htmlFor="yes-no">
+              <input id="isPrivate" className="switch-input" type="checkbox" name="Switch" />
+              <label className="switch-paddle" htmlFor="isPrivate">
                 <span className="switch-active" aria-hidden="true">Yes</span>
                 <span className="switch-inactive" aria-hidden="true">No</span>
               </label>
             </div>
           </div>
+        <button id="submit" data-type="star" type="submit" className="success button">Create Poll</button>
         </div>
       </form>
 

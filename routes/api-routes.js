@@ -8,6 +8,11 @@ module.exports = function(app) {
         });res.render('index')
     })
 
+    app.post('/api/polls', (req, res) => {
+        db.polls.create(req.body)
+        res.sendStatus(200)
+    })
+
     app.get('/api/migrate', (req, res) => {
         db.users.create({
             name: 'mearat',
