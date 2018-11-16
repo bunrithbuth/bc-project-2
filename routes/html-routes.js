@@ -9,4 +9,8 @@ module.exports = function (app) {
     app.get("/manage", function (req, res) {
         res.render('manager');
     });
+
+    app.get("/signin", function (req, res){
+        res.render('signin');
+    })
 };

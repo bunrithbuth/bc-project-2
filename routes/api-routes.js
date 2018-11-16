@@ -9,10 +9,26 @@ module.exports = function (app) {
     })
 
     app.get('/api/myPolls', (req, res) => {
-        console.log('ping')
         db.polls.findAll({}).then(function (dbTodo) {
             res.json(dbTodo);
         });
+    })
+
+    app.post('/api/signin', (req,res) => {
+        console.log('ping')
+        var tempUser = req.body;
+        db.users.findOne({ where: {email: tempUser.email} })
+        .then(function (user){
+            if(user == null){
+                console.log('new User generated')
+                db.users.create({
+                    name: tempUser.name,
+                    email: tempUser.email
+                });
+            }else{
+                res.json(user);
+            }
+        })
     })
 
     app.get('/api/migrate', (req, res) => {
