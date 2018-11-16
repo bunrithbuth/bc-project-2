@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+
+    <!-- mp: firebase app cdn -->
+    <!-- Firebase App is always required and must be first -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-functions.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div id="firebaseui-auth-container" style="padding: 40px"></div>
+    <div id="loader">Loading...</div>
+    <div class="signout" style="display:block; text-align: center">
+    <button id="signout">Sign Out</button></div>
+
+
+</body>
+<script>
+
+    /** How to use
+    The buttons appear in the firebaseui-auth-container
+    Once the user signs in, their current session is saved to firebase.auth().currentUser
+    */
+
+    var config = {
+        apiKey: "AIzaSyDzwxpyn4S-n67J4Xwtv7tBUrMcF34nIdk",
+        authDomain: "taco-bigguy4u.firebaseapp.com",
+        databaseURL: "https://taco-bigguy4u.firebaseio.com",
+        projectId: "taco-bigguy4u",
+        storageBucket: "taco-bigguy4u.appspot.com",
+        messagingSenderId: "564240678896"
+    };
+
+
+    firebase.initializeApp(config);
+
+    var userSignedIn = false;
+    var database = firebase.database();
+
+    var api = {}
+    var userProfile = {}
+    function apiKeyUpdate() {
+        api = getApiKeys();
+    }
+
+    function getApiKeys() {
+        return retrieveData('/api/')
+    }
+
+    $(document).on('click','#signout', function(){
+        signOut();
+    })
+
+    function updateUserProfile() {
+        rst = {};
+        database.ref('/users/' + getUid()).once('value', function (snap) {
+            snap.forEach(function (child) {
+                rst[child.key] = child.val();
+            })
+        }).then(function () {
+            userProfile = rst;
+        })
+    }
+
+    function retrieveData(path) {
+        rst = {};
+        database.ref(path).once('value', function (snap) {
+            snap.forEach(function (child) {
+                rst[child.key] = child.val();
+            })
+        }).then(function () {
+            return rst;
+        })
+    }
+
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+    var uiConfig = {
+        callbacks: {
+            signInSuccessWithAuthResult: function (authResult, redirctUrl) {
+                return true;
+            },
+            uiShown: function () {
+                document.getElementById('loader').style.display = 'none';
+            }
+        },
+        signInFlow: 'popup',
+        signInSuccessUrl: './index.html',
+        signInOptions: [
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ]
+    }
+
+    ui.start('#firebaseui-auth-container', uiConfig);
+
+    // When the user sign in or sign out, this function will be triggered.
+    firebase.auth().onAuthStateChanged(function (user) {
+
+        let elements = {
+            signin: [document.getElementById("firebaseui-auth-container"),
+            getUser()],
+
+            signout: [document.getElementById("signout-button")]
+        }
+    })
+
+    // return current user object from firebase.auth
+    function getUser() {
+        console.log(firebase.auth().currentUser.displayName)
+        console.log(firebase.auth().currentUser.email)
+        console.log(firebase.auth().currentUser.uid)
+        return firebase.auth().currentUser;
+    }
+
+    // returns uid of current loged in user
+    function getUid() {
+        return getUser().uid;
+    }
+
+    function getUemail() {
+        return getUser().email;
+    }
+
+    function signOut() {
+        console.log('signing out')
+        firebase.auth().signOut();
+    }
+
+    function pushProfile() {
+        database.ref('/users/' + getUid()).set(userProfile);
+    }
+
+    function addUserProfile(user) {
+        let existing = false;
+        database.ref('/users/').once('value', function (snap) {
+            snap.forEach(function (child) {
+                if (child.key == user.uid) {
+                    existing = true;
+                }
+            })
+        }).then(function () {
+            if (existing) {
+                updateUserProfile();
+            } else {
+                database.ref('/users/' + user.uid).set(constructUser(user));
+                updateUserProfile();
+            }
+        })
+    }
+
+    function constructgfUser(user) {
+        return {
+            name: user.displayName,
+            uid: user.uid,
+            email: user.email,
+        }
+    }
+
+    $(document).ready(function () {
+        if (userSignedIn) {
+            updateUserProfile();
+        }
+    })
+
+</script>
+
+</html>
