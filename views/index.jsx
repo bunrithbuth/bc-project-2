@@ -14,7 +14,6 @@ const Page = () =>
             <Nav />
             <Content />
             <Footer />
-            <script src='/js/app.js' />
             <Script />
         </body>
     </html>
