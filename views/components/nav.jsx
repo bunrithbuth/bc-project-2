@@ -1,7 +1,6 @@
 const React = require('react')
 
 const Nav = props =>
-<Fragment>
     <div className="top-bar" id="nav">
       <div className="top-bar-left">
         <ul className="dropdown menu" id="nav2">
@@ -14,9 +13,8 @@ const Nav = props =>
               <li><a className="top-bar-right" id="nav3" href="#">Log In</a></li>
            </ul>
           </div>
-      </ul>
+        </ul>
     </div>
   </div>
-
 
 module.exports = Nav
