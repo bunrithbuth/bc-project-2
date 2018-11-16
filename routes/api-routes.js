@@ -5,11 +5,35 @@ const SQLZ = require ('sequelize')
 const Op = SQLZ.Op
 
 
-module.exports = function(app) {
+module.exports = function (app) {
     app.get('/api/polls', (req, res) => {
         db.polls.findAll({}).then(function(polls) {
             res.json(polls);
         });
+    })
+
+    app.get('/api/myPolls', (req, res) => {
+        db.polls.findAll({}).then(function (dbTodo) {
+            res.json(dbTodo);
+        });
+    })
+
+    app.post('/api/signin', (req,res) => {
+        console.log('ping')
+        var tempUser = req.body;
+        db.users.findOne({ where: {email: tempUser.email} })
+        .then(function (user){
+            if(user == null){
+                console.log('new User generated')
+                db.users.create({
+                    name: tempUser.name,
+                    email: tempUser.email
+                });
+            }else{
+                res.json(user);
+            }
+        })
+
     })
 
     app.post('/api/polls', (req, res) => {
@@ -121,6 +145,7 @@ module.exports = function(app) {
         db.users.create({
             name: 'bunrith',
         })
+
         .then( _users => {
             console.log(moment().add(1,'days').format('YYYY-MM-DD'))
             db.polls.create({
@@ -142,8 +167,16 @@ module.exports = function(app) {
                         user_name: 'mearat',
                         poll_options_id: (_pollOption).id,
                         star_rating: 3.5,
-                        vote: null
-                    })    
+                        star_rating_count: 1,
+                        votes: null
+                    }).then(_pollEntry => {
+                        db.user_votes.create({
+                            user_name: 'mearat',
+                            poll_entry_id: (_pollEntry).id,
+                            star_rating: 3.5,
+                            vote: null
+                        })
+                    })
                 })
                 db.poll_options.create({
                     poll_id: (_polls).id,
@@ -161,7 +194,6 @@ module.exports = function(app) {
                     })    
                 })
             })
-        })
 
         res.render('index')
     })
