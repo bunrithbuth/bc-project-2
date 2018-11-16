@@ -7,6 +7,10 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       user_name: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -14,12 +18,17 @@ module.exports = function(sequelize, DataTypes) {
       is_private: {
         type: DataTypes.BOOLEAN,
         allowNull: false, 
+      },
+      expiration: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: DataTypes.NOW
       }
     });
 
 
     // polls.associate = models => {
-    //     polls.hasMany(models.poll_entry, {
+    //     polls.hasMany(models.poll_options, {
     //         onDelete: "cascade"
     //     })
 

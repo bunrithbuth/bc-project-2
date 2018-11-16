@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
                 len: [1, 16]
             }
         },
-        poll_entry_id: {
+        poll_options_id: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
