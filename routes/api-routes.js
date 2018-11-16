@@ -12,14 +12,15 @@ module.exports = function(app) {
         });
     })
 
+    //https://momentjs.com/docs/#/durations/
     app.post('/api/polls', (req, res) => {
-        console.log(req.body)
+        console.log('THIS IS WHAT WILL BE POSTED: ' + JSON.stringify(req.body))
         db.polls.create({
             type: req.body.type,
             name: req.body.name,
             user_name: req.body.user,
             is_private: req.body.is_private,
-            expiration: moment().add(req.body.duration_days,'days').format('YYYY-MM-DD')
+            expiration: moment().add(req.body.time, req.body.duration).format('YYYY-MM-DD')
         }).then( _polls => {
             console.log(req.body.poll_options)
             req.body.poll_options.forEach(req_poll_options => {              
