@@ -5,6 +5,9 @@ module.exports = function (app) {
         res.render('index')
     })
 
+    app.get('/migration', (req, res) => {
+        res.render('migration')
+
 
     app.get("/manage", function (req, res) {
         res.render('manager');
