@@ -1,3 +1,27 @@
-#home {
-  padding: 20px;
+h1, h2, h3, h4, h5 {
+  font-family: 'Cabin', sans-serif !important;
 }
+
+#body {
+  min-height: 100%;
+  font-family: 'Cabin', sans-serif;
+}
+
+#main {
+  padding: 10px;
+  background-color: lightgreen;
+}
+
+.footer {
+  padding: 10px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background-color: lightgrey;
+}
+
+/* font-family: 'Cabin', sans-serif;
+font-family: 'Bitter', serif;
+font-family: 'Quattrocento', serif;
+font-family: 'Armata', sans-serif; */
