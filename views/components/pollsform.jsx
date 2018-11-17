@@ -55,10 +55,10 @@ const PollsForm = () =>
                 Expire in
             </div>
             <div className="medium-3 cell">
-                <input type="number" min="1" />
+                <input id="time" type="number" min="1" />
             </div>
             <div className="medium-3 cell">
-                <select>
+                <select id="duration">
                     <option value="minutes">Minutes</option>
                     <option value="hours">Hours</option>
                     <option value="days">Days</option>
