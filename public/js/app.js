@@ -14,8 +14,10 @@ submit.addEventListener('click', function() {
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
         body: JSON.stringify({
           type: document.querySelector('#submit').getAttribute('data-type'),
+          name: "Mearat",
           user_name: 'Mearat',
-          is_private: document.querySelector('#isPrivate').checked
+          is_private: document.querySelector('#isPrivate').checked,
+          expiration: "2018-11-17"
         })
       })
         .then(r => {
