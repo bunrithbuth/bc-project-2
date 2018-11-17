@@ -8,6 +8,11 @@ const PollsForm = () =>
               <label>
                 <input id="statement" className="input-group-rounded" type="text" placeholder="Input your statement here" />
               </label>
+              <div className="expanded button-group">
+                <a id="multipleForm" className="button">Multiple Options</a>
+                <a id="twoChoicesForm" className="button">Two Options</a>
+                <a id="starForm" className="button">Star Rating</a>
+              </div>
             </div>
           </div>
           <div className="stars">
@@ -22,13 +27,15 @@ const PollsForm = () =>
             <input className="star star-1" id="star-1" type="radio" name="star" />
             <label className="star star-1" htmlFor="star-1"></label>
           </div>
-          <div className="multiple">
-          <input id="option1" className="input-group-rounded" type="text" placeholder="Option 1" />
-          <input id="option2" className="input-group-rounded" type="text" placeholder="Option 2" />
-          <input id="option3" className="input-group-rounded" type="text" placeholder="Option 3" />
-          <button className="button"><i className="fas fa-plus"></i> Add more options</button>
+          <div id="multiple">
+          <div id="multipleInput">
+            <input id="option1" className="input-group-rounded options" type="text" placeholder="Option 1" />
+            <input id="option2" className="input-group-rounded options" type="text" placeholder="Option 2" />
+            <input id="option3" className="input-group-rounded options" type="text" placeholder="Option 3" />
           </div>
-          <div className="twoChoices">
+          <button id="add" className="button"><i className="fas fa-plus"></i> Add more options</button>
+          </div>
+          <div id="twoChoices">
           <input id="option1" className="input-group-rounded" type="text" placeholder="Option 1" />
           <input id="option2" className="input-group-rounded" type="text" placeholder="Option 2" />
           </div>
@@ -61,7 +68,6 @@ const PollsForm = () =>
         </div>
         </div>
         <button id="submit" type="submit" className="success button">Create Poll</button>
-        <button id="back" className="warning button">Go Back</button>
         </div>
       </form>
 
