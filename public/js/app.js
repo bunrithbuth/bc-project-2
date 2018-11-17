@@ -27,13 +27,8 @@ submit.addEventListener('click', function() {
             }
         )
     }
-    console.log(optionArr)
-    console.log('Clicked')
-    console.log(document.querySelector('#time').value)
-    console.log(document.querySelector('#statement').value)
-    console.log(document.querySelector('#isPrivate').checked)
-    console.log(document.querySelector('#duration').value)
-    fetch('/api/polls', {
+    
+    fetch('/api/poll', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
         body: JSON.stringify({
@@ -47,7 +42,6 @@ submit.addEventListener('click', function() {
         })
       })
         .then(r => {
-            console.log('check')
           document.querySelector('#statement').value = '';
           document.querySelector('#isPrivate').checked = false;
           document.querySelector('#time').value = '';
@@ -84,7 +78,8 @@ document.getElementById('twoChoicesForm').addEventListener('click', () => {
     submit.setAttribute("data-type", "twoChoices")
 })
 
-document.getElementById('add').addEventListener('click', () => {
+document.getElementById('add').addEventListener('click', (event) => {
+    event.preventDefault()
     let optionCount = document.getElementsByClassName('options').length + 1
     let newOption = document.getElementById('multipleInput');
     newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);    
