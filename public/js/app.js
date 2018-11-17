@@ -84,8 +84,10 @@ document.getElementById('twoChoicesForm').addEventListener('click', () => {
     submit.setAttribute("data-type", "twoChoices")
 })
 
-document.getElementById('add').addEventListener('click', () => {
+document.getElementById('add').addEventListener('click', (event) => {
+    event.preventDefault()
     let optionCount = document.getElementsByClassName('options').length + 1
     let newOption = document.getElementById('multipleInput');
-    newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);    
+    newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);  
+    console.log('add')  
 })
