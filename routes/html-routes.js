@@ -23,4 +23,10 @@ module.exports = function (app) {
     app.get("/signin", function (req, res){
         res.render('signin');
     })
+    app.get("/viewpolls", function (req, res){
+        res.render('viewpolls');
+    })
+    app.get("/poll", function (req, res){
+        res.render('poll');
+    })
 };

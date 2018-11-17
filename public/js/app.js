@@ -47,13 +47,13 @@ submit.addEventListener('click', function() {
         })
       })
         .then(r => {
-            console.log('check')
-          document.querySelector('#statement').value = '';
-          document.querySelector('#isPrivate').checked = false;
-          document.querySelector('#time').value = '';
-          for (let i = 0; i < optionCount; i++) {
-            document.querySelector('#option' + (i + 1)).value = ''
-          }
+        console.log('check')
+            document.querySelector('#statement').value = '';
+            document.querySelector('#isPrivate').checked = false;
+            document.querySelector('#time').value = '';
+            for (let i = 0; i < optionCount; i++) {
+                document.querySelector('#option' + (i + 1)).value = ''
+            }
         })
         .catch(e => console.error(e))
 })
