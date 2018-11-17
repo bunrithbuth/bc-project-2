@@ -1,11 +1,11 @@
-let polls = {
+let poll = {
     user: 'bunrith',
     name: 'test poll',
     type: 'star',
-    is_private: 0,
+    isPrivate: 0,
     time: 2,
     duration: 'weeks',
-    poll_options: [
+    pollOption: [
         {
             name: 'McDonalds',
             description: 'Im Lovin It'
@@ -17,10 +17,10 @@ let polls = {
     ]
 }
 
-fetch('/api/polls', {
+fetch('/api/poll', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    body: JSON.stringify(polls)
+    body: JSON.stringify(poll)
 }).then(r => {
     console.log(r)  
 }).catch(e => 

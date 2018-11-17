@@ -9,6 +9,10 @@ module.exports = function (app) {
         res.render('migration')
     })
 
+    app.get('/migration2', (req, res) => {
+        res.render('migration2')
+    })
+
     app.get("/manage", function (req, res) {
         res.render('manager');
     });
