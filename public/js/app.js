@@ -21,8 +21,8 @@ submit.addEventListener('click', function() {
             {
                 name: document.querySelector('#option' + (i + 1)).value,
                 description: null,
-                star_rating: 0,
-                star_rating_count: 0,
+                starRating: 0,
+                starRatingCount: 0,
                 votes: 0
             }
         )
@@ -40,8 +40,8 @@ submit.addEventListener('click', function() {
           type: document.querySelector('#submit').getAttribute('data-type'),
           name: document.querySelector('#statement').value,
           user: 'Mearat',
-          poll_options: optionArr,
-          is_private: document.querySelector('#isPrivate').checked,
+          pollOption: optionArr,
+          isPrivate: document.querySelector('#isPrivate').checked,
           time: document.querySelector('#time').value,
           duration: document.querySelector('#duration').value,
         })
