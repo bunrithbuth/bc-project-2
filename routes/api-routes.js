@@ -58,7 +58,8 @@ module.exports = function(app) {
                     votes: 0
                 })
             })
-        })
+        }) 
+        res.sendStatus(200)
     })
 
     app.get('/api/polls/active', (req, res) => {
