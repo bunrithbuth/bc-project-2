@@ -84,21 +84,3 @@ font-family: 'Quattrocento', serif;
 font-family: 'Armata', sans-serif; */
 
 
-/* This is for hiding the forms in create polls */
-
-#pollsForm {
-  display: none;
-}
-
-.stars {
-  display: none;
-}
-
-.multiple {
-  display: none;
-}
-
-.twoChoices {
-  display: none;
-}
-
