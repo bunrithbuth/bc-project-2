@@ -8,4 +8,7 @@ module.exports = function(app) {
     app.get('/migration', (req, res) => {
         res.render('migration')
     })
+    app.get('/createpolls', (req, res) => {
+        res.render('createPolls')
+    })
 };
