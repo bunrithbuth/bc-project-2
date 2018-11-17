@@ -33,6 +33,10 @@ module.exports = function(sequelize, DataTypes) {
               name: "pollId",
             }
         })
+
+        pollOption.hasMany(models.userVote, {
+            onDelete: "cascade",
+        })
     }
 
     return pollOption;

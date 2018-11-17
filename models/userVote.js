@@ -24,5 +24,15 @@ module.exports = function(sequelize, DataTypes) {
         }
         
     });
+
+    userVote.associate = models => {
+        userVote.belongsTo(models.pollOption, {
+            foreignKey: { 
+              allowNull: false,
+              name: "pollOptionId",
+            }
+        })
+    }
+
     return userVote;
   };

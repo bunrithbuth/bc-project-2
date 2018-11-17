@@ -100,7 +100,7 @@ module.exports = function(app) {
     app.get('/poll/:id', (req, res) => {
         const _id = req.params.id
         let _poll
-        let _pollOption = []
+        // let _pollOption = []
 
         db.poll.findOne({
             where: {
@@ -110,32 +110,32 @@ module.exports = function(app) {
                 { model: db.pollOption }
             ]
         }).then(function(poll) {
-            if(poll.dataValues == undefined){
-                res.render('index')
-            }else{
-                console.log(poll.dataValues)
-                _poll = poll.dataValues
+            // if(poll.dataValues == undefined){
+            //     res.render('index')
+            // }else{
+            //     console.log(poll.dataValues)
+            //     _poll = poll.dataValues
 
-                db.pollOption.findAll({
-                    where: {
-                        pollId: _id
-                    }
-                }).then(function(pollOption) {
-                    pollOption.forEach(pollOption => {
-                        console.log(pollOption.dataValues)
-                        _pollOption.push(pollOption.dataValues)
-                    })
+            //     db.pollOption.findAll({
+            //         where: {
+            //             pollId: _id
+            //         }
+            //     }).then(function(pollOption) {
+            //         pollOption.forEach(pollOption => {
+            //             console.log(pollOption.dataValues)
+            //             _pollOption.push(pollOption.dataValues)
+            //         })
 
-                    let jsonAll = {
-                        poll: _poll,
-                        pollOption: _pollOption
-                    }
+            //         let jsonAll = {
+            //             poll: _poll,
+            //             pollOption: _pollOption
+            //         }
 
-                    res.json(jsonAll)
-                    //res.render(JSX_URL,JSON)
+            res.json(poll)
+            //res.render(JSX_URL,JSON)
 
-                })
-            }
+            // })
+            // }
 
         })
     })
@@ -173,7 +173,7 @@ module.exports = function(app) {
                 isPrivate: 0,
                 expiration: moment().add(1,'days').format('YYYY-MM-DD')
             }).then( _poll => {
-                db.poll_option.create({
+                db.pollOption.create({
                     pollId: (_poll).id,
                     name: 'McDonalds',
                     description: 'Im Lovin It',
@@ -182,7 +182,7 @@ module.exports = function(app) {
                     votes: null
                 }).then( _pollOption => {
                     db.userVote.create({
-                        user_name: 'mearat',
+                        userName: 'mearat',
                         pollOptionId: (_pollOption).id,
                         starRating: 3.5,
                         vote: null
