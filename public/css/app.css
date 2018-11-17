@@ -3,9 +3,6 @@
   padding: 20px;
 }
 
-body {
-  min-height: 100%
-}
 
 .footer {
   position: absolute;
@@ -16,9 +13,6 @@ body {
 
 /* For star rating component */
 
-div.stars{
-  display: inline-block;
-}
 
 input.star{
   display: none;
@@ -76,10 +70,11 @@ body {
 
 .footer {
   padding: 10px;
-  position: absolute;
+  position: relative;
   width: 100%;
   bottom: 0;
   left: 0;
+  right: 0;
   background-color: lightgrey;
 }
 
@@ -87,4 +82,5 @@ body {
 font-family: 'Bitter', serif;
 font-family: 'Quattrocento', serif;
 font-family: 'Armata', sans-serif; */
+
 
