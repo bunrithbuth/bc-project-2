@@ -3,9 +3,16 @@
   padding: 20px;
 }
 
-div.stars{
-  display: inline-block;
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
+
+/* For star rating component */
+
 
 input.star{
   display: none;
@@ -51,7 +58,7 @@ h1, h2, h3, h4, h5 {
   font-family: 'Cabin', sans-serif !important;
 }
 
-#body {
+body {
   min-height: 100%;
   font-family: 'Cabin', sans-serif;
 }
@@ -63,10 +70,11 @@ h1, h2, h3, h4, h5 {
 
 .footer {
   padding: 10px;
-  position: absolute;
+  position: relative;
   width: 100%;
   bottom: 0;
   left: 0;
+  right: 0;
   background-color: lightgrey;
 }
 
@@ -74,4 +82,23 @@ h1, h2, h3, h4, h5 {
 font-family: 'Bitter', serif;
 font-family: 'Quattrocento', serif;
 font-family: 'Armata', sans-serif; */
+
+
+/* This is for hiding the forms in create polls */
+
+#pollsForm {
+  display: none;
+}
+
+.stars {
+  display: none;
+}
+
+.multiple {
+  display: none;
+}
+
+.twoChoices {
+  display: none;
+}
 
