@@ -27,13 +27,8 @@ submit.addEventListener('click', function() {
             }
         )
     }
-    console.log(optionArr)
-    console.log('Clicked')
-    console.log(document.querySelector('#time').value)
-    console.log(document.querySelector('#statement').value)
-    console.log(document.querySelector('#isPrivate').checked)
-    console.log(document.querySelector('#duration').value)
-    fetch('/api/polls', {
+    
+    fetch('/api/poll', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
         body: JSON.stringify({
