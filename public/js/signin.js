@@ -91,11 +91,12 @@ firebase.auth().onAuthStateChanged(function (user) {
 function checkNewUser() {
     var temp = {
         name: firebase.auth().currentUser.displayName,
-        email: firebase.auth().currentUser.email
+        email: firebase.auth().currentUser.email,
+        photoURL: firebase.auth().currentUser.photoURL
     }
-    console.log(temp)
+    console.log(firebase.auth().currentUser)
     $.post("/api/signin", temp).then(function(data){
-        console.log('aye')
+        localStorage.setItem(temp);
     });
 }
 
@@ -153,3 +154,4 @@ $(document).ready(function () {
         updateUserProfile();
     }
 })
+

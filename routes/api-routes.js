@@ -24,8 +24,8 @@ module.exports = function(app) {
     })
 
     app.get('/api/myPolls', (req, res) => {
-        db.polls.findAll({}).then(function (dbTodo) {
-            res.json(dbTodo);
+        db.polls.findAll({}).then(function (poll) {
+            res.json(poll);
         });
     })
 
@@ -38,7 +38,8 @@ module.exports = function(app) {
                 console.log('new User generated')
                 db.user.create({
                     name: tempUser.name,
-                    email: tempUser.email
+                    email: tempUser.email,
+                    photoURL: tempUser.photoURL
                 });
             }else{
                 res.json(user);

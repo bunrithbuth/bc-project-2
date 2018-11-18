@@ -10,6 +10,10 @@ module.exports = function(sequelize, DataTypes) {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      photoURL: {
+        type: DataTypes.STRING,
+        allowNull: true,
       }
     });
     return user;

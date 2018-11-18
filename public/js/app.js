@@ -7,6 +7,15 @@ const twoChoices = document.getElementById('twoChoices')
 
 //Hiding all the polloptions input forms when content loaded
 document.addEventListener("DOMContentLoaded", () => {
+    
+// Retrieve local storage for user photoURL
+    if (typeof(Storage) !== "undefined") {
+        let user = JSON.parse(localStorage.getItem("firebaseui::rememberedAccounts"))
+        document.getElementById("avatar").setAttribute('src', user[0].photoUrl)
+    } else {
+        console.log("Not Logged In")
+    }
+
     multiple.style.display = "none"
     twoChoices.style.display = "none"
     stars.style.display = "none"

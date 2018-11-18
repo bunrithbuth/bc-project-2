@@ -4,10 +4,11 @@ const PollsForm = () =>
     <form id="pollsForm">
         <div className="grid-container">
           <div className="grid-x grid-padding-x">
+            <div className="medium-3 cell">
+              <label><img id="avatar" className="text-right middle" src="" alt="profile avatar" /></label>
+            </div>
             <div className="medium-6 cell">
-              <label>
                 <input id="statement" className="input-group-rounded" type="text" placeholder="Input your statement here" />
-              </label>
               <div className="expanded button-group">
                 <a id="multipleForm" className="button">Multiple Options</a>
                 <a id="twoChoicesForm" className="button">Two Options</a>
