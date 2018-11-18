@@ -7,11 +7,21 @@ const twoChoices = document.getElementById('twoChoices')
 
 //Hiding all the polloptions input forms when content loaded
 document.addEventListener("DOMContentLoaded", () => {
+    
+// Retrieve local storage for user photoURL
+    if (typeof(Storage) !== "undefined") {
+        let user = JSON.parse(localStorage.getItem("firebaseui::rememberedAccounts"))
+        document.getElementById("avatar").setAttribute('src', user[0].photoUrl)
+    } else {
+        console.log("Not Logged In")
+    }
+
     multiple.style.display = "none"
     twoChoices.style.display = "none"
     stars.style.display = "none"
 })
 
+//Submit eventlistener
 submit.addEventListener('click', function() {
     event.preventDefault()
     let optionCount = document.getElementsByClassName('options').length
@@ -27,7 +37,7 @@ submit.addEventListener('click', function() {
             }
         )
     }
-    
+//Fetch POST requet to the database   
     fetch('/api/poll', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
@@ -84,3 +94,7 @@ document.getElementById('add').addEventListener('click', (event) => {
     let newOption = document.getElementById('multipleInput');
     newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);    
 })
+
+//Foundation init
+
+$(document).foundation();

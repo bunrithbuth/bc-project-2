@@ -24,13 +24,13 @@ module.exports = function(app) {
     })
 
     app.get('/api/myPolls', (req, res) => {
-        db.polls.findAll({}).then(function (dbTodo) {
-            res.json(dbTodo);
+        db.polls.findAll({}).then(function (poll) {
+            res.json(poll);
         });
     })
 
     app.post('/api/signin', (req,res) => {
-        console.log('ping')
+        console.log(req.body)
         var tempUser = req.body;
         db.user.findOne({ where: {email: tempUser.email} })
         .then(function (user){
@@ -38,7 +38,8 @@ module.exports = function(app) {
                 console.log('new User generated')
                 db.user.create({
                     name: tempUser.name,
-                    email: tempUser.email
+                    email: tempUser.email,
+                    photoURL: tempUser.photoURL
                 });
             }else{
                 res.json(user);
