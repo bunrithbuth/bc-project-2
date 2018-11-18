@@ -140,7 +140,7 @@ function addUserProfile(user) {
     })
 }
 
-function constructgfUser(user) {
+function constructUser(user) {
     return {
         name: user.displayName,
         uid: user.uid,

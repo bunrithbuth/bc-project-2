@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     stars.style.display = "none"
 })
 
+//Submit eventlistener
 submit.addEventListener('click', function() {
     event.preventDefault()
     let optionCount = document.getElementsByClassName('options').length
@@ -27,7 +28,7 @@ submit.addEventListener('click', function() {
             }
         )
     }
-    
+//Fetch POST requet to the database   
     fetch('/api/poll', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
@@ -84,3 +85,7 @@ document.getElementById('add').addEventListener('click', (event) => {
     let newOption = document.getElementById('multipleInput');
     newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);    
 })
+
+//Foundation init
+
+$(document).foundation();

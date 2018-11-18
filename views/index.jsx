@@ -8,13 +8,13 @@ const Script = require('./components/script')
 
 const Page = () =>
     <html lang='en'>
-
         <Head />
         <body>
             <Nav />
             <Content />
             <Footer />
             <Script />
+            
         </body>
     </html>
 

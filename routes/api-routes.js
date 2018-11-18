@@ -30,7 +30,7 @@ module.exports = function(app) {
     })
 
     app.post('/api/signin', (req,res) => {
-        console.log('ping')
+        console.log(req.body)
         var tempUser = req.body;
         db.user.findOne({ where: {email: tempUser.email} })
         .then(function (user){
