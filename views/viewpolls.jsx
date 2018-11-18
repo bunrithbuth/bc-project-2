@@ -12,7 +12,8 @@ const ViewPolls = () =>
             <Nav />
 
             <Footer />
-            <Script />       
+            <Script /> 
+            <script src='./js/viewpolls.js' />      
         </body>
     </html>
 

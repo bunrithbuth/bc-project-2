@@ -23,10 +23,10 @@ module.exports = function(app) {
         });
     })
 
-    app.get('/api/myPolls', (req, res) => {
-        db.polls.findAll({
+    app.get('/api/myPolls/:id', (req, res) => {
+        db.poll.findAll({
             where: {
-                
+                userId: req.params.id
             }
         }).then(function (poll) {
             res.json(poll);
