@@ -24,7 +24,11 @@ module.exports = function(app) {
     })
 
     app.get('/api/myPolls', (req, res) => {
-        db.polls.findAll({}).then(function (poll) {
+        db.polls.findAll({
+            where: {
+                
+            }
+        }).then(function (poll) {
             res.json(poll);
         });
     })
@@ -54,7 +58,7 @@ module.exports = function(app) {
         db.poll.create({
             type: req.body.type,
             name: req.body.name,
-            userName: req.body.user,
+            userId: req.body.user,
             isPrivate: req.body.isPrivate,
             expiration: moment().add(req.body.time, req.body.duration).format('YYYY-MM-DD')
         }).then( _poll => {
