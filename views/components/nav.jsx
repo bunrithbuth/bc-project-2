@@ -1,20 +1,28 @@
 const React = require('react')
-
+const Fragment = React.Fragment
 const Nav = props =>
-    <div className="top-bar" id="nav">
-      <div className="top-bar-left">
-        <ul className="dropdown menu" id="nav2">
-          <li className="menu-text">Deez Polls</li>
-          <li><a href="#">Create a Poll</a></li>
-          <li><a href="#">View Polls</a></li>
-          <li><a href="#">About Us</a></li>
-          <div className="top-bar-right">
-           <ul className="menu">
-              <li><a className="top-bar-right" id="nav3" href="#">Log In</a></li>
-           </ul>
-          </div>
-        </ul>
+
+  <Fragment>
+    <div className="title-bar nav" data-responsive-toggle="example-menu" data-hide-for="medium">
+      <button className="menu-icon" type="button" data-toggle="example-menu"></button>
+      <div className="title-bar-title">Menu</div>
     </div>
+
+    <div className="top-bar nav" id="nav">
+      <div className="top-bar-left">
+        <ul className="dropdown menu nav" data-dropdown-menu>
+          <li className="menu-text">Deez Polls</li>
+          <li><a href="#">One</a></li>
+          <li><a href="#">Two</a></li>
+          <li><a href="#">Three</a></li>
+        </ul>
+      </div>
+      <div className="top-bar-right">
+        <ul className="menu nav">
+            <li><a href="#">Log In</a></li>
+    </ul>
   </div>
+      </div>
+  </Fragment>
 
 module.exports = Nav

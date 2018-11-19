@@ -7,8 +7,8 @@ h1, h2, h3, h4, h5 {
   font-family: 'Cabin', sans-serif;
 }
 
-#nav, #nav2, #nav3 {
-background-color: #9099a2;
+.nav {
+background-color: #9099a2 !important;
 }
 
 body {
