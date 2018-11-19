@@ -24,5 +24,7 @@ const Nav = props =>
   </div>
       </div>
   </Fragment>
+</Fragment>
+
 
 module.exports = Nav

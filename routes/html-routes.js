@@ -12,6 +12,10 @@ module.exports = function (app) {
         res.render('createPolls')
     })
 
+    app.get('/migration2', (req, res) => {
+        res.render('migration2')
+    })
+
     app.get("/manage", function (req, res) {
         res.render('manager');
     });

@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
-    var user_votes = sequelize.define("user_votes", {
-        user_name: {
+    var userVote = sequelize.define("userVote", {
+        userName: {
             type: DataTypes.STRING,
             // AllowNull is a flag that restricts a todo from being entered if it doesn't
             // have a text value
@@ -10,11 +10,11 @@ module.exports = function(sequelize, DataTypes) {
                 len: [1, 16]
             }
         },
-        poll_options_id: {
+        pollOptionId: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        star_rating: {
+        starRating: {
             type: DataTypes.FLOAT(2,1),
             allowNull: true, 
         },
@@ -24,5 +24,15 @@ module.exports = function(sequelize, DataTypes) {
         }
         
     });
-    return user_votes;
+
+    userVote.associate = models => {
+        userVote.belongsTo(models.pollOption, {
+            foreignKey: { 
+              allowNull: false,
+              name: "pollOptionId",
+            }
+        })
+    }
+
+    return userVote;
   };

@@ -2,7 +2,6 @@ const React = require('react')
 const Nav = require('./components/nav')
 const Footer = require('./components/footer')
 const PollsForm = require('./components/pollsform')
-const PollsOptions = require('./components/pollsoptions')
 
 const CreatePolls = () =>
     <html lang='en'>
@@ -18,7 +17,6 @@ const CreatePolls = () =>
         </head>
         <body>
             <Nav />
-            <PollsOptions />
             <PollsForm />
             <Footer />
             <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossOrigin="anonymous" />

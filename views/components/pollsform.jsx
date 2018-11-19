@@ -4,10 +4,16 @@ const PollsForm = () =>
     <form id="pollsForm">
         <div className="grid-container">
           <div className="grid-x grid-padding-x">
+            <div className="medium-3 cell">
+              <label><img id="avatar" className="text-right middle" src="" alt="profile avatar" /></label>
+            </div>
             <div className="medium-6 cell">
-              <label>
                 <input id="statement" className="input-group-rounded" type="text" placeholder="Input your statement here" />
-              </label>
+              <div className="expanded button-group">
+                <a id="multipleForm" className="button">Multiple Options</a>
+                <a id="twoChoicesForm" className="button">Two Options</a>
+                <a id="starForm" className="button">Star Rating</a>
+              </div>
             </div>
           </div>
           <div className="stars">
@@ -22,13 +28,15 @@ const PollsForm = () =>
             <input className="star star-1" id="star-1" type="radio" name="star" />
             <label className="star star-1" htmlFor="star-1"></label>
           </div>
-          <div className="multiple">
-          <input id="option1" className="input-group-rounded" type="text" placeholder="Option 1" />
-          <input id="option2" className="input-group-rounded" type="text" placeholder="Option 2" />
-          <input id="option3" className="input-group-rounded" type="text" placeholder="Option 3" />
-          <button className="button"><i className="fas fa-plus"></i> Add more options</button>
+          <div id="multiple">
+          <div id="multipleInput">
+            <input id="option1" className="input-group-rounded options" type="text" placeholder="Option 1" />
+            <input id="option2" className="input-group-rounded options" type="text" placeholder="Option 2" />
+            <input id="option3" className="input-group-rounded options" type="text" placeholder="Option 3" />
           </div>
-          <div className="twoChoices">
+          <button id="add" className="button"><i className="fas fa-plus"></i> Add more options</button>
+          </div>
+          <div id="twoChoices">
           <input id="option1" className="input-group-rounded" type="text" placeholder="Option 1" />
           <input id="option2" className="input-group-rounded" type="text" placeholder="Option 2" />
           </div>
@@ -48,10 +56,10 @@ const PollsForm = () =>
                 Expire in
             </div>
             <div className="medium-3 cell">
-                <input type="number" min="1" />
+                <input id="time" type="number" min="1" />
             </div>
             <div className="medium-3 cell">
-                <select>
+                <select id="duration">
                     <option value="minutes">Minutes</option>
                     <option value="hours">Hours</option>
                     <option value="days">Days</option>
@@ -61,7 +69,6 @@ const PollsForm = () =>
         </div>
         </div>
         <button id="submit" type="submit" className="success button">Create Poll</button>
-        <button id="back" className="warning button">Go Back</button>
         </div>
       </form>
 
