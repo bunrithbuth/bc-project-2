@@ -5,13 +5,15 @@ const stars = document.getElementsByClassName('stars')[0]
 const multiple = document.getElementById('multiple')
 const twoChoices = document.getElementById('twoChoices')
 
+
 //Hiding all the polloptions input forms when content loaded
 document.addEventListener("DOMContentLoaded", () => {
 
 // Retrieve local storage for user photoURL
     if (typeof(Storage) !== "undefined") {
         let user = JSON.parse(localStorage.getItem("user"))
-        document.getElementById("avatar").setAttribute('src', user.photoURL)
+        console.log(user.photoURL)
+        document.querySelector(".avatar").setAttribute('src', user.photoURL)
     } else {
         console.log("Not Logged In")
     }
@@ -23,8 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //Submit eventlistener
 submit.addEventListener('click', function() {
-    event.preventDefault()
     let optionCount = document.getElementsByClassName('options').length
+    event.preventDefault()
     let optionArr = []
     if (submit.getAttribute('data-type') === 'stars') {
         optionArr = [{
@@ -34,6 +36,24 @@ submit.addEventListener('click', function() {
                 starRatingCount: 0,
                 votes: 0
         }]
+    } else if (submit.getAttribute('data-type') === 'twoChoices') {
+        optionArr = [
+            {
+                name: document.querySelector('#a').value,
+                description: null,
+                starRating: 0,
+                starRatingCount: 0,
+                votes: 0
+            },
+            {
+                name: document.querySelector('#b').value,
+                description: null,
+                starRating: 0,
+                starRatingCount: 0,
+                votes: 0
+            }
+        ]
+
     } else {
         for (let i = 0; i < optionCount; i++) {
             optionArr.push(
@@ -69,6 +89,8 @@ submit.addEventListener('click', function() {
           for (let i = 0; i < optionCount; i++) {
             document.querySelector('#option' + (i + 1)).value = ''
           }
+          document.querySelector('#a').value = ''
+          document.querySelector('#b').value = ''
         })
         .catch(e => console.error(e))
 })

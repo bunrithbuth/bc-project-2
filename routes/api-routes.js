@@ -27,7 +27,10 @@ module.exports = function(app) {
         db.poll.findAll({
             where: {
                 userId: req.params.id
-            }
+            },
+            include: [
+                { model: db.pollOption }
+            ]
         }).then(function (poll) {
             res.json(poll);
         });
