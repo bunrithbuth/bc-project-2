@@ -70,7 +70,6 @@ const PollsForm = () =>
         </div>
         <button id="submit" type="submit" className="success button">Create Poll</button>
         </div>
-        <div id="showForm"></div>
       </form>
 
 module.exports = PollsForm

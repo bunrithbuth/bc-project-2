@@ -53,40 +53,41 @@ submit.addEventListener('click', function() {
       })
         .then(r => {
             console.log('check')
-            
-            if (data.type == "twoChoices" || data.type == "multiple") {
+            console.log(optionArr)
+            if (document.querySelector('#submit').getAttribute('data-type') == "twoChoices" || document.querySelector('#submit').getAttribute('data-type') == "multiple") {
         
-                for (var i = 0; i < data.length; i++) {
-            
-                    var card = $('<div className="card" style="width: 500px;">');
-                    var cardSection = $('<div className="card-divider">');
-            
-                    cardSection.append('<h2>' + data.name + '</h2>');
-                    cardSection.append('<input type="radio" name="pokemon"><label htmlFor="pokemonBlue">' + OptionArr[i] + '</label>');
+                var card = $('<div class="card">');
+                var cardSection = $('<div class="card-section">');
+        
+                cardSection.append('<h2>' + document.querySelector('#statement').value + '</h2>');
 
-                    card.append(cardSection)
-
-                    $('#showForm').append(card)
-                    console.log(card)
+                for (let i = 0; i < optionArr.length; i++) {
+                    cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + optionArr[i].name + '</label>');
+                    console.log(optionArr[i])
                 }
+
+                card.append(cardSection)
+
+                $('#showForm').append(card)
 
             } else {
             
-                var card = $('<div className="card" style="width: 500px;">')
-                var cardSection = $('<div className="card-divider">')
-                var starSection = $('<div className="stars">')
+                var card = $('<div class="card">')
+                var cardSection = $('<div class="card-section">')
+                var starSection = $('<div class="stars">')
+
+                cardSection.append('<h2>' + document.querySelector('#statement').value + '</h2>');
         
-                starSection.append('<input className="star star-5" id="star-5" type="radio" name="star" /><label className="star star-5" htmlFor="star-5"></label>')
-                starSection.append('<input className="star star-4" id="star-4" type="radio" name="star" /><label className="star star-4" htmlFor="star-4"></label>')
-                starSection.append('<input className="star star-3" id="star-3" type="radio" name="star" /><label className="star star-3" htmlFor="star-3"></label>')
-                starSection.append('<input className="star star-2" id="star-2" type="radio" name="star" /><label className="star star-2" htmlFor="star-2"></label>')
-                starSection.append('<input className="star star-1" id="star-1" type="radio" name="star" /><label className="star star-1" htmlFor="star-1"></label>')
+                starSection.append('<input class="star star-5" id="star-5" type="radio" name="star" /><label class="star star-5" for="star-5"></label>')
+                starSection.append('<input class="star star-4" id="star-4" type="radio" name="star" /><label class="star star-4" for="star-4"></label>')
+                starSection.append('<input class="star star-3" id="star-3" type="radio" name="star" /><label class="star star-3" for="star-3"></label>')
+                starSection.append('<input class="star star-2" id="star-2" type="radio" name="star" /><label class="star star-2" for="star-2"></label>')
+                starSection.append('<input class="star star-1" id="star-1" type="radio" name="star" /><label class="star star-1" for="star-1"></label>')
 
                 cardSection.append(starSection)
                 card.append(cardSection)
 
                 $('#showForm').append(card)
-                console.log(card)
 
             }
             document.querySelector('#statement').value = '';
@@ -95,9 +96,8 @@ submit.addEventListener('click', function() {
             for (let i = 0; i < optionCount; i++) {
                 document.querySelector('#option' + (i + 1)).value = ''
             }
-            multiple.style.display = "none"
-            twoChoices.style.display = "none"
-            stars.style.display = "none"
+            pollsForm.style.display = "none"
+            pollsOptions.style.display = "none"
             showForm.style.display = "block"
         })
         .catch(e => console.error(e))
