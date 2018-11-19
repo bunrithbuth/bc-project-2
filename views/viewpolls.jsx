@@ -10,9 +10,12 @@ const ViewPolls = () =>
         <Head />
         <body>
             <Nav />
-
+            <div className="grid-container">
+                <div id="cardContainer" className="grid-x grid-padding-x"></div>
+            </div>
             <Footer />
-            <Script />       
+            <Script /> 
+            <script src='./js/viewpolls.js' />      
         </body>
     </html>
 
