@@ -32,13 +32,13 @@ submit.addEventListener('click', function() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
         body: JSON.stringify({
-          type: document.querySelector('#submit').getAttribute('data-type'),
-          name: document.querySelector('#statement').value,
-          user: 'Mearat',
-          pollOption: optionArr,
-          isPrivate: document.querySelector('#isPrivate').checked,
-          time: document.querySelector('#time').value,
-          duration: document.querySelector('#duration').value,
+            type: document.querySelector('#submit').getAttribute('data-type'),
+            name: document.querySelector('#statement').value,
+            user: 'Mearat',
+            pollOption: optionArr,
+            isPrivate: document.querySelector('#isPrivate').checked,
+            time: document.querySelector('#time').value,
+            duration: document.querySelector('#duration').value,
         })
       })
         .then(r => {
@@ -48,6 +48,32 @@ submit.addEventListener('click', function() {
             document.querySelector('#time').value = '';
             for (let i = 0; i < optionCount; i++) {
                 document.querySelector('#option' + (i + 1)).value = ''
+            }
+            if (data.type == "stars"){
+
+            }
+            if (data.type == "twoChoices"){
+
+            }
+            if (data.type == "multiple"){
+
+            }
+
+            for (var i = 0; i < data.length; i++) {
+                // Create a parent div to hold book data
+                var wellSection = $("<div>");
+                // Add a class to this div: 'well'
+                wellSection.addClass("well");
+                // Add an id to the well to mark which well it is
+                wellSection.attr("id", "book-well-" + i);
+                // Append the well to the well section
+                $("#well-section").append(wellSection);
+            
+                // Now  we add our book data to the well we just placed on the page
+                $("#book-well-" + i).append("<h2>" + (i + 1) + ". " + data[i].title + "</h2>");
+                $("#book-well-" + i).append("<h3>Author: " + data[i].author + "</h4>");
+                $("#book-well-" + i).append("<h3>Genre: " + data[i].genre + "</h4>");
+                $("#book-well-" + i).append("<h3>Pages: " + data[i].pages + "</h4>");
             }
         })
         .catch(e => console.error(e))
