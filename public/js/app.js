@@ -7,11 +7,21 @@ const twoChoices = document.getElementById('twoChoices')
 
 //Hiding all the polloptions input forms when content loaded
 document.addEventListener("DOMContentLoaded", () => {
+    
+// Retrieve local storage for user photoURL
+    if (typeof(Storage) !== "undefined") {
+        let user = JSON.parse(localStorage.getItem("firebaseui::rememberedAccounts"))
+        document.getElementById("avatar").setAttribute('src', user[0].photoUrl)
+    } else {
+        console.log("Not Logged In")
+    }
+
     multiple.style.display = "none"
     twoChoices.style.display = "none"
     stars.style.display = "none"
 })
 
+//Submit eventlistener
 submit.addEventListener('click', function() {
     event.preventDefault()
     let optionCount = document.getElementsByClassName('options').length
@@ -27,7 +37,7 @@ submit.addEventListener('click', function() {
             }
         )
     }
-    
+//Fetch POST requet to the database   
     fetch('/api/poll', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
@@ -42,39 +52,56 @@ submit.addEventListener('click', function() {
         })
       })
         .then(r => {
-        console.log('check')
+            console.log('check')
+            
+            function renderPoll(data) {
+                if (data.type == "twoChoices" || data.type == "multiple") {
+            
+                    for (var i = 0; i < data.length; i++) {
+                
+                        var card = $('<div className="card" style="width: 500px;">');
+                        var cardSection = $('<div className="card-divider">');
+                
+                        cardSection.append('<h2>' + data[i].name + '</h2>');
+                        cardSection.append('<input type="radio" name="pokemon"><label htmlFor="pokemonBlue">' + OptionArr[i] + '</label>');
+
+                        card.append(cardSection)
+
+                        $('#showForm').append(card)
+                        console.log(card)
+                    }
+
+                } else {
+                
+                    var card = $('<div className="card" style="width: 500px;">')
+                    var cardSection = $('<div className="card-divider">')
+                    var starSection = $('<div className="stars">')
+            
+                    starSection.append('<input className="star star-5" id="star-5" type="radio" name="star" /><label className="star star-5" htmlFor="star-5"></label>')
+                    starSection.append('<input className="star star-4" id="star-4" type="radio" name="star" /><label className="star star-4" htmlFor="star-4"></label>')
+                    starSection.append('<input className="star star-3" id="star-3" type="radio" name="star" /><label className="star star-3" htmlFor="star-3"></label>')
+                    starSection.append('<input className="star star-2" id="star-2" type="radio" name="star" /><label className="star star-2" htmlFor="star-2"></label>')
+                    starSection.append('<input className="star star-1" id="star-1" type="radio" name="star" /><label className="star star-1" htmlFor="star-1"></label>')
+
+                    cardSection.append(starSection)
+                    card.append(cardSection)
+
+                    $('#showForm').append(card)
+                    console.log(card)
+
+                }
+
+            }
             document.querySelector('#statement').value = '';
             document.querySelector('#isPrivate').checked = false;
             document.querySelector('#time').value = '';
             for (let i = 0; i < optionCount; i++) {
                 document.querySelector('#option' + (i + 1)).value = ''
             }
-            if (data.type == "stars"){
-
-            }
-            if (data.type == "twoChoices"){
-
-            }
-            if (data.type == "multiple"){
-
-            }
-
-            for (var i = 0; i < data.length; i++) {
-                // Create a parent div to hold book data
-                var wellSection = $("<div>");
-                // Add a class to this div: 'well'
-                wellSection.addClass("well");
-                // Add an id to the well to mark which well it is
-                wellSection.attr("id", "book-well-" + i);
-                // Append the well to the well section
-                $("#well-section").append(wellSection);
-            
-                // Now  we add our book data to the well we just placed on the page
-                $("#book-well-" + i).append("<h2>" + (i + 1) + ". " + data[i].title + "</h2>");
-                $("#book-well-" + i).append("<h3>Author: " + data[i].author + "</h4>");
-                $("#book-well-" + i).append("<h3>Genre: " + data[i].genre + "</h4>");
-                $("#book-well-" + i).append("<h3>Pages: " + data[i].pages + "</h4>");
-            }
+            multiple.style.display = "none"
+            twoChoices.style.display = "none"
+            stars.style.display = "none"
+            showForm.style.display = "block"
         })
         .catch(e => console.error(e))
 })
@@ -110,5 +137,9 @@ document.getElementById('add').addEventListener('click', (event) => {
     let optionCount = document.getElementsByClassName('options').length + 1
     let newOption = document.getElementById('multipleInput');
     newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);  
-    console.log('add')  
+    console.log('add')
 })
+
+//Foundation init
+
+$(document).foundation();

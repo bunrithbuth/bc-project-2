@@ -29,4 +29,7 @@ module.exports = function (app) {
     app.get("/poll", function (req, res){
         res.render('poll');
     })
+    app.get("/poll:id", function (req, res){
+        res.render('poll');
+    })
 };

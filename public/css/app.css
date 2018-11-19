@@ -83,4 +83,7 @@ font-family: 'Bitter', serif;
 font-family: 'Quattrocento', serif;
 font-family: 'Armata', sans-serif; */
 
-
+#avatar {
+  width: 50px;
+  border-radius: 50%;
+}

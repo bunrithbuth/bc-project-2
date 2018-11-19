@@ -91,11 +91,12 @@ firebase.auth().onAuthStateChanged(function (user) {
 function checkNewUser() {
     var temp = {
         name: firebase.auth().currentUser.displayName,
-        email: firebase.auth().currentUser.email
+        email: firebase.auth().currentUser.email,
+        photoURL: firebase.auth().currentUser.photoURL
     }
-    console.log(temp)
+    console.log(firebase.auth().currentUser)
     $.post("/api/signin", temp).then(function(data){
-        console.log('aye')
+        localStorage.setItem(temp);
     });
 }
 
@@ -140,7 +141,7 @@ function addUserProfile(user) {
     })
 }
 
-function constructgfUser(user) {
+function constructUser(user) {
     return {
         name: user.displayName,
         uid: user.uid,
@@ -153,3 +154,4 @@ $(document).ready(function () {
         updateUserProfile();
     }
 })
+
