@@ -58,12 +58,13 @@ module.exports = function(app) {
     //https://momentjs.com/docs/#/durations/
     app.post('/api/poll', (req, res) => {
         console.log('THIS IS WHAT WILL BE POSTED: ' + JSON.stringify(req.body))
+        console.log(moment.utc().add(parseInt(req.body.time), req.body.duration))
         db.poll.create({
             type: req.body.type,
             name: req.body.name,
             userId: req.body.user,
             isPrivate: req.body.isPrivate,
-            expiration: moment().add(req.body.time, req.body.duration).format('YYYY-MM-DD')
+            expiration: moment.utc().add(parseInt(req.body.time), req.body.duration)
         }).then( _poll => {
             console.log(req.body.pollOption)
             req.body.pollOption.forEach(req_pollOption => {              
