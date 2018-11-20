@@ -1,8 +1,8 @@
 let poll = {
-    user: 'bunrith',
+    user: 1,
     name: 'test poll',
     type: 'star',
-    isPrivate: 0,
+    isPrivate: 1,
     time: 2,
     duration: 'weeks',
     pollOption: [

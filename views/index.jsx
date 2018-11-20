@@ -14,7 +14,6 @@ const Page = () =>
             <Content />
             <Footer />
             <Script />
-            
         </body>
     </html>
 
