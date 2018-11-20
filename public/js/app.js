@@ -30,8 +30,8 @@ submit.addEventListener('click', function() {
     let optionArr = []
     if (submit.getAttribute('data-type') === 'stars') {
         optionArr = [{
-                name: 'starRating',
-                description: null,
+                name: document.querySelector('#statement').value,
+                description: 'starRating',
                 starRating: 0,
                 starRatingCount: 0,
                 votes: 0
@@ -39,15 +39,15 @@ submit.addEventListener('click', function() {
     } else if (submit.getAttribute('data-type') === 'twoChoices') {
         optionArr = [
             {
-                name: document.querySelector('#a').value,
-                description: null,
+                name: document.querySelector('#statement').value,
+                description: document.querySelector('#a').value,
                 starRating: 0,
                 starRatingCount: 0,
                 votes: 0
             },
             {
-                name: document.querySelector('#b').value,
-                description: null,
+                name: document.querySelector('#statement').value,
+                description: document.querySelector('#b').value,
                 starRating: 0,
                 starRatingCount: 0,
                 votes: 0
@@ -58,8 +58,8 @@ submit.addEventListener('click', function() {
         for (let i = 0; i < optionCount; i++) {
             optionArr.push(
                 {
-                    name: document.querySelector('#option' + (i + 1)).value,
-                    description: null,
+                    name: document.querySelector('#statement').value,
+                    description: document.querySelector('#option' + (i + 1)).value,
                     starRating: 0,
                     starRatingCount: 0,
                     votes: 0
@@ -75,6 +75,7 @@ submit.addEventListener('click', function() {
         body: JSON.stringify({
             type: document.querySelector('#submit').getAttribute('data-type'),
             name: document.querySelector('#statement').value,
+            description: optionArr,
             user: 1,
             pollOption: optionArr,
             isPrivate: document.querySelector('#isPrivate').checked,
