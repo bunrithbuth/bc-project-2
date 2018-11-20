@@ -4,8 +4,10 @@ fetch('/api/poll/active')
     return response.json();
   })
   .then(function(myJson) {
-    for (const key in myJson) {
-        const element = myJson[key];
+    let max = 12
+    myJson.length < max ? max = myJson.length : null
+    for (i = 0 ; i < max ; i++) {
+        const element = myJson[i];
         console.log(element)
         $('.masonry-css').append(`
         <div class="masonry-css-item">
@@ -16,6 +18,3 @@ fetch('/api/poll/active')
     `)
     }
   });
-$(document).ready(function() {
-    $(document).foundation()
-})

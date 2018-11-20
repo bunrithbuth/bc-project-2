@@ -173,17 +173,27 @@ module.exports = function(app) {
 
         db.user.create({
             name: 'mearat',
+            email: 'meart@test.com',
+            photoURL: null
+        })
+
+        db.user.create({
+            name: 'mearat2',
+            email: 'mearat2@test.com',
+            photoURL: null
         })
 
         db.user.create({
             name: 'bunrith',
+            email: 'bunrith@test.com',
+            photoURL: null
         })
         .then( _users => {
             console.log(moment().add(1,'days').format('YYYY-MM-DD'))
             db.poll.create({
                 type: 'star',
                 name: 'bun test poll',
-                userName: (_users).name,
+                userId: (_users).id,
                 isPrivate: 0,
                 expiration: moment().add(1,'days').format('YYYY-MM-DD')
             }).then( _poll => {
@@ -196,7 +206,7 @@ module.exports = function(app) {
                     votes: null
                 }).then( _pollOption => {
                     db.userVote.create({
-                        userName: 'mearat',
+                        userId: 1,
                         pollOptionId: (_pollOption).id,
                         starRating: 3.5,
                         vote: null
@@ -211,7 +221,7 @@ module.exports = function(app) {
                     votes: null
                 }).then( _pollOption => {
                     db.userVote.create({
-                        userName: 'mearat2',
+                        userId: 2,
                         pollOptionId: (_pollOption).id,
                         starRating: 2.5,
                         vote: null
@@ -219,7 +229,6 @@ module.exports = function(app) {
                 })
             })
         })
-
         res.render('index')
     })
 };

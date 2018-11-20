@@ -86,7 +86,7 @@ font-family: 'Armata', sans-serif; */
 
 
 .hero-full-screen {
-  height: 100vh;
+  height: 95vh;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -149,6 +149,11 @@ font-family: 'Armata', sans-serif; */
   font-weight: bold;
 }
 
+
+#main-content-section {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 
 .full-width-testimonial {
   background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.1)), url("https://unsplash.it/2000/1200/?image=1011");
