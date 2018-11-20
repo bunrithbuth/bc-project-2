@@ -1,5 +1,6 @@
 const React = require('react')
 const Fragment = React.Fragment
+
 const Nav = props =>
 
   <Fragment>
@@ -20,11 +21,9 @@ const Nav = props =>
       <div className="top-bar-right">
         <ul className="menu nav">
             <li><a href="#">Log In</a></li>
-    </ul>
-  </div>
+        </ul>
       </div>
+    </div>
   </Fragment>
-</Fragment>
-
 
 module.exports = Nav
