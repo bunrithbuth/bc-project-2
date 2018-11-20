@@ -75,7 +75,7 @@ submit.addEventListener('click', function() {
         body: JSON.stringify({
             type: document.querySelector('#submit').getAttribute('data-type'),
             name: document.querySelector('#statement').value,
-            user: 'Mearat',
+            user: 1,
             pollOption: optionArr,
             isPrivate: document.querySelector('#isPrivate').checked,
             time: document.querySelector('#time').value,
@@ -85,10 +85,9 @@ submit.addEventListener('click', function() {
       .then(r => {
         console.log('check')
         console.log(optionArr)
-        if (document.querySelector('#submit').getAttribute('data-type') == "twoChoices" || document.querySelector('#submit').getAttribute('data-type') == "multiple") {
+        if (document.querySelector('#submit').getAttribute('data-type') == "twoChoices") {
             
-            var container = $('<div class="container">');
-            var card = $('<div class="card" style="width: 500px">');
+            var card = $('<div class="card">');
             var cardSection = $('<div class="card-section">');
     
             cardSection.append('<h2>' + document.querySelector('#statement').value + '</h2>');
@@ -99,13 +98,12 @@ submit.addEventListener('click', function() {
             }
 
             card.append(cardSection)
-            container.append(card)
 
             $('#showForm').append(card)
+
         } else if (document.querySelector('#submit').getAttribute('data-type') == "multiple") {
 
-            var container = $('<div class="container">');
-            var card = $('<div class="card" style="width: 500px">');
+            var card = $('<div class="card">');
             var cardSection = $('<div class="card-section">');
     
             cardSection.append('<h2>' + document.querySelector('#statement').value + '</h2>');
@@ -116,14 +114,12 @@ submit.addEventListener('click', function() {
             }
 
             card.append(cardSection)
-            container.append(card)
 
             $('#showForm').append(card)
 
         } else {
         
-            var container = $('<div class="container">');
-            var card = $('<div class="card" style="width: 500px">');
+            var card = $('<div class="card">');
             var cardSection = $('<div class="card-section">')
             var starSection = $('<div class="stars">')
 
@@ -137,7 +133,6 @@ submit.addEventListener('click', function() {
 
             cardSection.append(starSection)
             card.append(cardSection)
-            container.append(card)
 
             $('#showForm').append(card)
 
