@@ -83,72 +83,73 @@ submit.addEventListener('click', function() {
             duration: document.querySelector('#duration').value,
         })
       })
-      .then(r => {
-        console.log('check')
-        console.log(optionArr)
-        if (document.querySelector('#submit').getAttribute('data-type') == "twoChoices") {
-            
-            var card = $('<div class="card">');
-            var cardSection = $('<div class="card-section">');
-    
-            cardSection.append('<h2>' + document.querySelector('#statement').value + '</h2>');
-
-            for (let i = 0; i < optionArr.length; i++) {
-                cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + optionArr[i].name + '</label>');
-                console.log(optionArr[i])
-            }
-
-            card.append(cardSection)
-
-            $('#showForm').append(card)
-
-        } else if (document.querySelector('#submit').getAttribute('data-type') == "multiple") {
-
-            var card = $('<div class="card">');
-            var cardSection = $('<div class="card-section">');
-    
-            cardSection.append('<h2>' + document.querySelector('#statement').value + '</h2>');
-
-            for (let i = 0; i < optionArr.length; i++) {
-                cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + optionArr[i].name + '</label>');
-                console.log(optionArr[i])
-            }
-
-            card.append(cardSection)
-
-            $('#showForm').append(card)
-
-        } else {
+    .then(r => {
+    console.log('check')
+    console.log(optionArr)
+    if (document.querySelector('#submit').getAttribute('data-type') == "twoChoices") {
         
-            var card = $('<div class="card">');
-            var cardSection = $('<div class="card-section">')
-            var starSection = $('<div class="stars">')
+        var card = $('<div class="card">');
+        var cardSection = $('<div class="card-section">');
 
-            cardSection.append('<h2>' + document.querySelector('#statement').value + '</h2>');
+        cardSection.append('<h2>' + document.querySelector('#statement').value + '</h2>');
+
+        for (let i = 0; i < optionArr.length; i++) {
+            cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + optionArr[i].description + '</label>');
+            console.log(optionArr[i])
+        }
+
+        card.append(cardSection)
+
+        $('#showForm').append(card)
+
+    } else if (document.querySelector('#submit').getAttribute('data-type') == "multiple") {
+
+        var card = $('<div class="card">');
+        var cardSection = $('<div class="card-section">');
+
+        cardSection.append('<h2>' + document.querySelector('#statement').value + '</h2>');
+
+        for (let i = 0; i < optionArr.length; i++) {
+            cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + optionArr[i].description + '</label>');
+            console.log(optionArr[i])
+        }
+
+        card.append(cardSection)
+
+        $('#showForm').append(card)
+
+    } else {
     
-            starSection.append('<input class="star star-5" id="star-5" type="radio" name="star" /><label class="star star-5" for="star-5"></label>')
-            starSection.append('<input class="star star-4" id="star-4" type="radio" name="star" /><label class="star star-4" for="star-4"></label>')
-            starSection.append('<input class="star star-3" id="star-3" type="radio" name="star" /><label class="star star-3" for="star-3"></label>')
-            starSection.append('<input class="star star-2" id="star-2" type="radio" name="star" /><label class="star star-2" for="star-2"></label>')
-            starSection.append('<input class="star star-1" id="star-1" type="radio" name="star" /><label class="star star-1" for="star-1"></label>')
+        var card = $('<div class="card">');
+        var cardSection = $('<div class="card-section">')
+        var starSection = $('<div class="stars">')
 
-            cardSection.append(starSection)
-            card.append(cardSection)
+        cardSection.append('<h2>' + document.querySelector('#statement').value + '</h2>');
 
-            $('#showForm').append(card)
+        starSection.append('<input class="star star-5" id="star-5" type="radio" name="star" /><label class="star star-5" for="star-5"></label>')
+        starSection.append('<input class="star star-4" id="star-4" type="radio" name="star" /><label class="star star-4" for="star-4"></label>')
+        starSection.append('<input class="star star-3" id="star-3" type="radio" name="star" /><label class="star star-3" for="star-3"></label>')
+        starSection.append('<input class="star star-2" id="star-2" type="radio" name="star" /><label class="star star-2" for="star-2"></label>')
+        starSection.append('<input class="star star-1" id="star-1" type="radio" name="star" /><label class="star star-1" for="star-1"></label>')
 
-        }
-        document.querySelector('#statement').value = '';
-        document.querySelector('#isPrivate').checked = false;
-        document.querySelector('#time').value = '';
-        for (let i = 0; i < optionCount; i++) {
-            document.querySelector('#option' + (i + 1)).value = ''
-        }
-        pollsForm.style.display = "none"
-        pollsOptions.style.display = "none"
-        showForm.style.display = "block"
-        })
-        .catch(e => console.error(e))
+        cardSection.append(starSection)
+        card.append(cardSection)
+
+        $('#showForm').append(card)
+
+    }
+    document.querySelector('#statement').value = '';
+    document.querySelector('#isPrivate').checked = false;
+    document.querySelector('#time').value = '';
+    for (let i = 0; i < optionCount; i++) {
+        document.querySelector('#option' + (i + 1)).value = ''
+    }
+    pollsForm.style.display = "none"
+    pollsOptions.style.display = "none"
+    createNew.style.display = "block"
+    showForm.style.display = "block"
+    })
+    .catch(e => console.error(e))
 })
 
 //Eventlistener for different type of input forms
@@ -158,6 +159,7 @@ document.getElementById('starForm').addEventListener('click', () => {
     multiple.style.display = "none"
     twoChoices.style.display = "none"
     stars.style.display = "inline-block"
+    createNew.style.display = "none"
     submit.setAttribute("data-type", "stars")
 })
 
@@ -166,6 +168,7 @@ document.getElementById('multipleForm').addEventListener('click', () => {
     multiple.style.display = "block"
     twoChoices.style.display = "none"
     stars.style.display = "none"
+    createNew.style.display = "none"
     submit.setAttribute("data-type", "multiple")
 })
 
@@ -174,6 +177,7 @@ document.getElementById('twoChoicesForm').addEventListener('click', () => {
     multiple.style.display = "none"
     twoChoices.style.display = "block"
     stars.style.display = "none"
+    createNew.style.display = "none"
     submit.setAttribute("data-type", "twoChoices")
 })
 
