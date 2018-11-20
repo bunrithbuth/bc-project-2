@@ -243,8 +243,8 @@ font-family: 'Armata', sans-serif; */
 
 @media screen and (min-width: 68.75em) {
   .masonry-css {
-    -webkit-column-count: 5;
-            column-count: 5;
+    -webkit-column-count: 6;
+            column-count: 6;
   }
 }
 
