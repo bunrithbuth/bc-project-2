@@ -15,6 +15,8 @@ const Page = () =>
             <Content />
             <Footer />
             <Script />
+            <script src='/js/app.js' />
+            <script src='js/index.js' />
         </body>
     </html>
 

@@ -46,16 +46,32 @@ module.exports = function(app) {
         })
 
     })
+
+    function guid() {
+        function s4() {
+          return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
     
     //https://momentjs.com/docs/#/durations/
     app.post('/api/poll', (req, res) => {
         console.log('THIS IS WHAT WILL BE POSTED: ' + JSON.stringify(req.body))
+
+        let _uId = null
+        if(req.body.isPrivate){
+            _uId = guid()
+        }
+
         db.poll.create({
             type: req.body.type,
             name: req.body.name,
             userName: req.body.user,
             isPrivate: req.body.isPrivate,
-            expiration: moment().add(req.body.time, req.body.duration).format('YYYY-MM-DD')
+            expiration: moment().add(req.body.time, req.body.duration).format('YYYY-MM-DD'),
+            uId: _uId,
         }).then( _poll => {
             console.log(req.body.pollOption)
             req.body.pollOption.forEach(req_pollOption => {              
@@ -101,43 +117,37 @@ module.exports = function(app) {
     app.get('/poll/:id', (req, res) => {
         const _id = req.params.id
         let _poll
-        // let _pollOption = []
+
+        console.log(' ')
 
         db.poll.findOne({
             where: {
-                id: _id
+                uId: _id
             },
             include: [
                 { model: db.pollOption }
             ]
-        }).then(function(poll) {
-            // if(poll.dataValues == undefined){
-            //     res.render('index')
-            // }else{
-            //     console.log(poll.dataValues)
-            //     _poll = poll.dataValues
-
-            //     db.pollOption.findAll({
-            //         where: {
-            //             pollId: _id
-            //         }
-            //     }).then(function(pollOption) {
-            //         pollOption.forEach(pollOption => {
-            //             console.log(pollOption.dataValues)
-            //             _pollOption.push(pollOption.dataValues)
-            //         })
-
-            //         let jsonAll = {
-            //             poll: _poll,
-            //             pollOption: _pollOption
-            //         }
-
-            res.json(poll)
-            //res.render(JSX_URL,JSON)
-
-            // })
-            // }
-
+        }).then(function(uid_poll) {
+            if(uid_poll === null) {
+                db.poll.findOne({
+                    where: {
+                        id: _id
+                    },
+                    include: [
+                        { model: db.pollOption }
+                    ]
+                }).then(function(id_poll) {
+                    if(id_poll === null){
+                        res.json({noPollExists: 1})
+                    }else{
+                        if(id_poll.isPrivate === true){
+                            res.json({isPrivate: 1})
+                        }else{
+                            res.json(id_poll)
+                        }
+                    }
+                })
+            }      
         })
     })
 
@@ -157,7 +167,8 @@ module.exports = function(app) {
     //  //need to update poll_options as well
     // })
 
-    app.get('/api/migrate', (req, res) => {
+    app.get('/api/migrate', (req, res) => { 
+
         db.user.create({
             name: 'mearat',
         })

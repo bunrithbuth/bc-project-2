@@ -23,6 +23,10 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.DATE,
           allowNull: false,
           defaultValue: DataTypes.NOW
+      },
+      uId: {
+        type: DataTypes.STRING,
+        allowNull: true,
       }
     });
 
