@@ -23,14 +23,21 @@ module.exports = function(app) {
         });
     })
 
-    app.get('/api/myPolls', (req, res) => {
-        db.polls.findAll({}).then(function (dbTodo) {
-            res.json(dbTodo);
+    app.get('/api/myPolls/:id', (req, res) => {
+        db.poll.findAll({
+            where: {
+                userId: req.params.id
+            },
+            include: [
+                { model: db.pollOption }
+            ]
+        }).then(function (poll) {
+            res.json(poll);
         });
     })
 
     app.post('/api/signin', (req,res) => {
-        console.log('ping')
+        console.log(req.body)
         var tempUser = req.body;
         db.user.findOne({ where: {email: tempUser.email} })
         .then(function (user){
@@ -38,7 +45,8 @@ module.exports = function(app) {
                 console.log('new User generated')
                 db.user.create({
                     name: tempUser.name,
-                    email: tempUser.email
+                    email: tempUser.email,
+                    photoURL: tempUser.photoURL
                 });
             }else{
                 res.json(user);
@@ -59,19 +67,13 @@ module.exports = function(app) {
     //https://momentjs.com/docs/#/durations/
     app.post('/api/poll', (req, res) => {
         console.log('THIS IS WHAT WILL BE POSTED: ' + JSON.stringify(req.body))
-
-        let _uId = null
-        if(req.body.isPrivate){
-            _uId = guid()
-        }
-
+        console.log(moment.utc().add(parseInt(req.body.time), req.body.duration))
         db.poll.create({
             type: req.body.type,
             name: req.body.name,
-            userName: req.body.user,
+            userId: req.body.user,
             isPrivate: req.body.isPrivate,
-            expiration: moment().add(req.body.time, req.body.duration).format('YYYY-MM-DD'),
-            uId: _uId,
+            expiration: moment.utc().add(parseInt(req.body.time), req.body.duration)
         }).then( _poll => {
             console.log(req.body.pollOption)
             req.body.pollOption.forEach(req_pollOption => {              

@@ -16,3 +16,6 @@ fetch('/api/poll/active')
     `)
     }
   });
+$(document).ready(function() {
+    $(document).foundation()
+})

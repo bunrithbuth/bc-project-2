@@ -1,7 +1,7 @@
-$(document).ready(function () {
-    getMyPolls();
+// $(document).ready(function () {
+//     getMyPolls();
 
-});
+// });
 
 
 function getMyPolls() {
