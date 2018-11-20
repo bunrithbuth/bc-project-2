@@ -5,7 +5,7 @@ const PollsForm = () =>
         <div className="grid-container">
           <div className="grid-x grid-padding-x">
             <div className="medium-3 cell">
-              <label><img id="avatar" className="text-right middle" src="" alt="profile avatar" /></label>
+              <label><img className="text-right middle avatar" src="" alt="profile avatar" /></label>
             </div>
             <div className="medium-6 cell">
                 <input id="statement" className="input-group-rounded" type="text" placeholder="Input your statement here" />
@@ -36,9 +36,10 @@ const PollsForm = () =>
           </div>
           <button id="add" className="button"><i className="fas fa-plus"></i> Add more options</button>
           </div>
+          {/* Need to fix this */}
           <div id="twoChoices">
-          <input id="option1" className="input-group-rounded" type="text" placeholder="Option 1" />
-          <input id="option2" className="input-group-rounded" type="text" placeholder="Option 2" />
+          <input id="a" className="input-group-rounded" type="text" placeholder="Option 1" />
+          <input id="b" className="input-group-rounded" type="text" placeholder="Option 2" />
           </div>
           <div>
             <p>Make it private?</p>

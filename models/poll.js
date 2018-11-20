@@ -11,9 +11,9 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      userName: {
-        type: DataTypes.STRING,
-        allowNull: true,
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       isPrivate: {
         type: DataTypes.BOOLEAN,
@@ -23,6 +23,10 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.DATE,
           allowNull: false,
           defaultValue: DataTypes.NOW
+      },
+      uId: {
+        type: DataTypes.STRING,
+        allowNull: true,
       }
     });
 

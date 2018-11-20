@@ -96,7 +96,9 @@ function checkNewUser() {
     }
     console.log(firebase.auth().currentUser)
     $.post("/api/signin", temp).then(function(data){
-        localStorage.setItem(temp);
+        temp.id = data.id
+        localStorage.setItem("user", JSON.stringify(temp));
+
     });
 }
 
