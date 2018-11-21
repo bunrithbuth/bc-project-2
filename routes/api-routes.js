@@ -67,27 +67,9 @@ module.exports = function(app) {
                     photoURL: tempUser.photoURL
                 });
             }else{
-               res.json(_user)
+               res.json(user)
             }
         })
-    })
-
-    app.post('/api/signin', (req, res) => {
-        console.log('ping')
-        var tempUser = req.body;
-        db.users.findOne({ where: { email: tempUser.email } })
-            .then(function (user) {
-                if (user == null) {
-                    console.log('new User generated')
-                    db.users.create({
-                        name: tempUser.name,
-                        email: tempUser.email
-                    });
-                } else {
-                    res.json(user);
-                }
-            })
-
     })
 
     function guid() {
