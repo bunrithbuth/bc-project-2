@@ -1,6 +1,6 @@
 var path = require("path");
 
-module.exports = function(app) {
+module.exports = function (app) {
     app.get('/', (req, res) => {
         res.render('index')
     })
@@ -8,11 +8,19 @@ module.exports = function(app) {
     app.get('/migration', (req, res) => {
         res.render('migration')
     })
-
-    app.get('/hello', (req, res) => {
+    app.get('/createpolls', (req, res) => {
         res.render('createPolls')
     })
 
+    app.get("/manage", function (req, res) {
+        res.render('manager');
+    });
 
+    app.get("/signin", function (req, res){
+        res.render('signin');
+    })
 
+    app.get("/aboutUs", function (req, res){
+        res.render('aboutUs');
+    })
 };

@@ -7,7 +7,7 @@ const Nav = props =>
         <li className="menu-text">Deez Polls</li>
         <li><a href="/createpolls">Create a Poll</a></li>
         <li><a href="#">View Polls</a></li>
-        <li><a href="#">About Us</a></li>
+        <li><a href="/aboutUs">About Us</a></li>
           <div className="top-bar-right">
            <ul className="menu">
               <li><a className="top-bar-right" href="#">Log In</a></li>

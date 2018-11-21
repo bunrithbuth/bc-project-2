@@ -3,7 +3,8 @@ let polls = {
     name: 'test poll',
     type: 'star',
     is_private: 0,
-    duration_days: 2,
+    time: 2,
+    duration: 'weeks',
     poll_options: [
         {
             name: 'McDonalds',

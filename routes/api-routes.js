@@ -12,14 +12,39 @@ module.exports = function(app) {
         });
     })
 
+    app.get('/api/myPolls', (req, res) => {
+        db.polls.findAll({}).then(function (dbTodo) {
+            res.json(dbTodo);
+        });
+    })
+
+    app.post('/api/signin', (req,res) => {
+        console.log('ping')
+        var tempUser = req.body;
+        db.users.findOne({ where: {email: tempUser.email} })
+        .then(function (user){
+            if(user == null){
+                console.log('new User generated')
+                db.users.create({
+                    name: tempUser.name,
+                    email: tempUser.email
+                });
+            }else{
+                res.json(user);
+            }
+        })
+
+    })
+    
+    //https://momentjs.com/docs/#/durations/
     app.post('/api/polls', (req, res) => {
-        console.log(req.body)
+        console.log('THIS IS WHAT WILL BE POSTED: ' + JSON.stringify(req.body))
         db.polls.create({
             type: req.body.type,
             name: req.body.name,
             user_name: req.body.user,
             is_private: req.body.is_private,
-            expiration: moment().add(req.body.duration_days,'days').format('YYYY-MM-DD')
+            expiration: moment().add(req.body.time, req.body.duration).format('YYYY-MM-DD')
         }).then( _polls => {
             console.log(req.body.poll_options)
             req.body.poll_options.forEach(req_poll_options => {              
@@ -64,16 +89,37 @@ module.exports = function(app) {
     app.get('/polls/:id', (req, res) => {
         const _id = req.params.id
         let _poll
+        let _poll_options = []
+
         db.polls.findOne({
             where: {
                 id: _id
             }
         }).then(function(poll) {
+            console.log(poll.dataValues)
             _poll = poll.dataValues
-            console.log(_poll)
-            res.json(_poll)
-            //res.render(JSX_URL,JSON)
-        });
+
+            db.poll_options.findAll({
+                where: {
+                    poll_id: _id
+                }
+            }).then(function(poll_options) {
+                poll_options.forEach(poll_option => {
+                    console.log(poll_option.dataValues)
+                    _poll_options.push(poll_option.dataValues)
+                })
+
+                let jsonAll = {
+                    poll: _poll,
+                    poll_options: _poll_options
+                }
+
+                res.json(jsonAll)
+                //res.render(JSX_URL,JSON)
+
+            })
+
+        })
     })
 
     // app.get('/api/user_votes/:poll_id', (req, res) => {
@@ -121,6 +167,21 @@ module.exports = function(app) {
                         user_name: 'mearat',
                         poll_options_id: (_pollOption).id,
                         star_rating: 3.5,
+                        vote: null
+                    })    
+                })
+                db.poll_options.create({
+                    poll_id: (_polls).id,
+                    name: 'Burger King',
+                    description: 'Have it Your Way!',
+                    star_rating: 2.5,
+                    star_rating_count: 1,
+                    votes: null
+                }).then( _pollOption => {
+                    db.user_votes.create({
+                        user_name: 'mearat2',
+                        poll_options_id: (_pollOption).id,
+                        star_rating: 2.5,
                         vote: null
                     })    
                 })
