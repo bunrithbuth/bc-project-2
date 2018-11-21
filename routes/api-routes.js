@@ -109,10 +109,8 @@ module.exports = function(app) {
                     starRating: 0,
                     starRatingCount: 0,
                     votes: 0
-                })
+                }).then(data => res.json(data));
             })
-            res.json(_poll)
-            res.sendStatus(200)
         }) 
     })
 
@@ -175,7 +173,9 @@ module.exports = function(app) {
                         }
                     }
                 })
-            }      
+            }else{
+                res.json(uid_poll)
+            }     
         })
     })
 
