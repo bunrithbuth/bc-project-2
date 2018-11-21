@@ -1,5 +1,5 @@
 
-fetch('/api/poll/active')
+fetch('/api/active')
   .then(function(response) {
     return response.json();
   })
