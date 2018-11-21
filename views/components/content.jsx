@@ -20,8 +20,8 @@ const Content = props =>
 
       <div className="middle-content-section">
         <h1>Deeze Polls</h1>
-        <button className="button large">Create a Poll!</button>
-        <button className="button large">View Community Polls!</button>
+        <button className="button large" id="hpbutton1">Create a Poll!</button>
+        <button className="button large" id="hpbutton2">View Community Polls!</button>
       </div>
 
       <div className="bottom-content-section" data-magellan data-threshold="0">

@@ -149,6 +149,9 @@ font-family: 'Armata', sans-serif; */
   font-weight: bold;
 }
 
+#hpbutton1 { border-radius: 5000px 0px 0px 5000px; }
+#hpbutton2 { border-radius: 0px 5000px 5000px 0px; }
+
 
 #main-content-section {
   padding-top: 20px;
