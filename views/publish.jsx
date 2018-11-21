@@ -12,7 +12,7 @@ const Publish = (props) =>
             <Nav />
             <div className="grid-container">
                 <div id="cardContainer" className="grid-x grid-padding-x">
-                {props.star}
+                {props.poll}
                 </div>
             </div>
             <Footer />
