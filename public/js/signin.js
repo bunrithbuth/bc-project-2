@@ -66,7 +66,7 @@ var uiConfig = {
         }
     },
     signInFlow: 'popup',
-    signInSuccessUrl: '/manage',
+    signInSuccessUrl: '/', //Change url here after signin
     signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         firebase.auth.EmailAuthProvider.PROVIDER_ID
@@ -95,8 +95,9 @@ function checkNewUser() {
         photoURL: firebase.auth().currentUser.photoURL
     }
     console.log(firebase.auth().currentUser)
-    $.post("/api/signin", temp).then(function(data){
+    $.post("/api/signin", temp).then(function (data) {
         temp.id = data.id
+        console.log(temp)
         localStorage.setItem("user", JSON.stringify(temp));
 
     });
@@ -119,6 +120,7 @@ function getUemail() {
 function signOut() {
     console.log('signing out')
     firebase.auth().signOut();
+    localStorage.clear();
 }
 
 function pushProfile() {
@@ -149,6 +151,10 @@ function constructUser(user) {
         uid: user.uid,
         email: user.email,
     }
+}
+
+function getLocalUser() {
+    return JSON.parse(localStorage.getItem('user'));
 }
 
 $(document).ready(function () {
