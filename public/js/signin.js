@@ -66,7 +66,7 @@ var uiConfig = {
         }
     },
     signInFlow: 'popup',
-    signInSuccessUrl: '/signin', //Change url here after signin
+    signInSuccessUrl: '/', //Change url here after signin
     signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         firebase.auth.EmailAuthProvider.PROVIDER_ID
@@ -151,11 +151,6 @@ function constructUser(user) {
         uid: user.uid,
         email: user.email,
     }
-}
-
-function clearLocal(){
-    console.log('cleared')
-    localStorage.clear();
 }
 
 function getLocalUser() {
