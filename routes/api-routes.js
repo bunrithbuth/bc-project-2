@@ -67,7 +67,7 @@ module.exports = function(app) {
                     photoURL: tempUser.photoURL
                 });
             }else{
-               res.json(_user)
+               res.json(user)
             }
         })
     })
@@ -79,7 +79,7 @@ module.exports = function(app) {
             .then(function (user) {
                 if (user == null) {
                     console.log('new User generated')
-                    db.users.create({
+                    db.user.create({
                         name: tempUser.name,
                         email: tempUser.email
                     });
