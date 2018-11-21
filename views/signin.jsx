@@ -27,9 +27,9 @@ const SignIn = () =>
             <div id="loader">Loading...</div>
             <center>
 
-                <div className="signout">
-                    <button id="signout">Sign Out</button>
-                </div>
+
+                <button onclick="signOut()" id="signout-button">Sign Out</button>
+
             </center>
 
         </body>
