@@ -11,7 +11,6 @@ const Script = props =>
                 <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
                 <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-functions.js"></script>
                 <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
-                <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
                 <script src="/js/global.js" />
                 <script src="/js/signin.js" />
 
