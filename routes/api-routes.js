@@ -36,6 +36,23 @@ module.exports = function(app) {
         });
     })
 
+    app.get('/api/user/:id', (req, res) => {
+        const _id = req.params.id
+        
+        db.user.findOne({
+            where: {
+                id: _id
+            }
+        }).then(function(_user) {
+            console.log(_user)
+            if(_user == null){
+                res.json({name: 'userid not found'})
+            }else{
+               res.json(_user)
+            }
+        })
+    })
+
     app.post('/api/signin', (req,res) => {
         console.log(req.body)
         var tempUser = req.body;
@@ -155,7 +172,7 @@ module.exports = function(app) {
         })
     })
 
-    app.get('/poll/:id/option', (req, res) => {
+    app.get('/api/poll/:id/option', (req, res) => {
         const _id = req.params.id
         let _poll
 
