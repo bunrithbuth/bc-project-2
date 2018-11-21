@@ -84,10 +84,11 @@ submit.addEventListener('click', function() {
         })
     })
     .then(JSON => {
-        $.ajax({ url: '/api/poll', method: "GET" })
-        .then(function(poll) {
-            console.log(poll)
-        })
+        console.log(JSON)
+        // $.ajax({ url: '/api/poll/:id', method: "GET" })
+        // .then(function(poll) {
+        //     console.log(poll)
+        // })
     })
     
     // function submitPost(post) {
