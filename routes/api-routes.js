@@ -36,6 +36,23 @@ module.exports = function(app) {
         });
     })
 
+    app.get('/api/user/:id', (req, res) => {
+        const _id = req.params.id
+
+        db.user.findOne({
+            where: {
+                id: _id
+            }
+        }).then(function(_user) {
+            console.log(_user)
+            if(_user == null){
+                res.json({name: 'userid not found'})
+            }else{
+               res.json(_user)
+            }
+        })
+    })
+
     app.post('/api/signin', (req,res) => {
         console.log(req.body)
         var tempUser = req.body;
@@ -66,6 +83,12 @@ module.exports = function(app) {
     
     //https://momentjs.com/docs/#/durations/
     app.post('/api/poll', (req, res) => {
+
+        let _uId = null
+        if(req.body.isPrivate){
+            _uId = guid()
+        }
+
         console.log('THIS IS WHAT WILL BE POSTED: ' + JSON.stringify(req.body))
         console.log(moment.utc().add(parseInt(req.body.time), req.body.duration))
         db.poll.create({
@@ -73,6 +96,7 @@ module.exports = function(app) {
             name: req.body.name,
             userId: req.body.user,
             isPrivate: req.body.isPrivate,
+            uId: _uId,
             expiration: moment.utc().add(parseInt(req.body.time), req.body.duration)
         }).then( _poll => {
             console.log(req.body.pollOption)
@@ -153,7 +177,7 @@ module.exports = function(app) {
         })
     })
 
-    app.get('/poll/:id/option', (req, res) => {
+    app.get('/api/poll/:id/option', (req, res) => {
         const _id = req.params.id
         let _poll
 
