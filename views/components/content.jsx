@@ -19,7 +19,8 @@ const Content = props =>
       </div>
 
       <div className="middle-content-section">
-        <h1>Deeze Polls</h1>
+        <img src="./assets/pollLogoBig.png" id="logo" />
+        <h1>Deez Polls</h1>
         <button className="button large">Create a Poll!</button>
         <button className="button large">View Community Polls!</button>
       </div>

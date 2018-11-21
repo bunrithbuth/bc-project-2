@@ -47,6 +47,25 @@ module.exports = function(app) {
             console.log(_user)
             if(_user == null){
                 res.json({name: 'userid not found'})
+
+            }else{
+               res.json(_user)
+            }
+        })
+    })
+
+    app.post('/api/signin', (req,res) => {
+        console.log(req.body)
+        var tempUser = req.body;
+        db.user.findOne({ where: {email: tempUser.email} })
+        .then(function (user){
+            if(user == null){
+                console.log('new User generated')
+                db.user.create({
+                    name: tempUser.name,
+                    email: tempUser.email,
+                    photoURL: tempUser.photoURL
+                });
             }else{
                res.json(_user)
             }
