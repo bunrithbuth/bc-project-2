@@ -35,6 +35,19 @@ module.exports = function(app) {
             res.json(poll);
         });
     })
+    app.get('/api/poll/:id', (req, res) => {
+        db.poll.findAll({
+            where: {
+                id: req.params.id
+            },
+            include: [
+                { model: db.pollOption }
+            ]
+        }).then(function (poll) {
+            console.log(poll)
+            res.json(poll);
+        });
+    })
 
     app.get('/api/user/:id', (req, res) => {
         const _id = req.params.id
@@ -117,6 +130,7 @@ module.exports = function(app) {
             uId: _uId,
             expiration: moment.utc().add(parseInt(req.body.time), req.body.duration)
         }).then( _poll => {
+            
             console.log(req.body.pollOption)
             req.body.pollOption.forEach(req_pollOption => {              
                 console.log(req_pollOption.name)
@@ -127,8 +141,10 @@ module.exports = function(app) {
                     starRating: 0,
                     starRatingCount: 0,
                     votes: 0
-                }).then(data => res.json(data));
+                });
+
             })
+            res.json(_poll)
         }) 
     })
 
@@ -187,14 +203,15 @@ module.exports = function(app) {
                         if(id_poll.isPrivate === true){
                             res.json({isPrivate: 1})
                         }else{
-                            res.json(id_poll)
+                            res.render('publish', {poll: JSON.stringify(id_poll)})
                         }
                     }
                 })
             }else{
-                res.json(uid_poll)
+                res.json('publish', {poll: JSON.stringify(uid_poll)})
             }     
         })
+        
     })
 
     app.get('/api/poll/:id/option', (req, res) => {
