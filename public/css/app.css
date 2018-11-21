@@ -1,14 +1,79 @@
+/* font-family: 'Cabin', sans-serif;
+font-family: 'Bitter', serif;
+font-family: 'Quattrocento', serif;
+font-family: 'Armata', sans-serif; */
 
 #home {
   padding: 20px;
 }
 
+#logo {
+  width: 350px;
+  padding-left: 10px;
+}
+
+#deez {
+  margin: 0px;
+  padding: 0px;
+}
 
 .footer {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  color: white;
+}
+
+#nav1, #nav2, #nav3 {
+  background-color: #2c3840;
+}
+
+a {
+  color: white;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Cabin', sans-serif !important;
+}
+
+body {
+  min-height: 100%;
+  font-family: 'Cabin', sans-serif;
+}
+
+#main {
+  padding: 10px;
+  background-color: lightgreen;
+}
+
+#pollsForm {
+  padding: 40px;
+}
+
+
+.footer {
+  padding: 10px;
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #2c3840;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+/* NO TOUCHY */
+.pollOptions, .switch-paddle, .switch-paddle::after, .success, #time, #duration, #add {
+  border-radius: 5000px;
 }
 
 /* For star rating component */
@@ -53,34 +118,6 @@ input.star:checked ~ .rev-box{
     padding-left: 1rem;
   }
 
-h1, h2, h3, h4, h5 {
-  font-family: 'Cabin', sans-serif !important;
-}
-
-body {
-  min-height: 100%;
-  font-family: 'Cabin', sans-serif;
-}
-
-#main {
-  padding: 10px;
-  background-color: lightgreen;
-}
-
-.footer {
-  padding: 10px;
-  position: relative;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: lightgrey;
-}
-
-/* font-family: 'Cabin', sans-serif;
-font-family: 'Bitter', serif;
-font-family: 'Quattrocento', serif;
-font-family: 'Armata', sans-serif; */
 
 /* FOR HOMEPAGE HERO */
 
@@ -304,10 +341,4 @@ font-family: 'Armata', sans-serif; */
 .callout:hover {
   background-color: #3e8e41;
   color: white;
-}
-
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
 }
