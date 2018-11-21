@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
-    var poll_options = sequelize.define("poll_options", {
-      poll_id: {
+    var pollOption = sequelize.define("pollOption", {
+      pollId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -12,11 +12,11 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: true, 
       },
-      star_rating: {
+      starRating: {
         type: DataTypes.FLOAT(2,1),
         allowNull: true, 
       },
-      star_rating_count: {
+      starRatingCount: {
         type: DataTypes.INTEGER,
         allowNull: true, 
       },
@@ -24,16 +24,21 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         allowNull: true, 
       }
-    });
+    })
 
-    // poll_entry.associate = models => {
-    //     poll_entry.belongsTo(models.polls, {
-    //         foreignKey: {
-    //             allowNull: false
-    //         }
-    //     })
-    // }
+    pollOption.associate = models => {
+        pollOption.belongsTo(models.poll, {
+            foreignKey: { 
+              allowNull: false,
+              name: "pollId",
+            }
+        })
 
-    return poll_options;
+        pollOption.hasMany(models.userVote, {
+            onDelete: "cascade",
+        })
+    }
+
+    return pollOption;
   };
   

@@ -6,28 +6,47 @@ const Op = SQLZ.Op
 
 
 module.exports = function(app) {
-    app.get('/api/polls', (req, res) => {
-        db.polls.findAll({}).then(function(polls) {
-            res.json(polls);
+    app.get('/api/poll', (req, res) => {
+        db.polls.findAll({}).then(function(poll) {
+            res.json(poll);
         });
     })
 
-    app.get('/api/myPolls', (req, res) => {
-        db.polls.findAll({}).then(function (dbTodo) {
-            res.json(dbTodo);
+    app.delete('/api/poll/:id', (req, res) => {
+        db.poll.destroy({
+            where: {
+              id: req.params.id
+            }
+          })
+        .then(function(dbPost) {
+              res.json(dbPost);
+        });
+    })
+
+    app.get('/api/myPolls/:id', (req, res) => {
+        db.poll.findAll({
+            where: {
+                userId: req.params.id
+            },
+            include: [
+                { model: db.pollOption }
+            ]
+        }).then(function (poll) {
+            res.json(poll);
         });
     })
 
     app.post('/api/signin', (req,res) => {
-        console.log('ping')
+        console.log(req.body)
         var tempUser = req.body;
-        db.users.findOne({ where: {email: tempUser.email} })
+        db.user.findOne({ where: {email: tempUser.email} })
         .then(function (user){
             if(user == null){
                 console.log('new User generated')
-                db.users.create({
+                db.user.create({
                     name: tempUser.name,
-                    email: tempUser.email
+                    email: tempUser.email,
+                    photoURL: tempUser.photoURL
                 });
             }else{
                 res.json(user);
@@ -35,90 +54,141 @@ module.exports = function(app) {
         })
 
     })
+
+    function guid() {
+        function s4() {
+          return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
     
     //https://momentjs.com/docs/#/durations/
-    app.post('/api/polls', (req, res) => {
+    app.post('/api/poll', (req, res) => {
         console.log('THIS IS WHAT WILL BE POSTED: ' + JSON.stringify(req.body))
-        db.polls.create({
+        console.log(moment.utc().add(parseInt(req.body.time), req.body.duration))
+        db.poll.create({
             type: req.body.type,
             name: req.body.name,
-            user_name: req.body.user,
-            is_private: req.body.is_private,
-            expiration: moment().add(req.body.time, req.body.duration).format('YYYY-MM-DD')
-        }).then( _polls => {
-            console.log(req.body.poll_options)
-            req.body.poll_options.forEach(req_poll_options => {              
-                console.log(req_poll_options.name)
-                db.poll_options.create({
-                    poll_id: (_polls).id,
-                    name: req_poll_options.name,
-                    description: req_poll_options.description,
-                    star_rating: 0,
-                    star_rating_count: 0,
+            userId: req.body.user,
+            isPrivate: req.body.isPrivate,
+            expiration: moment.utc().add(parseInt(req.body.time), req.body.duration)
+        }).then( _poll => {
+            console.log(req.body.pollOption)
+            req.body.pollOption.forEach(req_pollOption => {              
+                console.log(req_pollOption.name)
+                db.pollOption.create({
+                    pollId: (_poll).id,
+                    name: req_pollOption.name,
+                    description: req_pollOption.description,
+                    starRating: 0,
+                    starRatingCount: 0,
                     votes: 0
                 })
             })
-        })
+            res.json(_poll)
+            res.sendStatus(200)
+        }) 
     })
 
-    app.get('/api/polls/active', (req, res) => {
-        db.polls.findAll({
+    app.get('/api/poll/active', (req, res) => {
+        db.poll.findAll({
             where: {
                 expiration: {
                     [Op.gte]: moment().format("MM/DD/YYYY")
-                }
+                },
+                isPrivate: 0
             }
-        }).then(function(polls) {
-            res.json(polls);
+        }).then(function(poll) {
+            res.json(poll);
         });
     })
 
-    app.get('/api/polls/expired', (req, res) => {
-        db.polls.findAll({
+    app.get('/api/poll/expired', (req, res) => {
+        db.poll.findAll({
             where: {
                 expiration: {
                     [Op.lt]: moment().format("MM/DD/YYYY")
                 }
             }
-        }).then(function(polls) {
-            res.json(polls);
+        }).then(function(poll) {
+            res.json(poll);
         });
     })
 
 
-    app.get('/polls/:id', (req, res) => {
+    app.get('/poll/:id', (req, res) => {
         const _id = req.params.id
         let _poll
-        let _poll_options = []
 
-        db.polls.findOne({
+        console.log(' ')
+
+        db.poll.findOne({
             where: {
-                id: _id
-            }
-        }).then(function(poll) {
-            console.log(poll.dataValues)
-            _poll = poll.dataValues
-
-            db.poll_options.findAll({
-                where: {
-                    poll_id: _id
-                }
-            }).then(function(poll_options) {
-                poll_options.forEach(poll_option => {
-                    console.log(poll_option.dataValues)
-                    _poll_options.push(poll_option.dataValues)
+                uId: _id
+            },
+            include: [
+                { model: db.pollOption }
+            ]
+        }).then(function(uid_poll) {
+            if(uid_poll === null) {
+                db.poll.findOne({
+                    where: {
+                        id: _id
+                    },
+                    include: [
+                        { model: db.pollOption }
+                    ]
+                }).then(function(id_poll) {
+                    if(id_poll === null){
+                        res.json({noPollExists: 1})
+                    }else{
+                        if(id_poll.isPrivate === true){
+                            res.json({isPrivate: 1})
+                        }else{
+                            res.json(id_poll)
+                        }
+                    }
                 })
+            }      
+        })
+    })
 
-                let jsonAll = {
-                    poll: _poll,
-                    poll_options: _poll_options
-                }
+    app.get('/poll/:id/option', (req, res) => {
+        const _id = req.params.id
+        let _poll
 
-                res.json(jsonAll)
-                //res.render(JSX_URL,JSON)
+        console.log(' ')
 
-            })
-
+        db.poll.findOne({
+            where: {
+                uId: _id
+            },
+            include: [
+                { model: db.pollOption }
+            ]
+        }).then(function(uid_poll) {
+            if(uid_poll === null) {
+                db.poll.findOne({
+                    where: {
+                        id: _id
+                    },
+                    include: [
+                        { model: db.pollOption }
+                    ]
+                }).then(function(id_poll) {
+                    if(id_poll === null){
+                        res.json({noPollExists: 1})
+                    }else{
+                        if(id_poll.isPrivate === true){
+                            res.json({isPrivate: 1})
+                        }else{
+                            res.json(id_poll.pollOptions)
+                        }
+                    }
+                })
+            }      
         })
     })
 
@@ -138,56 +208,66 @@ module.exports = function(app) {
     //  //need to update poll_options as well
     // })
 
-    app.get('/api/migrate', (req, res) => {
-        db.users.create({
+    app.get('/api/migrate', (req, res) => { 
+
+        db.user.create({
             name: 'mearat',
+            email: 'meart@test.com',
+            photoURL: null
         })
 
-        db.users.create({
+        db.user.create({
+            name: 'mearat2',
+            email: 'mearat2@test.com',
+            photoURL: null
+        })
+
+        db.user.create({
             name: 'bunrith',
+            email: 'bunrith@test.com',
+            photoURL: null
         })
         .then( _users => {
             console.log(moment().add(1,'days').format('YYYY-MM-DD'))
-            db.polls.create({
+            db.poll.create({
                 type: 'star',
                 name: 'bun test poll',
-                user_name: (_users).name,
-                is_private: 0,
+                userId: (_users).id,
+                isPrivate: 0,
                 expiration: moment().add(1,'days').format('YYYY-MM-DD')
-            }).then( _polls => {
-                db.poll_options.create({
-                    poll_id: (_polls).id,
+            }).then( _poll => {
+                db.pollOption.create({
+                    pollId: (_poll).id,
                     name: 'McDonalds',
                     description: 'Im Lovin It',
-                    star_rating: 3.5,
-                    star_rating_count: 1,
+                    starRating: 3.5,
+                    starRatingCount: 1,
                     votes: null
                 }).then( _pollOption => {
-                    db.user_votes.create({
-                        user_name: 'mearat',
-                        poll_options_id: (_pollOption).id,
-                        star_rating: 3.5,
+                    db.userVote.create({
+                        userId: 1,
+                        pollOptionId: (_pollOption).id,
+                        starRating: 3.5,
                         vote: null
                     })    
                 })
-                db.poll_options.create({
-                    poll_id: (_polls).id,
+                db.pollOption.create({
+                    pollId: (_poll).id,
                     name: 'Burger King',
                     description: 'Have it Your Way!',
-                    star_rating: 2.5,
-                    star_rating_count: 1,
+                    starRating: 2.5,
+                    starRatingCount: 1,
                     votes: null
                 }).then( _pollOption => {
-                    db.user_votes.create({
-                        user_name: 'mearat2',
-                        poll_options_id: (_pollOption).id,
-                        star_rating: 2.5,
+                    db.userVote.create({
+                        userId: 2,
+                        pollOptionId: (_pollOption).id,
+                        starRating: 2.5,
                         vote: null
                     })    
                 })
             })
         })
-
         res.render('index')
     })
 };

@@ -12,6 +12,10 @@ module.exports = function (app) {
         res.render('createPolls')
     })
 
+    app.get('/migration2', (req, res) => {
+        res.render('migration2')
+    })
+
     app.get("/manage", function (req, res) {
         res.render('manager');
     });
@@ -20,7 +24,11 @@ module.exports = function (app) {
         res.render('signin');
     })
 
-    app.get("/aboutUs", function (req, res){
-        res.render('aboutUs');
+    app.get('/viewpolls', (req, res) => {
+        res.render('viewpolls')
+    })
+
+    app.get('/aboutUs', (req, res) => {
+        res.render('aboutUs')
     })
 };

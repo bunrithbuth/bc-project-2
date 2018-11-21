@@ -2,7 +2,7 @@
 // // type, user_id, is_private
 
 module.exports = function(sequelize, DataTypes) {
-    var polls = sequelize.define("polls", {
+    var poll = sequelize.define("poll", {
       type: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -11,11 +11,11 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      user_name: {
-        type: DataTypes.STRING,
-        allowNull: true,
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
-      is_private: {
+      isPrivate: {
         type: DataTypes.BOOLEAN,
         allowNull: false, 
       },
@@ -23,22 +23,20 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.DATE,
           allowNull: false,
           defaultValue: DataTypes.NOW
+      },
+      uId: {
+        type: DataTypes.STRING,
+        allowNull: true,
       }
     });
 
 
-    // polls.associate = models => {
-    //     polls.hasMany(models.poll_options, {
-    //         onDelete: "cascade"
-    //     })
+    poll.associate = function(models) {
+        poll.hasMany(models.pollOption, {
+            onDelete: "cascade",
+        })
+    }
 
-    //     polls.belongsTo(models.users, {
-    //         foreignKey: {
-    //             allowNull: true
-    //         }
-    //     })
-    // }
-
-    return polls;
+    return poll;
   };
   
