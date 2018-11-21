@@ -24,7 +24,7 @@ module.exports = function (app) {
         res.render('signin');
     })
 
-    app.get('/viewpolls', (req, res) => {
-        res.render('viewpolls')
+    app.get('/mypolls', (req, res) => {
+        res.render('mypolls')
     })
 };
