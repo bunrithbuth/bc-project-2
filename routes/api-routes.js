@@ -87,8 +87,9 @@ module.exports = function(app) {
                     votes: 0
                 })
             })
+            res.json(_poll)
+            res.sendStatus(200)
         }) 
-        res.sendStatus(200)
     })
 
     app.get('/api/poll/active', (req, res) => {
@@ -96,7 +97,8 @@ module.exports = function(app) {
             where: {
                 expiration: {
                     [Op.gte]: moment().format("MM/DD/YYYY")
-                }
+                },
+                isPrivate: 0
             }
         }).then(function(poll) {
             res.json(poll);
@@ -153,6 +155,43 @@ module.exports = function(app) {
         })
     })
 
+    app.get('/poll/:id/option', (req, res) => {
+        const _id = req.params.id
+        let _poll
+
+        console.log(' ')
+
+        db.poll.findOne({
+            where: {
+                uId: _id
+            },
+            include: [
+                { model: db.pollOption }
+            ]
+        }).then(function(uid_poll) {
+            if(uid_poll === null) {
+                db.poll.findOne({
+                    where: {
+                        id: _id
+                    },
+                    include: [
+                        { model: db.pollOption }
+                    ]
+                }).then(function(id_poll) {
+                    if(id_poll === null){
+                        res.json({noPollExists: 1})
+                    }else{
+                        if(id_poll.isPrivate === true){
+                            res.json({isPrivate: 1})
+                        }else{
+                            res.json(id_poll.pollOptions)
+                        }
+                    }
+                })
+            }      
+        })
+    })
+
     // app.get('/api/user_votes/:poll_id', (req, res) => {
     //     db.polls.findAll({}).then(function(polls) {
     //         res.json(polls);
@@ -173,17 +212,27 @@ module.exports = function(app) {
 
         db.user.create({
             name: 'mearat',
+            email: 'meart@test.com',
+            photoURL: null
+        })
+
+        db.user.create({
+            name: 'mearat2',
+            email: 'mearat2@test.com',
+            photoURL: null
         })
 
         db.user.create({
             name: 'bunrith',
+            email: 'bunrith@test.com',
+            photoURL: null
         })
         .then( _users => {
             console.log(moment().add(1,'days').format('YYYY-MM-DD'))
             db.poll.create({
                 type: 'star',
                 name: 'bun test poll',
-                userName: (_users).name,
+                userId: (_users).id,
                 isPrivate: 0,
                 expiration: moment().add(1,'days').format('YYYY-MM-DD')
             }).then( _poll => {
@@ -196,7 +245,7 @@ module.exports = function(app) {
                     votes: null
                 }).then( _pollOption => {
                     db.userVote.create({
-                        userName: 'mearat',
+                        userId: 1,
                         pollOptionId: (_pollOption).id,
                         starRating: 3.5,
                         vote: null
@@ -211,7 +260,7 @@ module.exports = function(app) {
                     votes: null
                 }).then( _pollOption => {
                     db.userVote.create({
-                        userName: 'mearat2',
+                        userId: 2,
                         pollOptionId: (_pollOption).id,
                         starRating: 2.5,
                         vote: null
@@ -219,7 +268,6 @@ module.exports = function(app) {
                 })
             })
         })
-
         res.render('index')
     })
 };
