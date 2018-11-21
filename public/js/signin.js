@@ -94,10 +94,8 @@ function checkNewUser() {
         email: firebase.auth().currentUser.email,
         photoURL: firebase.auth().currentUser.photoURL
     }
-    console.log(firebase.auth().currentUser)
     $.post("/api/signin", temp).then(function (data) {
         temp.id = data.id
-        console.log(temp)
         localStorage.setItem("user", JSON.stringify(temp));
 
     });

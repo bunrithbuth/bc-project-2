@@ -5,7 +5,7 @@ const Head = require('./components/head')
 const Script = require('./components/script')
 
 
-const ViewPolls = () =>
+const MyPolls = () =>
     <html lang='en'>
         <Head />
         <body>
@@ -15,8 +15,8 @@ const ViewPolls = () =>
             </div>
             <Footer />
             <Script /> 
-            <script src='./js/viewpolls.js' />      
+            <script src='./js/mypolls.js' />      
         </body>
     </html>
 
-module.exports = ViewPolls
+module.exports = MyPolls

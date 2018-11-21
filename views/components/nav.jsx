@@ -15,7 +15,7 @@ const Nav = props =>
         <ul className="dropdown menu" id="nav2">
           <li className="menu-text" id="deez"><a href="/">Deez Polls</a></li>
           <li><a href="/createpolls">Create a Poll</a></li>
-          <li><a href="/viewpolls">View Polls</a></li>
+          <li><a href="/mypolls">My Polls</a></li>
           <li><a href="#">About Us</a></li>
             <div className="top-bar-right">
             <ul className="menu">

@@ -134,7 +134,7 @@ module.exports = function(app) {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.gte]: moment().format("MM/DD/YYYY")
+                    [Op.gte]: moment.utc()
                 },
                 isPrivate: 0
             }
@@ -147,7 +147,7 @@ module.exports = function(app) {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.lt]: moment().format("MM/DD/YYYY")
+                    [Op.lt]: moment.utc()
                 }
             }
         }).then(function(poll) {
@@ -190,7 +190,7 @@ module.exports = function(app) {
                     }
                 })
             }else{
-                res.json('publish', {poll: JSON.stringify(uid_poll)})
+                res.render('publish', {poll: JSON.stringify(uid_poll)})
             }     
         })
         
