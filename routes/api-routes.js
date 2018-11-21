@@ -175,7 +175,9 @@ module.exports = function(app) {
                         }
                     }
                 })
-            }      
+            }else{
+                res.json(uid_poll)
+            }     
         })
     })
 

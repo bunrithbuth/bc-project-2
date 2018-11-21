@@ -19,9 +19,16 @@ const Content = props =>
       </div>
 
       <div className="middle-content-section">
+<<<<<<< HEAD
         <h1>Deeze Polls</h1>
         <button className="button large" id="hpbutton1">Create a Poll!</button>
         <button className="button large" id="hpbutton2">View Community Polls!</button>
+=======
+        <img src="./assets/pollLogoBig.png" id="logo" />
+        <h1>Deez Polls</h1>
+        <button className="button large">Create a Poll!</button>
+        <button className="button large">View Community Polls!</button>
+>>>>>>> 50eab6b9d22afdddcf5b72baaaaea38ed3e0339a
       </div>
 
       <div className="bottom-content-section" data-magellan data-threshold="0">
