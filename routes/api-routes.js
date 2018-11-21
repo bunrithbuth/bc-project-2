@@ -5,10 +5,10 @@ const SQLZ = require('sequelize')
 const Op = SQLZ.Op
 
 
-module.exports = function (app) {
-    app.get('/api/polls', (req, res) => {
-        db.polls.findAll({}).then(function (polls) {
-            res.json(polls);
+module.exports = function(app) {
+    app.get('/api/poll', (req, res) => {
+        db.polls.findAll({}).then(function(poll) {
+            res.json(poll);
         });
     })
 
