@@ -5,14 +5,16 @@ const PollsForm = () =>
         <div className="grid-container">
           <div className="grid-x grid-padding-x">
             <div className="medium-3 cell">
-              <label><img className="text-right middle avatar" src="" alt="profile avatar" /></label>
+              <div className="text-center">
+                <img className="avatar" src="" alt="profile avatar" />
+              </div>
             </div>
             <div className="medium-6 cell">
                 <input id="statement" className="input-group-rounded" type="text" placeholder="Input your statement here" />
               <div className="expanded button-group">
-                <a id="multipleForm" className="button">Multiple Options</a>
-                <a id="twoChoicesForm" className="button">Two Options</a>
-                <a id="starForm" className="button">Star Rating</a>
+                <a id="multipleForm" className="button pollOptions">Multiple Options</a>
+                <a id="twoChoicesForm" className="button pollOptions">Two Options</a>
+                <a id="starForm" className="button pollOptions">Star Rating</a>
               </div>
             </div>
           </div>
@@ -54,7 +56,7 @@ const PollsForm = () =>
         <div>
         <div className="grid-x grid-padding-x">
             <div className="medium-1 cell">
-                Expire in
+                Expire in:
             </div>
             <div className="medium-3 cell">
                 <input id="time" type="number" min="1" />
@@ -69,7 +71,7 @@ const PollsForm = () =>
             </div>
         </div>
         </div>
-        <button id="submit" type="submit" className="success button">Create Poll</button>
+        <button id="submit" type="submit" className="createButton button">Create Poll</button>
         </div>
       </form>
 

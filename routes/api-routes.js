@@ -1,13 +1,13 @@
 const db = require("../models");
 const moment = require('node-moment')
 
-const SQLZ = require ('sequelize')
+const SQLZ = require('sequelize')
 const Op = SQLZ.Op
 
 
 module.exports = function(app) {
     app.get('/api/poll', (req, res) => {
-        db.polls.findAll({}).then(function(poll) {
+        db.poll.findAll({}).then(function(poll) {
             res.json(poll);
         });
     })
@@ -35,6 +35,37 @@ module.exports = function(app) {
             res.json(poll);
         });
     })
+    app.get('/api/poll/:id', (req, res) => {
+        db.poll.findAll({
+            where: {
+                id: req.params.id
+            },
+            include: [
+                { model: db.pollOption }
+            ]
+        }).then(function (poll) {
+            console.log(poll)
+            res.json(poll);
+        });
+    })
+
+    app.get('/api/user/:id', (req, res) => {
+        const _id = req.params.id
+
+        db.user.findOne({
+            where: {
+                id: _id
+            }
+        }).then(function(_user) {
+            console.log(_user)
+            if(_user == null){
+                res.json({name: 'userid not found'})
+
+            }else{
+               res.json(_user)
+            }
+        })
+    })
 
     app.post('/api/signin', (req,res) => {
         console.log(req.body)
@@ -49,10 +80,9 @@ module.exports = function(app) {
                     photoURL: tempUser.photoURL
                 });
             }else{
-                res.json(user);
+               res.json(user)
             }
         })
-
     })
 
     function guid() {
@@ -66,6 +96,12 @@ module.exports = function(app) {
     
     //https://momentjs.com/docs/#/durations/
     app.post('/api/poll', (req, res) => {
+
+        let _uId = null
+        if(req.body.isPrivate){
+            _uId = guid()
+        }
+
         console.log('THIS IS WHAT WILL BE POSTED: ' + JSON.stringify(req.body))
         console.log(moment.utc().add(parseInt(req.body.time), req.body.duration))
         db.poll.create({
@@ -73,8 +109,10 @@ module.exports = function(app) {
             name: req.body.name,
             userId: req.body.user,
             isPrivate: req.body.isPrivate,
+            uId: _uId,
             expiration: moment.utc().add(parseInt(req.body.time), req.body.duration)
         }).then( _poll => {
+            
             console.log(req.body.pollOption)
             req.body.pollOption.forEach(req_pollOption => {              
                 console.log(req_pollOption.name)
@@ -85,18 +123,18 @@ module.exports = function(app) {
                     starRating: 0,
                     starRatingCount: 0,
                     votes: 0
-                })
+                });
+
             })
             res.json(_poll)
-            res.sendStatus(200)
         }) 
     })
 
-    app.get('/api/poll/active', (req, res) => {
+    app.get('/api/active', (req, res) => {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.gte]: moment().format("MM/DD/YYYY")
+                    [Op.gte]: moment.utc().format("MM/DD/YYYY")
                 },
                 isPrivate: 0
             }
@@ -105,12 +143,13 @@ module.exports = function(app) {
         });
     })
 
-    app.get('/api/poll/expired', (req, res) => {
+    app.get('/api/expired', (req, res) => {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.lt]: moment().format("MM/DD/YYYY")
-                }
+                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                },
+                isPrivate: 0
             }
         }).then(function(poll) {
             res.json(poll);
@@ -147,15 +186,18 @@ module.exports = function(app) {
                         if(id_poll.isPrivate === true){
                             res.json({isPrivate: 1})
                         }else{
-                            res.json(id_poll)
+                            res.render('publish', {poll: JSON.stringify(id_poll)})
                         }
                     }
                 })
-            }      
+            }else{
+                res.render('publish', {poll: JSON.stringify(uid_poll)})
+            }     
         })
+        
     })
 
-    app.get('/poll/:id/option', (req, res) => {
+    app.get('/api/poll/:id/option', (req, res) => {
         const _id = req.params.id
         let _poll
 
