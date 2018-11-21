@@ -38,7 +38,7 @@ module.exports = function(app) {
 
     app.get('/api/user/:id', (req, res) => {
         const _id = req.params.id
-        
+
         db.user.findOne({
             where: {
                 id: _id
@@ -83,6 +83,12 @@ module.exports = function(app) {
     
     //https://momentjs.com/docs/#/durations/
     app.post('/api/poll', (req, res) => {
+
+        let _uId = null
+        if(req.body.isPrivate){
+            _uId = guid()
+        }
+
         console.log('THIS IS WHAT WILL BE POSTED: ' + JSON.stringify(req.body))
         console.log(moment.utc().add(parseInt(req.body.time), req.body.duration))
         db.poll.create({
@@ -90,6 +96,7 @@ module.exports = function(app) {
             name: req.body.name,
             userId: req.body.user,
             isPrivate: req.body.isPrivate,
+            uId: _uId,
             expiration: moment.utc().add(parseInt(req.body.time), req.body.duration)
         }).then( _poll => {
             console.log(req.body.pollOption)
