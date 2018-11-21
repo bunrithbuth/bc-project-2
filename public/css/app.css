@@ -86,7 +86,7 @@ font-family: 'Armata', sans-serif; */
 
 
 .hero-full-screen {
-  height: 100vh;
+  height: 95vh;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -149,6 +149,14 @@ font-family: 'Armata', sans-serif; */
   font-weight: bold;
 }
 
+#hpbutton1 { border-radius: 5000px 0px 0px 5000px; }
+#hpbutton2 { border-radius: 0px 5000px 5000px 0px; }
+
+
+#main-content-section {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 
 .full-width-testimonial {
   background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.1)), url("https://unsplash.it/2000/1200/?image=1011");
@@ -238,8 +246,8 @@ font-family: 'Armata', sans-serif; */
 
 @media screen and (min-width: 68.75em) {
   .masonry-css {
-    -webkit-column-count: 5;
-            column-count: 5;
+    -webkit-column-count: 6;
+            column-count: 6;
   }
 }
 

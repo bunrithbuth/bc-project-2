@@ -4,18 +4,48 @@ fetch('/api/poll/active')
     return response.json();
   })
   .then(function(myJson) {
-    for (const key in myJson) {
-        const element = myJson[key];
-        console.log(element)
-        $('.masonry-css').append(`
-        <div class="masonry-css-item">
-            <div class="callout">
-            <h4>${element.name}</h4> HERE Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio aliquam, corrupti, quis rem beatae quidem, labore, aspernatur nihil distinctio fugit sint facilis sunt eius fugiat iusto blanditiis tenetur alias ut.
-            </div>
-        </div>
-    `)
-    }
+    let max = 12
+    myJson.length < max ? max = myJson.length : null
+    for (i = 0 ; i < max ; i++) {
+        const element = myJson[i];
+        //console.log(element)
+
+        fetch(`/api/poll/${element.id}/option`)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(myJson2) {
+                console.log(myJson2)
+
+                fetch(`/api/user/${element.userId}`)
+                    .then(function(response) {
+                        return response.json();
+                    })
+                    .then(function(myJson3) {
+                        console.log(myJson3)
+
+                        switch(element.type){
+                            case 'star':
+                                $('.masonry-css').append(`
+                                    <div class="masonry-css-item">
+                                        <a href="/poll/${element.id}">
+                                        <div class="callout">
+                                            <h4 style="padding: 0px;">${element.name}</h4>
+                                            <p>
+                                                &#0151; ${myJson3.name}
+                                            </p>
+                                            <p>
+                                                <span>Rating: </span>
+                                                <span style="font-size: 24px;">&#9734;   3.5</span>
+                                            </p>
+                                        </div>
+                                        </a>
+                                    </div>
+                                `)
+                            break;
+                        }
+                    })
+
+            })
+        }
   });
-$(document).ready(function() {
-    $(document).foundation()
-})

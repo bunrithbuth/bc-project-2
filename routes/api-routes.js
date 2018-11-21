@@ -1,7 +1,7 @@
 const db = require("../models");
 const moment = require('node-moment')
 
-const SQLZ = require ('sequelize')
+const SQLZ = require('sequelize')
 const Op = SQLZ.Op
 
 
@@ -36,6 +36,24 @@ module.exports = function(app) {
         });
     })
 
+    app.get('/api/user/:id', (req, res) => {
+        const _id = req.params.id
+
+        db.user.findOne({
+            where: {
+                id: _id
+            }
+        }).then(function(_user) {
+            console.log(_user)
+            if(_user == null){
+                res.json({name: 'userid not found'})
+
+            }else{
+               res.json(_user)
+            }
+        })
+    })
+
     app.post('/api/signin', (req,res) => {
         console.log(req.body)
         var tempUser = req.body;
@@ -49,9 +67,26 @@ module.exports = function(app) {
                     photoURL: tempUser.photoURL
                 });
             }else{
-                res.json(user);
+               res.json(_user)
             }
         })
+    })
+
+    app.post('/api/signin', (req, res) => {
+        console.log('ping')
+        var tempUser = req.body;
+        db.users.findOne({ where: { email: tempUser.email } })
+            .then(function (user) {
+                if (user == null) {
+                    console.log('new User generated')
+                    db.users.create({
+                        name: tempUser.name,
+                        email: tempUser.email
+                    });
+                } else {
+                    res.json(user);
+                }
+            })
 
     })
 
@@ -66,6 +101,12 @@ module.exports = function(app) {
     
     //https://momentjs.com/docs/#/durations/
     app.post('/api/poll', (req, res) => {
+
+        let _uId = null
+        if(req.body.isPrivate){
+            _uId = guid()
+        }
+
         console.log('THIS IS WHAT WILL BE POSTED: ' + JSON.stringify(req.body))
         console.log(moment.utc().add(parseInt(req.body.time), req.body.duration))
         db.poll.create({
@@ -73,6 +114,7 @@ module.exports = function(app) {
             name: req.body.name,
             userId: req.body.user,
             isPrivate: req.body.isPrivate,
+            uId: _uId,
             expiration: moment.utc().add(parseInt(req.body.time), req.body.duration)
         }).then( _poll => {
             console.log(req.body.pollOption)
@@ -85,10 +127,9 @@ module.exports = function(app) {
                     starRating: 0,
                     starRatingCount: 0,
                     votes: 0
-                })
+                }).then(data => res.json(data));
             })
         }) 
-        res.sendStatus(200)
     })
 
     app.get('/api/poll/active', (req, res) => {
@@ -96,7 +137,8 @@ module.exports = function(app) {
             where: {
                 expiration: {
                     [Op.gte]: moment().format("MM/DD/YYYY")
-                }
+                },
+                isPrivate: 0
             }
         }).then(function(poll) {
             res.json(poll);
@@ -149,6 +191,45 @@ module.exports = function(app) {
                         }
                     }
                 })
+            }else{
+                res.json(uid_poll)
+            }     
+        })
+    })
+
+    app.get('/api/poll/:id/option', (req, res) => {
+        const _id = req.params.id
+        let _poll
+
+        console.log(' ')
+
+        db.poll.findOne({
+            where: {
+                uId: _id
+            },
+            include: [
+                { model: db.pollOption }
+            ]
+        }).then(function(uid_poll) {
+            if(uid_poll === null) {
+                db.poll.findOne({
+                    where: {
+                        id: _id
+                    },
+                    include: [
+                        { model: db.pollOption }
+                    ]
+                }).then(function(id_poll) {
+                    if(id_poll === null){
+                        res.json({noPollExists: 1})
+                    }else{
+                        if(id_poll.isPrivate === true){
+                            res.json({isPrivate: 1})
+                        }else{
+                            res.json(id_poll.pollOptions)
+                        }
+                    }
+                })
             }      
         })
     })
@@ -173,17 +254,27 @@ module.exports = function(app) {
 
         db.user.create({
             name: 'mearat',
+            email: 'meart@test.com',
+            photoURL: null
+        })
+
+        db.user.create({
+            name: 'mearat2',
+            email: 'mearat2@test.com',
+            photoURL: null
         })
 
         db.user.create({
             name: 'bunrith',
+            email: 'bunrith@test.com',
+            photoURL: null
         })
         .then( _users => {
             console.log(moment().add(1,'days').format('YYYY-MM-DD'))
             db.poll.create({
                 type: 'star',
                 name: 'bun test poll',
-                userName: (_users).name,
+                userId: (_users).id,
                 isPrivate: 0,
                 expiration: moment().add(1,'days').format('YYYY-MM-DD')
             }).then( _poll => {
@@ -196,7 +287,7 @@ module.exports = function(app) {
                     votes: null
                 }).then( _pollOption => {
                     db.userVote.create({
-                        userName: 'mearat',
+                        userId: 1,
                         pollOptionId: (_pollOption).id,
                         starRating: 3.5,
                         vote: null
@@ -211,7 +302,7 @@ module.exports = function(app) {
                     votes: null
                 }).then( _pollOption => {
                     db.userVote.create({
-                        userName: 'mearat2',
+                        userId: 2,
                         pollOptionId: (_pollOption).id,
                         starRating: 2.5,
                         vote: null
@@ -219,7 +310,6 @@ module.exports = function(app) {
                 })
             })
         })
-
         res.render('index')
     })
 };

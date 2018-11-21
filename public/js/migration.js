@@ -1,5 +1,5 @@
 let poll = {
-    user: 'bunrith',
+    user: 1,
     name: 'test poll',
     type: 'star',
     isPrivate: 1,
