@@ -1,7 +1,7 @@
 const db = require("../models");
 const moment = require('node-moment')
 
-const SQLZ = require ('sequelize')
+const SQLZ = require('sequelize')
 const Op = SQLZ.Op
 
 
@@ -47,6 +47,7 @@ module.exports = function(app) {
             console.log(_user)
             if(_user == null){
                 res.json({name: 'userid not found'})
+
             }else{
                res.json(_user)
             }
@@ -66,9 +67,26 @@ module.exports = function(app) {
                     photoURL: tempUser.photoURL
                 });
             }else{
-                res.json(user);
+               res.json(_user)
             }
         })
+    })
+
+    app.post('/api/signin', (req, res) => {
+        console.log('ping')
+        var tempUser = req.body;
+        db.users.findOne({ where: { email: tempUser.email } })
+            .then(function (user) {
+                if (user == null) {
+                    console.log('new User generated')
+                    db.users.create({
+                        name: tempUser.name,
+                        email: tempUser.email
+                    });
+                } else {
+                    res.json(user);
+                }
+            })
 
     })
 
