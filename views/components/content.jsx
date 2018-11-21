@@ -5,6 +5,7 @@ const Content = props =>
   <Fragment>
     <div className="grid-container fluid content">
       <div className="grid-x">
+        <div className="cell text-center"><img src="./assets/pollLogoBig.png" id="logo" /></div>
         <div className="cell text-center"><h1 id="title">Welcome to Deez Polls</h1></div>
           <p className="cell text-center">The purpose of this app is to allow users to create polls to share publicly or privately. Guest users will able to participate in public polls but will have to register to participate in private polls.</p>
       </div>
