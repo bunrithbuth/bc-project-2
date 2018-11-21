@@ -28,6 +28,7 @@ submit.addEventListener('click', function() {
     let optionCount = document.getElementsByClassName('options').length
     event.preventDefault()
     let optionArr = []
+
     if (submit.getAttribute('data-type') === 'stars') {
         optionArr = [{
                 name: document.querySelector('#statement').value,
@@ -76,35 +77,29 @@ submit.addEventListener('click', function() {
             type: document.querySelector('#submit').getAttribute('data-type'),
             name: document.querySelector('#statement').value,
             description: optionArr,
-            user: 1,
+            user: JSON.parse(localStorage.getItem("user")).id,
             pollOption: optionArr,
             isPrivate: document.querySelector('#isPrivate').checked,
             time: document.querySelector('#time').value,
             duration: document.querySelector('#duration').value,
         })
     })
-    $.ajax({ url: '/api/poll/', method: "GET" })
-        .then(function(poll) {
-            console.log(poll)
-        // window.location.href = "/poll";
-        })
     .then(JSON => {
         JSON.json()
         .then(response => {
-            console.log(response)
-            
 
+            console.log(response)
 
             if (document.querySelector('#submit').getAttribute('data-type') == "twoChoices") {
-            
+                        
                 var card = $('<div class="card">');
                 var cardSection = $('<div class="card-section">');
     
                 cardSection.append('<h2>' + response.name + '</h2>');
     
                 for (let i = 0; i < response.length; i++) {
-                    cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + response[i].description + '</label>');
-                    console.log(response[i].description)
+                    cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + response.description + '</label>');
+                    console.log(response.description)
                 }
     
                 card.append(cardSection)
@@ -119,8 +114,8 @@ submit.addEventListener('click', function() {
                 cardSection.append('<h2>' + response.name + '</h2>');
     
                 for (let i = 0; i < response.length; i++) {
-                    cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + response[i].description + '</label>');
-                    console.log(response[i].description)
+                    cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + response.description + '</label>');
+                    console.log(response.description)
                 }
     
                 card.append(cardSection)
@@ -145,10 +140,7 @@ submit.addEventListener('click', function() {
                 card.append(cardSection)
     
                 $('#showForm').append(card)
-    
             }
-            console.log(response[i].description)
-            
             document.querySelector('#statement').value = '';
             document.querySelector('#isPrivate').checked = false;
             document.querySelector('#time').value = '';
@@ -158,8 +150,16 @@ submit.addEventListener('click', function() {
             pollsForm.style.display = "none"
             pollsOptions.style.display = "none"
             showForm.style.display = "block"
+            
         })
     })
+            // $.ajax({ url: '/api/poll/', method: "GET" })
+            //     .then(function(pollOption) {
+
+            //         console.log(pollOption)
+
+            //         window.location.href = "/poll/" + pollId;  
+            //     })
     .catch(e => console.error(e))
 })
 
@@ -200,3 +200,14 @@ document.getElementById('add').addEventListener('click', (event) => {
 //Foundation init
 
 $(document).foundation();
+
+// function getPush(r){
+//     console.log(r)
+//     // fetch('/api/myPolls/' + r.id)
+    
+//         // .then(function(response) {
+//         //     return response.json();
+//         // })
+//         // .then(function(data) {
+//         //     console.log(data)
+// }

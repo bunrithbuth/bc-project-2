@@ -7,7 +7,7 @@ const Op = SQLZ.Op
 
 module.exports = function(app) {
     app.get('/api/poll', (req, res) => {
-        db.polls.findAll({}).then(function(poll) {
+        db.poll.findAll({}).then(function(poll) {
             res.json(poll);
         });
     })
@@ -140,7 +140,7 @@ module.exports = function(app) {
     })
 
 
-    app.get('/poll/:id', (req, res) => {
+    app.get('api/poll/:id', (req, res) => {
         const _id = req.params.id
         let _poll
 
