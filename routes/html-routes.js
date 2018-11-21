@@ -27,4 +27,8 @@ module.exports = function (app) {
     app.get('/mypolls', (req, res) => {
         res.render('mypolls')
     })
+
+    app.get('/aboutUs', (req, res) => {
+        res.render('aboutUs')
+    })
 };
