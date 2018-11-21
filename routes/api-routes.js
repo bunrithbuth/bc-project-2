@@ -96,7 +96,8 @@ module.exports = function(app) {
             where: {
                 expiration: {
                     [Op.gte]: moment().format("MM/DD/YYYY")
-                }
+                },
+                isPrivate: 0
             }
         }).then(function(poll) {
             res.json(poll);
@@ -146,6 +147,43 @@ module.exports = function(app) {
                             res.json({isPrivate: 1})
                         }else{
                             res.json(id_poll)
+                        }
+                    }
+                })
+            }      
+        })
+    })
+
+    app.get('/poll/:id/option', (req, res) => {
+        const _id = req.params.id
+        let _poll
+
+        console.log(' ')
+
+        db.poll.findOne({
+            where: {
+                uId: _id
+            },
+            include: [
+                { model: db.pollOption }
+            ]
+        }).then(function(uid_poll) {
+            if(uid_poll === null) {
+                db.poll.findOne({
+                    where: {
+                        id: _id
+                    },
+                    include: [
+                        { model: db.pollOption }
+                    ]
+                }).then(function(id_poll) {
+                    if(id_poll === null){
+                        res.json({noPollExists: 1})
+                    }else{
+                        if(id_poll.isPrivate === true){
+                            res.json({isPrivate: 1})
+                        }else{
+                            res.json(id_poll.pollOptions)
                         }
                     }
                 })
