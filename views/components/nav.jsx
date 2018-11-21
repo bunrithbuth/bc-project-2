@@ -19,7 +19,7 @@ const Nav = props =>
           <li><a href="#">About Us</a></li>
             <div className="top-bar-right">
             <ul className="menu">
-                <li><a className="top-bar-right" id="nav3" href="#">Log In</a></li>
+                <li><a className="top-bar-right" id="nav3" href="/signin">Log In</a></li>
             </ul>
             </div>
         </ul>

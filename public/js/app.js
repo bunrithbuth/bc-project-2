@@ -83,6 +83,7 @@ submit.addEventListener('click', function() {
         })
       })
         .then(r => {
+        
           document.querySelector('#statement').value = '';
           document.querySelector('#isPrivate').checked = false;
           document.querySelector('#time').value = '';
@@ -91,6 +92,16 @@ submit.addEventListener('click', function() {
           }
           document.querySelector('#a').value = ''
           document.querySelector('#b').value = ''
+          
+          r.json()
+          .then(r => {
+            if (!r.isPrivate) {
+
+                window.location.href = '/poll/' + r.id
+            } else {
+                window.location.href = '/poll/' + r.uId
+            }
+          })
         })
         .catch(e => console.error(e))
 })
@@ -131,3 +142,15 @@ document.getElementById('add').addEventListener('click', (event) => {
 //Foundation init
 
 $(document).foundation();
+
+function getPoll(r) {
+    console.log(r.pollId)
+fetch('/api/poll/' + r.pollId)
+  .then(function(response) {
+    console.log(response)
+    return response.json();
+  })
+  .then(function(data) {
+      console.log(data)
+})
+}
