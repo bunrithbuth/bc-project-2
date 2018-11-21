@@ -71,7 +71,7 @@ const PollsForm = () =>
             </div>
         </div>
         </div>
-        <button id="submit" type="submit" className="success button">Create Poll</button>
+        <button id="submit" type="submit" className="createButton button">Create Poll</button>
         </div>
       </form>
 

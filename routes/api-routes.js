@@ -7,7 +7,7 @@ const Op = SQLZ.Op
 
 module.exports = function(app) {
     app.get('/api/poll', (req, res) => {
-        db.polls.findAll({}).then(function(poll) {
+        db.poll.findAll({}).then(function(poll) {
             res.json(poll);
         });
     })
@@ -130,11 +130,11 @@ module.exports = function(app) {
         }) 
     })
 
-    app.get('/api/poll/active', (req, res) => {
+    app.get('/api/active', (req, res) => {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.gte]: moment.utc()
+                    [Op.gte]: moment.utc().format("MM/DD/YYYY")
                 },
                 isPrivate: 0
             }
@@ -143,12 +143,13 @@ module.exports = function(app) {
         });
     })
 
-    app.get('/api/poll/expired', (req, res) => {
+    app.get('/api/expired', (req, res) => {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.lt]: moment.utc()
-                }
+                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                },
+                isPrivate: 0
             }
         }).then(function(poll) {
             res.json(poll);

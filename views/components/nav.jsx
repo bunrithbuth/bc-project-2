@@ -5,8 +5,8 @@ const Nav = props =>
 
   <Fragment>
 
-  <div className ="title-bar" data-responsive-toggle="nav" data-hide-for="medium">
-  <button className ="menu-icon" type="button" data-toggle="nav"></button>
+  <div className ="title-bar" data-responsive-toggle="nav1" data-hide-for="medium">
+  <button className ="menu-icon" type="button" data-toggle="nav1"></button>
   <div className ="title-bar-title">Menu</div>
   </div>
 

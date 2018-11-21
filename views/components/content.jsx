@@ -36,7 +36,9 @@ const Content = props =>
         <h3>Our Recent Community Polls!</h3>
         <div className="masonry-css">
           <div className="masonry-css-item">
-            <img src="https://placehold.it/300x300" className="" height="" width="" alt=""/>
+            <a href="/createpolls">
+              <img src="/assets/createpoll.png" className="createpoll" height="" width="" alt=""/>
+            </a>
           </div>  
         </div>
         {/* other shit gets appended by get from js stuff */}
