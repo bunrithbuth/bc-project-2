@@ -87,8 +87,9 @@ module.exports = function(app) {
                     votes: 0
                 })
             })
+            res.json(_poll)
+            res.sendStatus(200)
         }) 
-        res.sendStatus(200)
     })
 
     app.get('/api/poll/active', (req, res) => {
