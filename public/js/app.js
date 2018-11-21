@@ -101,7 +101,6 @@ submit.addEventListener('click', function() {
                     cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + response.description + '</label>');
                     console.log(response.description)
                 }
-    
                 card.append(cardSection)
     
                 $('#showForm').append(card)
@@ -200,14 +199,3 @@ document.getElementById('add').addEventListener('click', (event) => {
 //Foundation init
 
 $(document).foundation();
-
-// function getPush(r){
-//     console.log(r)
-//     // fetch('/api/myPolls/' + r.id)
-    
-//         // .then(function(response) {
-//         //     return response.json();
-//         // })
-//         // .then(function(data) {
-//         //     console.log(data)
-// }
