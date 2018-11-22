@@ -96,7 +96,6 @@ submit.addEventListener('click', function() {
           r.json()
           .then(r => {
             if (!r.isPrivate) {
-
                 window.location.href = '/poll/' + r.id
             } else {
                 window.location.href = '/poll/' + r.uId
@@ -143,14 +142,14 @@ document.getElementById('add').addEventListener('click', (event) => {
 
 $(document).foundation();
 
-function getPoll(r) {
-    console.log(r.pollId)
-fetch('/api/poll/' + r.pollId)
-  .then(function(response) {
-    console.log(response)
-    return response.json();
-  })
-  .then(function(data) {
-      console.log(data)
-})
-}
+// function getPoll(r) {
+//     console.log(r.pollId)
+// fetch('/api/poll/' + r.pollId)
+//   .then(function(response) {
+//     console.log(response)
+//     return response.json();
+//   })
+//   .then(function(data) {
+//       console.log(data)
+// })
+// }

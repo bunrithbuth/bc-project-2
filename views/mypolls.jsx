@@ -5,20 +5,18 @@ const Head = require('./components/head')
 const Script = require('./components/script')
 
 
-const Publish = (props) =>
+const MyPolls = () =>
     <html lang='en'>
         <Head />
         <body>
             <Nav />
             <div className="grid-container">
-                <div id="cardContainer" className="grid-x grid-padding-x">
-                {props.star}
-                </div>
+                <div id="cardContainer" className="grid-x grid-padding-x"></div>
             </div>
             <Footer />
             <Script /> 
-            <script src='./js/app.js' />      
+            <script src='./js/mypolls.js' />      
         </body>
     </html>
 
-module.exports = Publish
+module.exports = MyPolls
