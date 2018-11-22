@@ -11,21 +11,31 @@ const Publish = (props) =>
         <body>
             <Nav />
             <div className="grid-container">
-                <div id="cardContainer" className="grid-x grid-padding-x">
-                    <div id="cardContainer" className="grid-x grid-padding-x" key={props.poll.id}>
+
+                    <div id="cardContainer" className="grid-x grid-padding-x">
                     {props.poll}
-                        <h1>Q: {Object.values(JSON.parse(props.poll))[2]} </h1>
-                        <br></br>
-                        <h1>Q: {Object.keys(JSON.parse(props.poll)).map(key => (
-                            <h2 key={key} details={props.poll[key]} />
-                            
-                        ))} </h1>
+                        
+                        
                     </div>
-                </div>
+
+                    <div id="cardContainer" className="grid-x grid-padding-x">
+                   
+                    <h1>Q: {Object.values(JSON.parse(props.poll))[2]} </h1>
+                        <br></br>
+                
+                    </div>
+                
             </div>
+            <div className="grid-container">
+                <div id="cardContainer" className="grid-x grid-padding-x"></div>
+            </div>
+            
             <Footer />
-            <Script /> 
-            <script src='./js/app.js' />      
+            <Script />
+            <script src='./js/publish.js' />  
+            <script src='./js/mypolls.js' />  
+
+            
         </body>
     </html>
 
