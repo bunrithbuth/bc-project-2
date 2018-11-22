@@ -346,3 +346,9 @@ input.star:checked ~ .rev-box{
   background-color: #3e8e41;
   color: white;
 }
+
+
+#commH1 {
+  font-size: 48px;
+  color: black;
+}
