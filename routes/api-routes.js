@@ -190,7 +190,7 @@ module.exports = function(app) {
                     }
                 })
             }else{
-                res.json('publish', {poll: JSON.stringify(uid_poll)})
+                res.render('publish', {poll: JSON.stringify(uid_poll)})
             }     
         })
         
