@@ -19,7 +19,6 @@ const CreatePolls = () =>
         <body>
             <Nav />
             <PollsForm />
-            <Poll/ >
             <Footer />
             <Script />
             <script src='./js/app.js' />
