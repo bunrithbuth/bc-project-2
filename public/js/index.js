@@ -1,11 +1,15 @@
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 $(document).ready(function() {
     $(document).foundation()
     showForm.style.display = "none"
 })
 =======
 fetch('/api/poll/active')
+=======
+fetch('/api/active')
+>>>>>>> 808ada085a641869f8f741066c3334a43271e4e6
   .then(function(response) {
     return response.json();
   })
@@ -74,13 +78,18 @@ fetch('/api/poll/active')
                                     <div class="masonry-css-item">
                                         <a href="/poll/${element.id}">
                                         <div class="callout">
-                                            <h4 style="padding: 0px;">${element.name}</h4>
+                                            <h5 style="padding: 0px;">${element.name}</h5>
+                                            <h6>
+                                                ${myJson2[0].name}
+                                            </h6>
+                                            <h6>
+                                                ${myJson2[1].name}
+                                            </h6>
+                                            <h6>
+                                                ${myJson2[2].name}
+                                            </h6>
                                             <p>
                                                 &#0151; ${myJson3.name}
-                                            </p>
-                                            <p>
-                                                <span>Rating: </span>
-                                                <span style="font-size: 24px;">&#9734;   3.5</span>
                                             </p>
                                         </div>
                                         </a>
@@ -89,7 +98,6 @@ fetch('/api/poll/active')
                             break;
                         }
                     })
-
             })
         }
   });

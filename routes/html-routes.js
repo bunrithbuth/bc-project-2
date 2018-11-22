@@ -23,13 +23,12 @@ module.exports = function (app) {
     app.get("/signin", function (req, res){
         res.render('signin');
     })
-    app.get("/viewpolls", function (req, res){
-        res.render('viewpolls');
+
+    app.get('/mypolls', (req, res) => {
+        res.render('mypolls')
     })
-    app.get("/poll", function (req, res){
-        res.render('poll');
-    })
-    app.get("/poll:id", function (req, res){
-        res.render('poll');
+
+    app.get('/aboutUs', (req, res) => {
+        res.render('aboutUs')
     })
 };

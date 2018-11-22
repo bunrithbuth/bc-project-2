@@ -83,44 +83,22 @@ submit.addEventListener('click', function() {
             time: document.querySelector('#time').value,
             duration: document.querySelector('#duration').value,
         })
-    })
-    .then(JSON => {
-        JSON.json()
-        .then(response => {
-
-            console.log(response)
-
-            if (document.querySelector('#submit').getAttribute('data-type') == "twoChoices") {
-                        
-                var card = $('<div class="card">');
-                var cardSection = $('<div class="card-section">');
-    
-                cardSection.append('<h2>' + response.name + '</h2>');
-    
-                for (let i = 0; i < response.length; i++) {
-                    cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + response.description + '</label>');
-                    console.log(response.description)
-                }
-                card.append(cardSection)
-    
-                $('#showForm').append(card)
-    
-            } else if (document.querySelector('#submit').getAttribute('data-type') == "multiple") {
-    
-                var card = $('<div class="card">');
-                var cardSection = $('<div class="card-section">');
-    
-                cardSection.append('<h2>' + response.name + '</h2>');
-    
-                for (let i = 0; i < response.length; i++) {
-                    cardSection.append('<input type="radio" name="pokemon"><label for="pokemonBlue">' + response.description + '</label>');
-                    console.log(response.description)
-                }
-    
-                card.append(cardSection)
-    
-                $('#showForm').append(card)
-    
+      })
+        .then(r => {
+        
+          document.querySelector('#statement').value = '';
+          document.querySelector('#isPrivate').checked = false;
+          document.querySelector('#time').value = '';
+          for (let i = 0; i < optionCount; i++) {
+            document.querySelector('#option' + (i + 1)).value = ''
+          }
+          document.querySelector('#a').value = ''
+          document.querySelector('#b').value = ''
+          
+          r.json()
+          .then(r => {
+            if (!r.isPrivate) {
+                window.location.href = '/poll/' + r.id
             } else {
             
                 var card = $('<div class="card">');
@@ -199,3 +177,18 @@ document.getElementById('add').addEventListener('click', (event) => {
 //Foundation init
 
 $(document).foundation();
+<<<<<<< HEAD
+=======
+
+// function getPoll(r) {
+//     console.log(r.pollId)
+// fetch('/api/poll/' + r.pollId)
+//   .then(function(response) {
+//     console.log(response)
+//     return response.json();
+//   })
+//   .then(function(data) {
+//       console.log(data)
+// })
+// }
+>>>>>>> 808ada085a641869f8f741066c3334a43271e4e6

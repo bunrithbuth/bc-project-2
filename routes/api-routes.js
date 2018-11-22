@@ -130,11 +130,11 @@ module.exports = function(app) {
         }) 
     })
 
-    app.get('/api/poll/active', (req, res) => {
+    app.get('/api/active', (req, res) => {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.gte]: moment().format("MM/DD/YYYY")
+                    [Op.gte]: moment.utc().format("MM/DD/YYYY")
                 },
                 isPrivate: 0
             }
@@ -143,12 +143,13 @@ module.exports = function(app) {
         });
     })
 
-    app.get('/api/poll/expired', (req, res) => {
+    app.get('/api/expired', (req, res) => {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.lt]: moment().format("MM/DD/YYYY")
-                }
+                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                },
+                isPrivate: 0
             }
         }).then(function(poll) {
             res.json(poll);
@@ -190,7 +191,7 @@ module.exports = function(app) {
                     }
                 })
             }else{
-                res.json('publish', {poll: JSON.stringify(uid_poll)})
+                res.render('publish', {poll: JSON.stringify(uid_poll)})
             }     
         })
         

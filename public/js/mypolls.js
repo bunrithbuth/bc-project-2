@@ -1,13 +1,12 @@
-let user = JSON.parse(localStorage.getItem("user"))
+let _user = JSON.parse(localStorage.getItem("user"))
 
-fetch('/api/myPolls/' + user.id)
+fetch('/api/myPolls/' + _user.id)
   .then(function(response) {
     return response.json();
   })
   .then(function(data) {
     console.log(data)
     let cardContainer = document.getElementById('cardContainer')
-    let user = JSON.parse(localStorage.getItem("user"))
    
     data.forEach(polls => {
         let pollDiv = ""
@@ -48,7 +47,7 @@ fetch('/api/myPolls/' + user.id)
             `<div class="medium-6 cell">
             <div class="card">
                 <div class="card-divider">
-                    <img class="avatar" src="${user.photoURL}">
+                    <img class="avatar" src="${_user.photoURL}">
                     <div>
                         ${polls.name.trim()}
                     </div>
