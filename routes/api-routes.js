@@ -57,7 +57,7 @@ module.exports = function(app) {
                 id: _id
             }
         }).then(function(_user) {
-            console.log(_user)
+            // console.log(_user)
             if(_user == null){
                 res.json({name: 'userid not found'})
 
@@ -68,12 +68,12 @@ module.exports = function(app) {
     })
 
     app.post('/api/signin', (req,res) => {
-        console.log(req.body)
+        // console.log(req.body)
         var tempUser = req.body;
         db.user.findOne({ where: {email: tempUser.email} })
         .then(function (user){
             if(user == null){
-                console.log('new User generated')
+                // console.log('new User generated')
                 db.user.create({
                     name: tempUser.name,
                     email: tempUser.email,
@@ -136,12 +136,48 @@ module.exports = function(app) {
                 expiration: {
                     [Op.gte]: moment.utc().format("MM/DD/YYYY")
                 },
-                isPrivate: 0
-            }
+                isPrivate: 0,
+            },
+            order: [['expiration', 'ASC']]
         }).then(function(poll) {
             res.json(poll);
         });
     })
+
+    const _perpage = 2
+    app.get('/api/active/:page', (req, res) => {
+        const _page = req.params.page
+
+        db.poll.findAll({
+            where: {
+                expiration: {
+                    [Op.gte]: moment.utc().format("MM/DD/YYYY")
+                },
+                isPrivate: 0,
+            },
+            offset: ((_page * _perpage) - _perpage),
+            limit: _perpage,
+            order: [['expiration', 'ASC']],
+        }).then(function(poll) {
+            console.log("HEREEEEEeeeee")
+            console.log(poll)
+            res.json(poll);
+        });
+    })
+
+    app.get('/api/count/active', (req, res) => {
+        db.poll.count({
+            where: {
+                expiration: {
+                    [Op.gte]: moment.utc().format("MM/DD/YYYY")
+                },
+                isPrivate: 0,
+            }
+        }).then(function(_count) {
+            res.json({count: _count, perpage: _perpage});
+        });
+    })
+
 
     app.get('/api/expired', (req, res) => {
         db.poll.findAll({
@@ -155,6 +191,40 @@ module.exports = function(app) {
             res.json(poll);
         });
     })
+
+    app.get('/api/expired/:page', (req, res) => {
+        const _page = req.params.page
+
+        db.poll.findAll({
+            where: {
+                expiration: {
+                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                },
+                isPrivate: 0,
+            },
+            offset: ((_page * _perpage) - _perpage),
+            limit: _perpage,
+            order: [['expiration', 'ASC']],
+        }).then(function(poll) {
+            console.log("HEREEEEEeeeee")
+            console.log(poll)
+            res.json(poll);
+        });
+    })
+
+    app.get('/api/count/expired', (req, res) => {
+        db.poll.count({
+            where: {
+                expiration: {
+                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                },
+                isPrivate: 0,
+            }
+        }).then(function(_count) {
+            res.json({count: _count, perpage: _perpage});
+        });
+    })
+
 
 
     app.get('api/poll/:id', (req, res) => {

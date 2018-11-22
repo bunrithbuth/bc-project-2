@@ -14,11 +14,11 @@ fetch('/api/active')
     return response.json();
   })
   .then(function(myJson) {
+    console.log(myJson)
     let max = 20
     myJson.length < max ? max = myJson.length : null
     for (i = 0 ; i < max ; i++) {
         const element = myJson[i];
-        //console.log(element)
 
         fetch(`/api/poll/${element.id}/option`)
             .then(function(response) {
