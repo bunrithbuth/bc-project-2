@@ -313,3 +313,13 @@ module.exports = function(app) {
         res.render('index')
     })
 };
+
+// app.put('/polloption/:id', (req, res) => {
+//     const _id = req.params.id
+//     db.pollOption.update({
+        
+//     }, {where: {id: _id}})
+//     .then(console.log(res))
+//     .catch(e => console.log(e))
+// })
+

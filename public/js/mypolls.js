@@ -13,7 +13,7 @@ fetch('/api/myPolls/' + _user.id)
         if (polls.type === "multiple") {
             polls.pollOptions.forEach(element => {
                 pollDiv +=
-               `<div>
+               `<div data-optionId="${element.id}" >
                <h4 class="voteOptions">${element.name}</h4>
                 <div class="progress" role="progressbar" tabindex="0">
                 <span class="progress-meter" style="width: 25%">
@@ -25,7 +25,7 @@ fetch('/api/myPolls/' + _user.id)
             })
         } else if (polls.type === "stars") {
             pollDiv = `
-            <div class="stars">
+            <div data-optionId="${polls.pollOptions[0].id}" class="stars">
                 <input class="star star-5" id="star-5" type="radio" name="star">
                 <label class="star star-5" for="star-5"></label>
                 <input class="star star-4" id="star-4" type="radio" name="star">
@@ -39,13 +39,13 @@ fetch('/api/myPolls/' + _user.id)
             </div>`
         } else {
             pollDiv = `
-            <div class="left">${polls.pollOptions[0].name}</div>
-            <div class="right">${polls.pollOptions[1].name}</div>
+            <div data-optionId="${polls.pollOptions[0].id}" class="left">${polls.pollOptions[0].name}</div>
+            <div data-optionId="${polls.pollOptions[1].id}" class="right">${polls.pollOptions[1].name}</div>
             `
         }
             cardContainer.insertAdjacentHTML('afterbegin',
             `<div class="medium-6 cell">
-            <div class="card">
+            <div data-pollId="${polls.id}" class="card">
                 <div class="card-divider">
                     <img class="avatar" src="${_user.photoURL}">
                     <div>
@@ -62,6 +62,31 @@ fetch('/api/myPolls/' + _user.id)
                 </div>
             </div>
         </div>
-            `)     
+            `)
+
+    //Delete eventlistener and fetch Delete method
+      let deleteBtn = document.getElementsByClassName('delete') 
+      for (let i = 0; i < deleteBtn.length; i++) {
+          deleteBtn[i].addEventListener('click', function() {
+              console.log(this.parentElement.parentElement.getAttribute('data-pollId'))
+            fetch('/api/poll/' + this.parentElement.parentElement.getAttribute('data-pollId'), {
+                method: 'DELETE'
+              })
+              .then(res => location.reload())
+           })   
+      } 
+      //Vote eventlistener and fetch PUT method
+      let voteBtn = document.getElementsByClassName('vote') 
+      for (let i = 0; i < voteBtn.length; i++) {
+          voteBtn[i].addEventListener('click', function() {
+              console.log(this.parentElement.previousElementSibling.children[0].getAttribute('data-optionId'))
+            // fetch('/api/poll/' + this.parentElement.parentElement.getAttribute('data-pollID'), {
+            //     method: 'PUT'
+            //   })
+            //   .then(res => location.reload())
+           })   
+      } 
+      
     });
   });
+
