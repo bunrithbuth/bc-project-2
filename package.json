@@ -1,7 +1,6 @@
 {
   "name": "bc-project-2",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -27,5 +26,7 @@
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
     "sequelize": "^4.41.0"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }
