@@ -136,8 +136,9 @@ module.exports = function(app) {
                 expiration: {
                     [Op.gte]: moment.utc().format("MM/DD/YYYY")
                 },
-                isPrivate: 0
-            }
+                isPrivate: 0,
+            },
+            order: [['expiration', 'ASC']]
         }).then(function(poll) {
             res.json(poll);
         });
@@ -155,7 +156,8 @@ module.exports = function(app) {
                 isPrivate: 0,
             },
             offset: ((_page * _perpage) - _perpage),
-            limit: _perpage
+            limit: _perpage,
+            order: [['expiration', 'ASC']],
         }).then(function(poll) {
             console.log("HEREEEEEeeeee")
             console.log(poll)
@@ -201,7 +203,8 @@ module.exports = function(app) {
                 isPrivate: 0,
             },
             offset: ((_page * _perpage) - _perpage),
-            limit: _perpage
+            limit: _perpage,
+            order: [['expiration', 'ASC']],
         }).then(function(poll) {
             console.log("HEREEEEEeeeee")
             console.log(poll)

@@ -1,11 +1,19 @@
-let onPage = 1
+$( document ).ready(function() {
+    let onPage = 1
 
-pageChange(onPage)
+    pageChange(onPage)
 
-$('#hpbutton1').css("background-color", "#14679e");
-$('#hpbutton1').css("color", "#fefefe");
+    $('#hpbutton1').css("background-color", "#14679e");
+    $('#hpbutton1').css("color", "#fefefe");
 
+});
 
+function timeConvert(_min) { 
+    // console.log('days is ' + Math.floor(_min/24/60))
+    // console.log('hours is ' + Math.floor(_min/60%24))
+    // console.log('min is ' + Math.floor(_min%60))
+    return {days: Math.floor(_min/24/60), hours: Math.floor(_min/60%24), min: Math.floor(_min%60)}
+  }
 function pageChange(num) {
     let onPage = num
     
@@ -20,7 +28,12 @@ function pageChange(num) {
         myJson.length < max ? max = myJson.length : null
         for (i = 0 ; i < max ; i++) {
             const element = myJson[i];
-            console.log(element)
+            let expiration = moment(element.expiration)
+            //console.log(expiration)
+            let minaway = moment(expiration).diff(moment.utc(), "minutes")
+            //console.log(minaway)
+            let time = timeConvert(parseInt(minaway))
+            //console.log(time)
 
             fetch(`/api/poll/${element.id}/option`)
                 .then(function(response) {
@@ -50,6 +63,12 @@ function pageChange(num) {
                                                     <span>Rating: </span>
                                                     <span style="font-size: 24px;">&#9734;   3.5</span>
                                                 </p>
+                                                <h6>
+                                                    expires in:
+                                                </h6>
+                                                <h6><b>
+                                                    ${time.days} days ${time.hours} hours ${time.min} minutes
+                                                </b><h6>
                                             </div>
                                             </a>
                                         </div>
@@ -70,6 +89,12 @@ function pageChange(num) {
                                                 <p>
                                                     &#0151; ${myJson3.name}
                                                 </p>
+                                                <h6>
+                                                    expires in:
+                                                </h6>
+                                                <h6><b>
+                                                    ${time.days} days ${time.hours} hours ${time.min} minutes
+                                                </b><h6>
                                             </div>
                                             </a>
                                         </div>
@@ -93,6 +118,12 @@ function pageChange(num) {
                                                 <p>
                                                     &#0151; ${myJson3.name}
                                                 </p>
+                                                <h6>
+                                                    expires in:
+                                                </h6>
+                                                <h6><b>
+                                                    ${time.days} days ${time.hours} hours ${time.min} minutes
+                                                </b><h6>
                                             </div>
                                             </a>
                                         </div>
