@@ -28,11 +28,10 @@ submit.addEventListener('click', function() {
     let optionCount = document.getElementsByClassName('options').length
     event.preventDefault()
     let optionArr = []
-
     if (submit.getAttribute('data-type') === 'stars') {
         optionArr = [{
-                name: document.querySelector('#statement').value,
-                description: 'starRating',
+                name: 'starRating',
+                description: null,
                 starRating: 0,
                 starRatingCount: 0,
                 votes: 0
@@ -40,15 +39,15 @@ submit.addEventListener('click', function() {
     } else if (submit.getAttribute('data-type') === 'twoChoices') {
         optionArr = [
             {
-                name: document.querySelector('#statement').value,
-                description: document.querySelector('#a').value,
+                name: document.querySelector('#a').value,
+                description: null,
                 starRating: 0,
                 starRatingCount: 0,
                 votes: 0
             },
             {
-                name: document.querySelector('#statement').value,
-                description: document.querySelector('#b').value,
+                name: document.querySelector('#b').value,
+                description: null,
                 starRating: 0,
                 starRatingCount: 0,
                 votes: 0
@@ -59,8 +58,8 @@ submit.addEventListener('click', function() {
         for (let i = 0; i < optionCount; i++) {
             optionArr.push(
                 {
-                    name: document.querySelector('#statement').value,
-                    description: document.querySelector('#option' + (i + 1)).value,
+                    name: document.querySelector('#option' + (i + 1)).value,
+                    description: null,
                     starRating: 0,
                     starRatingCount: 0,
                     votes: 0
@@ -74,14 +73,13 @@ submit.addEventListener('click', function() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
         body: JSON.stringify({
-            type: document.querySelector('#submit').getAttribute('data-type'),
-            name: document.querySelector('#statement').value,
-            description: optionArr,
-            user: JSON.parse(localStorage.getItem("user")).id,
-            pollOption: optionArr,
-            isPrivate: document.querySelector('#isPrivate').checked,
-            time: document.querySelector('#time').value,
-            duration: document.querySelector('#duration').value,
+          type: document.querySelector('#submit').getAttribute('data-type'),
+          name: document.querySelector('#statement').value,
+          user: JSON.parse(localStorage.getItem("user")).id,
+          pollOption: optionArr,
+          isPrivate: document.querySelector('#isPrivate').checked,
+          time: document.querySelector('#time').value,
+          duration: document.querySelector('#duration').value,
         })
       })
         .then(r => {
@@ -100,44 +98,11 @@ submit.addEventListener('click', function() {
             if (!r.isPrivate) {
                 window.location.href = '/poll/' + r.id
             } else {
-            
-                var card = $('<div class="card">');
-                var cardSection = $('<div class="card-section">')
-                var starSection = $('<div class="stars">')
-    
-                cardSection.append('<h2>' + response.name + '</h2>');
-    
-                starSection.append('<input class="star star-5" id="star-5" type="radio" name="star" /><label class="star star-5" for="star-5"></label>')
-                starSection.append('<input class="star star-4" id="star-4" type="radio" name="star" /><label class="star star-4" for="star-4"></label>')
-                starSection.append('<input class="star star-3" id="star-3" type="radio" name="star" /><label class="star star-3" for="star-3"></label>')
-                starSection.append('<input class="star star-2" id="star-2" type="radio" name="star" /><label class="star star-2" for="star-2"></label>')
-                starSection.append('<input class="star star-1" id="star-1" type="radio" name="star" /><label class="star star-1" for="star-1"></label>')
-    
-                cardSection.append(starSection)
-                card.append(cardSection)
-    
-                $('#showForm').append(card)
+                window.location.href = '/poll/' + r.uId
             }
-            document.querySelector('#statement').value = '';
-            document.querySelector('#isPrivate').checked = false;
-            document.querySelector('#time').value = '';
-            for (let i = 0; i < optionCount; i++) {
-                document.querySelector('#option' + (i + 1)).value = ''
-            }
-            pollsForm.style.display = "none"
-            pollsOptions.style.display = "none"
-            showForm.style.display = "block"
-            
+          })
         })
-    })
-            // $.ajax({ url: '/api/poll/', method: "GET" })
-            //     .then(function(pollOption) {
-
-            //         console.log(pollOption)
-
-            //         window.location.href = "/poll/" + pollId;  
-            //     })
-    .catch(e => console.error(e))
+        .catch(e => console.error(e))
 })
 
 //Eventlistener for different type of input forms
@@ -170,15 +135,12 @@ document.getElementById('add').addEventListener('click', (event) => {
     event.preventDefault()
     let optionCount = document.getElementsByClassName('options').length + 1
     let newOption = document.getElementById('multipleInput');
-    newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);  
-    console.log('add')
+    newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);    
 })
 
 //Foundation init
 
 $(document).foundation();
-<<<<<<< HEAD
-=======
 
 // function getPoll(r) {
 //     console.log(r.pollId)
@@ -191,4 +153,3 @@ $(document).foundation();
 //       console.log(data)
 // })
 // }
->>>>>>> 808ada085a641869f8f741066c3334a43271e4e6

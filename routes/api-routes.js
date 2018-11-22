@@ -227,7 +227,7 @@ module.exports = function(app) {
 
 
 
-    app.get('api/poll/:id', (req, res) => {
+    app.get('/poll/:id', (req, res) => {
         const _id = req.params.id
         let _poll
 

@@ -1,15 +1,4 @@
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-$(document).ready(function() {
-    $(document).foundation()
-    showForm.style.display = "none"
-})
-=======
-fetch('/api/poll/active')
-=======
 fetch('/api/active')
->>>>>>> 808ada085a641869f8f741066c3334a43271e4e6
   .then(function(response) {
     return response.json();
   })
@@ -101,4 +90,3 @@ fetch('/api/active')
             })
         }
   });
->>>>>>> ad971f0cac37f836cbef8fe4df6f535698237a13
