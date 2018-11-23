@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
 // Retrieve local storage for user photoURL
     if (typeof(Storage) !== "undefined") {
         let user = JSON.parse(localStorage.getItem("user"))
-        console.log(user.photoURL)
         document.querySelector(".avatar").setAttribute('src', user.photoURL)
     } else {
         console.log("Not Logged In")
@@ -138,9 +137,6 @@ document.getElementById('add').addEventListener('click', (event) => {
     newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);    
 })
 
-//Foundation init
-
-$(document).foundation();
 
 // function getPoll(r) {
 //     console.log(r.pollId)
