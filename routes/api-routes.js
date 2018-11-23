@@ -256,12 +256,12 @@ module.exports = function(app) {
                         if(id_poll.isPrivate === true){
                             res.json({isPrivate: 1})
                         }else{
-                            res.render('publish', {poll: JSON.stringify(id_poll)})
+                            res.render('publish', {poll: id_poll.dataValues})
                         }
                     }
                 })
             }else{
-                res.render('publish', {poll: JSON.stringify(uid_poll)})
+                res.render('publish', {poll: uid_poll.dataValues})
             }     
         })
         
