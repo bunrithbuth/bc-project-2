@@ -2,14 +2,14 @@ const React = require('react')
 
 const PollsForm = () =>
     <form id="pollsForm">
-        <div className="grid-container full fluid">
+        <div className="grid-container">
           <div className="grid-x grid-padding-x">
-            <div className="medium-2 cell">
+            <div className="medium-1 cell">
               <div className="avatarContainer text-right">
                 <img className="avatar" src="" alt="profile avatar" />
               </div>
             </div>
-            <div className="medium-9 cell">
+            <div className="medium-10 cell">
                 <input id="statement" className="input-group-rounded" type="text" placeholder="Input your statement here" />
               <div className="expanded button-group align-middle">
                 <a id="multipleForm" className="button pollOptions">Multiple Options</a>
@@ -45,11 +45,15 @@ const PollsForm = () =>
           <input id="b" className="input-group-rounded" type="text" placeholder="Option 2" />
           </div>
           </div>
-          <div className="grid-x grid-padding-x full fluid align-left">
+          <div className="grid-x grid-padding-x">
           <div className="medium-1 cell"></div>
-          <div className="medium-2 cell text-left middle">
+          <div className="medium-3 cell text-left">
             <p>Make it private?</p>
-            </div>
+          </div>
+          </div>
+          <div className="grid-x grid-padding-x">
+          <div className="medium-1 cell"></div>
+
             <div className="medium-1 cell text-left switch large">
               <input id="isPrivate" className="switch-input" type="checkbox" name="Switch" />
               <label className="switch-paddle" htmlFor="isPrivate">
@@ -58,10 +62,10 @@ const PollsForm = () =>
               </label>
             </div>
           </div>
-        <div className="grid-x grid-padding-x align-left">
+        <div className="grid-x grid-padding-x ">
             <div className="medium-1 cell"></div>
             <div className="medium-1 cell">
-              <label htmlFor="time" className="expireLabel text-right middle">Expire In: </label>
+              <label htmlFor="time" className="expireLabel text-left middle">Expire In: </label>
             </div>
             <div className="medium-3 cell">
                 <input id="time" type="number" min="1" />
@@ -77,7 +81,7 @@ const PollsForm = () =>
         </div>
         <div className="grid-x grid-padding-x">
         <div className="medium-1 cell"></div>
-        <div className="medium-2 cell text-center">
+        <div className="medium-2 cell text-left">
         <button id="submit" type="submit" className="createButton button">Create Poll</button>
         </div>
         </div>
