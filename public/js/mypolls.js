@@ -39,13 +39,13 @@ fetch('/api/myPolls/' + _user.id)
             </div>`
         } else {
             pollDiv = `
-            <div data-optionId="${polls.pollOptions[0].id}" class="left">${polls.pollOptions[0].name}</div>
-            <div data-optionId="${polls.pollOptions[1].id}" class="right">${polls.pollOptions[1].name}</div>
+            <input type="radio" name="options" value="${polls.pollOptions[0].id}" class="left"> ${polls.pollOptions[0].name} <br>
+            <input type="radio" name="options" value="${polls.pollOptions[1].id}" class="left"> ${polls.pollOptions[1].name} <br>  
             `
         }
             cardContainer.insertAdjacentHTML('afterbegin',
             `<div class="medium-6 cell">
-            <div data-pollId="${polls.id}" class="card">
+            <div data-pollType="${polls.type}" data-pollId="${polls.id}" class="card">
                 <div class="card-divider">
                     <img class="avatar" src="${_user.photoURL}">
                     <div>
@@ -79,11 +79,19 @@ fetch('/api/myPolls/' + _user.id)
       let voteBtn = document.getElementsByClassName('vote') 
       for (let i = 0; i < voteBtn.length; i++) {
           voteBtn[i].addEventListener('click', function() {
-              console.log(this.parentElement.previousElementSibling.children[0].getAttribute('data-optionId'))
-            // fetch('/api/poll/' + this.parentElement.parentElement.getAttribute('data-pollID'), {
-            //     method: 'PUT'
-            //   })
-            //   .then(res => location.reload())
+              console.log(this.parentElement.previousElementSibling.querySelector('input[name = "options"]:checked').value)
+              console.log(this.parentElement.parentElement.getAttribute('data-pollType'))
+            fetch('/api/pollOption/' + this.parentElement.previousElementSibling.querySelector('input[name = "options"]:checked').value, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                },
+                body: JSON.stringify({
+                        userId: _user.id,
+                        starRating: null,
+                })
+              })
+              .then(res => console.log(res))
            })   
       } 
       

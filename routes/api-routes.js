@@ -383,19 +383,35 @@ module.exports = function(app) {
 
     app.put('/api/pollOption/:id', (req, res) => {
         const _id = req.params.id
-        db.pollOption.update({
-            starRating: req.body.starRating,
-            starRatingCount: req.body.starRatingCount,
-            votes: req.body.votes  
-        }, {where: {id: _id}})
+        console.log("UserID is" + req.body.userId)
+        db.pollOption.findOne({
+            where: {
+                id : _id
+            }
+        }).then((_pollOption) => {
+            let currentStarRating
+            let currentStarRatingCount
+            if (req.body.starRating != null) {
+                currentStarRatingCount = _pollOption.starRatingCount + 1
+                currentStarRating = (req.body.starRating + _pollOption.starRating) / (currentStarRatingCount)
+            } else {
+                currentStarRating = _pollOption.starRating
+                currentStarRatingCount = _pollOption.starRatingCount
+            }
+            db.pollOption.update({
+                starRating: currentStarRating,
+                starRatingCount: currentStarRatingCount,
+                votes: _pollOption.votes + 1 
+            }, {where: {id: _id}})
+        })
         .then(() => {
             db.userVote.create({
                 userId: req.body.userId,
                 pollOptionId: _id,
                 starRating: req.body.starRating,
-                vote: req.body.vote
+                vote: 1
             })
-        })
+        }).then(() => res.json())
         .catch(e => console.log(e))
     })
 };
