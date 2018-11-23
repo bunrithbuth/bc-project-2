@@ -1,12 +1,4 @@
-//Elements Variables
-const submit = document.getElementById('submit')
-const pollsForm = document.getElementById('pollsForm')
-const stars = document.getElementsByClassName('stars')[0]
-const multiple = document.getElementById('multiple')
-const twoChoices = document.getElementById('twoChoices')
-
-
-//Hiding all the polloptions input forms when content loaded
+//Login user local storage
 document.addEventListener("DOMContentLoaded", () => {
 
 // Retrieve local storage for user photoURL
@@ -17,99 +9,81 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         console.log("Not Logged In")
     }
-
-    multiple.style.display = "none"
-    twoChoices.style.display = "none"
-    stars.style.display = "none"
 })
 
 // PollOptions and user vote tables
 
 //Submit eventlistener
 submit.addEventListener('click', function() {
-    let optionCount = document.getElementsByClassName('options').length
+    let optionCount = document.getElementsByClassName('radio').length
     event.preventDefault()
-    let optionArr = []
-    if (submit.getAttribute('data-type') === 'stars') {
-        optionArr = [{
-                name: 'starRating',
-                description: null,
-                starRating: 0,
-                starRatingCount: 0,
-                votes: 0
-        }]
-    } else if (submit.getAttribute('data-type') === 'twoChoices') {
-        optionArr = [
+    let userVoteArr = []
+    // User Votes Table Update
+    if (submit.getAttribute('class') === 'star') {
+        // Star vote
+        userVoteArr = [
             {
-                name: document.querySelector('#a').value,
-                description: null,
-                starRating: 0,
+                userId: JSON.parse(localStorage.getItem("user")).id,
+                pollId: document.querySelector('#userVote').value,
+                starRating: document.querySelector('#star-' + (i + 1)).value,
                 starRatingCount: 0,
-                votes: 0
-            },
-            {
-                name: document.querySelector('#b').value,
-                description: null,
-                starRating: 0,
-                starRatingCount: 0,
-                votes: 0
+                votes: document.querySelector('#star-' + (i + 1)).value
             }
         ]
-
-    } else {
+    } else if (submit.getAttribute('class') === 'twoChoices') {
+        // twoChoices vote
         for (let i = 0; i < optionCount; i++) {
-            optionArr.push(
+            userVoteArr.push(
                 {
-                    name: document.querySelector('#option' + (i + 1)).value,
-                    description: null,
-                    starRating: 0,
+                    userId: JSON.parse(localStorage.getItem("user")).id,
+                    pollId: document.querySelector('#userVote').value,
+                    starRating: document.querySelector('#radio-' + (i + 1)).value,
                     starRatingCount: 0,
-                    votes: 0
+                    votes: document.querySelector('#radio-' + (i + 1)).value
                 }
             )
-    }
+        }
+    } else {
+        // multiple vote
+        for (let i = 0; i < optionCount; i++) {
+            userVoteArr.push(
+                {
+                    userId: JSON.parse(localStorage.getItem("user")).id,
+                    pollId: document.querySelector('#userVote').value,
+                    starRating: document.querySelector('#radio-0').value,
+                    starRatingCount: 0,
+                    votes: document.querySelector('#radio-0').value
+                }
+            )
+        }
     }
 
 //Fetch POST request to the database   
-    fetch('/api/poll', {
+    fetch('/api/pollOption/:id', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
         body: JSON.stringify({
-          type: document.querySelector('#submit').getAttribute('data-type'),
-          name: document.querySelector('#statement').value,
-          user: JSON.parse(localStorage.getItem("user")).id,
-          pollOption: optionArr,
-          isPrivate: document.querySelector('#isPrivate').checked,
-          time: document.querySelector('#time').value,
-          duration: document.querySelector('#duration').value,
+            starRating: document.querySelector('.options').value,
+            starRatingCount: 1,
+            votes: 1,
+            userVote: userVoteArr
         })
       })
         .then(r => {
         
-          document.querySelector('#statement').value = '';
-          document.querySelector('#isPrivate').checked = false;
-          document.querySelector('#time').value = '';
-          for (let i = 0; i < optionCount; i++) {
-            document.querySelector('#option' + (i + 1)).value = ''
-          }
-          document.querySelector('#a').value = ''
-          document.querySelector('#b').value = ''
-          
-          r.json()
-          .then(r => {
-            if (!r.isPrivate) {
-                window.location.href = '/poll/' + r.id
-            } else {
-                window.location.href = '/poll/' + r.uId
-            }
-          })
+            // $('#userVote').hide()
+            // $('#castVote').show()
+            // $('#castRoute').show()
+            // // Create New Poll
+            // $('#castRoute').append('<a class="button small expanded" href="/creatpolls">Create Polls</a>')
+            // // Go To My Poll
+            // $('#castRoute').append('<a class="button small expanded" href="/mypolls">My Polls</a>')
+            // // Go To Community Polls
+            // $('#castRoute').append('<a class="button small expanded" href="/communityPolls">Community Polls</a>')
         })
         .catch(e => console.error(e))
 })
 
-
-
 //Foundation init
 
 $(document).foundation();
-
