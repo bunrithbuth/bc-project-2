@@ -20,16 +20,13 @@ const PollsForm = () =>
           </div>
         <div className="grid-x grid-padding-x full fluid align-center">
           <div className="stars medium-10 cell text-center">
-            <input className="star star-5" id="star-5" type="radio" name="star" />
-            <label className="star star-5" htmlFor="star-5"></label>
-            <input className="star star-4" id="star-4" type="radio" name="star" />
-            <label className="star star-4" htmlFor="star-4"></label>
-            <input className="star star-3" id="star-3" type="radio" name="star" />
-            <label className="star star-3" htmlFor="star-3"></label>
-            <input className="star star-2" id="star-2" type="radio" name="star" />
-            <label className="star star-2" htmlFor="star-2"></label>
-            <input className="star star-1" id="star-1" type="radio" name="star" />
-            <label className="star star-1" htmlFor="star-1"></label>
+          <span className="user-rating">
+            <input disabled type="radio" name="rating" value="5" /><span className="star"></span>
+            <input disabled type="radio" name="rating" value="4" /><span className="star"></span>
+            <input disabled type="radio" name="rating" value="3" /><span className="star"></span>
+            <input disabled type="radio" name="rating" value="2" /><span className="star"></span>
+            <input disabled type="radio" name="rating" value="1" /><span className="star"></span>
+          </span>
           </div>
           <div id="multiple" className="medium-10 cell">
           <div id="multipleInput">
