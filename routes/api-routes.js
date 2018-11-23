@@ -151,7 +151,7 @@ module.exports = function(app) {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.gte]: moment.utc().format("MM/DD/YYYY")
+                    [Op.gte]: moment.utc().format("MM/DD/YYYY HH:MM:SS")
                 },
                 isPrivate: 0,
             },
@@ -169,7 +169,7 @@ module.exports = function(app) {
         db.poll.count({
             where: {
                 expiration: {
-                    [Op.gte]: moment.utc().format("MM/DD/YYYY")
+                    [Op.gte]: moment.utc().format("MM/DD/YYYY HH:MM:SS")
                 },
                 isPrivate: 0,
             }
