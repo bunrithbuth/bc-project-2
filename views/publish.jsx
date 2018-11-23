@@ -12,12 +12,11 @@ const Publish = (props) =>
             <Nav />
             <div className="grid-container">
                 <div id="cardContainer" className="grid-x grid-padding-x">
-                {props.poll}
+               
                 </div>
             </div>
             <Footer />
             <Script /> 
-            <script src='./js/app.js' />      
         </body>
     </html>
 
