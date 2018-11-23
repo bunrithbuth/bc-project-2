@@ -1,7 +1,6 @@
-let _user = JSON.parse(localStorage.getItem("user"))
-
-fetch('/api/myPolls/' + _user.id)
+fetch('/poll/:id')
   .then(function(response) {
+    console.log(response)
     return response.json();
   })
   .then(function(data) {
