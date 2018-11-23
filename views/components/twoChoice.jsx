@@ -1,37 +1,24 @@
-const React = require("react")
+const React = require('react')
 
 
-const Form1 = () =>
-<div>
 
-// ~~~~ input circle ~~~~~
-    <div> 
-        <div className="grid-x grid-padding-x">
-            <div className="medium-4 cell">
-                <label>
-                    <input id="statement" className="input-group-rounded" type="text" placeholder="Input your statement here" />
-                </label>
-            </div>
-            <div className="medium-4 cell">
-                <label>
-                    <input id="statement" className="input-group-rounded" type="text" placeholder="Input your statement here number dos" />
-                </label>
-            </div>
-        </div>
-    </div>
-// ~~~~~~~~~~~~~~~~~~~~~~~
+const TwoChoices = (props) =>
 
-        <div>
-            <p>Make it private?</p>
-            <div className="switch large">
-                <input id="isPrivate" className="switch-input" type="checkbox" name="Switch" />
-                <label className="switch-paddle" htmlFor="isPrivate">
-                    <span className="switch-active" aria-hidden="true">Yes</span>
-                    <span className="switch-inactive" aria-hidden="true">No</span>
-                </label>
+
+        <div id="cardContainer" className="grid-x grid-padding-x">
+            <div className="medium-12 cell">
+                <div className="card">
+                    <div class="card-divider">
+                        <div className="twoChoices">
+                            <input className="star star-5" id="twoChoices1" type="radio" name="star" />
+                            <label className="star star-5" htmlFor="twoChoices1">{props.poll.pollOptions[0].name}</label>
+                            <input className="star star-5" id="twoChoices2" type="radio" name="star" />
+                            <label className="star star-5" htmlFor="twoChoices2">{props.poll.pollOptions[1].name}</label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <button id="submit" data-type="star" type="submit" className="success button">Create Poll</button>
-</div>        
 
-module.exports = Form1 
+
+module.exports = TwoChoices

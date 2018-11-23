@@ -348,6 +348,10 @@ input.star:checked ~ .rev-box{
 }
 
 
+#commH1 {
+  font-size: 48px;
+  color: black;
+}
 /* #aboutCard {
   width: 300px;
 } */

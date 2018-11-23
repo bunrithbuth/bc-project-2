@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Retrieve local storage for user photoURL
     if (typeof(Storage) !== "undefined") {
         let user = JSON.parse(localStorage.getItem("user"))
+        console.log(user.photoURL)
         document.querySelector(".avatar").setAttribute('src', user.photoURL)
     } else {
         console.log("Not Logged In")
@@ -21,6 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     twoChoices.style.display = "none"
     stars.style.display = "none"
 })
+
+// PollOptions and user vote tables
 
 //Submit eventlistener
 submit.addEventListener('click', function() {
@@ -104,48 +107,9 @@ submit.addEventListener('click', function() {
         .catch(e => console.error(e))
 })
 
-//Eventlistener for different type of input forms
-
-document.getElementById('starForm').addEventListener('click', () => {
-    pollsForm.style.display = "block"
-    multiple.style.display = "none"
-    twoChoices.style.display = "none"
-    stars.style.display = "inline-block"
-    submit.setAttribute("data-type", "stars")
-})
-
-document.getElementById('multipleForm').addEventListener('click', () => {
-    pollsForm.style.display = "block"
-    multiple.style.display = "block"
-    twoChoices.style.display = "none"
-    stars.style.display = "none"
-    submit.setAttribute("data-type", "multiple")
-})
-
-document.getElementById('twoChoicesForm').addEventListener('click', () => {
-    pollsForm.style.display = "block"
-    multiple.style.display = "none"
-    twoChoices.style.display = "block"
-    stars.style.display = "none"
-    submit.setAttribute("data-type", "twoChoices")
-})
-
-document.getElementById('add').addEventListener('click', (event) => {
-    event.preventDefault()
-    let optionCount = document.getElementsByClassName('options').length + 1
-    let newOption = document.getElementById('multipleInput');
-    newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);    
-})
 
 
-// function getPoll(r) {
-//     console.log(r.pollId)
-// fetch('/api/poll/' + r.pollId)
-//   .then(function(response) {
-//     console.log(response)
-//     return response.json();
-//   })
-//   .then(function(data) {
-//       console.log(data)
-// })
-// }
+//Foundation init
+
+$(document).foundation();
+
