@@ -1,9 +1,8 @@
 const db = require("../models");
 const moment = require('node-moment')
-
 const SQLZ = require('sequelize')
 const Op = SQLZ.Op
-
+var path = require("path");
 
 module.exports = function(app) {
     app.get('/api/poll', (req, res) => {
@@ -68,7 +67,6 @@ module.exports = function(app) {
     })
 
     app.post('/api/signin', (req,res) => {
-        // console.log(req.body)
         var tempUser = req.body;
         db.user.findOne({ where: {email: tempUser.email} })
         .then(function (user){
@@ -382,4 +380,24 @@ module.exports = function(app) {
         })
         res.render('index')
     })
+
+    app.put('/api/pollOption/:id', (req, res) => {
+        const _id = req.params.id
+        db.pollOption.update({
+            starRating: req.body.starRating,
+            starRatingCount: req.body.starRatingCount,
+            votes: req.body.votes  
+        }, {where: {id: _id}})
+        .then(() => {
+            db.userVote.create({
+                userId: req.body.userId,
+                pollOptionId: _id,
+                starRating: req.body.starRating,
+                vote: req.body.vote
+            })
+        })
+        .catch(e => console.log(e))
+    })
 };
+
+
