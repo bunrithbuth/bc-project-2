@@ -10,7 +10,7 @@ const PollsForm = () =>
               </div>
             </div>
             <div className="medium-10 cell">
-                <input id="statement" className="input-group-rounded" type="text" placeholder="Input your statement here" />
+                <input id="statement" className="input-group-rounded" type="text" placeholder="Name your poll!" />
               <div className="expanded button-group align-middle">
                 <a id="multipleForm" className="button pollOptions">Multiple Options</a>
                 <a id="twoChoicesForm" className="button pollOptions">Two Options</a>
