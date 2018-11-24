@@ -48,7 +48,8 @@ const Publish = (props) =>
                     </div>  
                 </div>
             </div>
-                {/* <div id="cardContainer" className="grid-x grid-padding-x">
+            <div className="grid-container">
+                <div id="cardContainer" className="grid-x grid-padding-x">
                     <div id="castVote" className="medium-12 cell">
                         <div className="card">
                             <div className="card-divider">
@@ -56,7 +57,9 @@ const Publish = (props) =>
                             </div>
                         </div>
                     </div>
-                </div> */}
+                </div>                
+            </div>
+
             <Footer />
             <Script />
             <script src='/js/votes.js' />
