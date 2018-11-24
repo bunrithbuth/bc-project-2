@@ -5,6 +5,33 @@ const Op = SQLZ.Op
 var path = require("path");
 
 module.exports = function(app) {
+    
+    app.get('/api/hasvoted/:pollid/:userid', (req, res) => {
+        let _pollId = req.params.pollid
+        db.pollOption.findAll({
+            where: {
+                pollId: _pollId
+            }
+        }).then(function(pollOption) {
+            console.log(pollOption)
+            let _pollOptionId = []
+            for (const key in pollOption) {
+                    const element = pollOption[key];
+                    _pollOptionId.push(element.dataValues.id);
+            }
+
+            console.log(_pollOptionId)
+            
+            db.userVote.findAll({
+                where: {
+                    pollOptionId: {in: [_pollOptionId]}
+                }
+            }).then(function(pollOption) {
+                 res.json(pollOption)
+            });
+        });
+    })
+
     app.get('/api/poll', (req, res) => {
         db.poll.findAll({}).then(function(poll) {
             res.json(poll);
@@ -34,6 +61,7 @@ module.exports = function(app) {
             res.json(poll);
         });
     })
+    
     app.get('/api/poll/:id', (req, res) => {
         db.poll.findAll({
             where: {
