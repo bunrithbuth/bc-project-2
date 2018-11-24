@@ -90,7 +90,11 @@ body {
 }
 
 /* NO TOUCHY */
+<<<<<<< HEAD
+.pollOptions, .button, .switch-paddle, .switch-paddle::after, .success, #time, #duration, #add, .createButton, .details, .vote, .delete {
+=======
 .pollOptions, .switch-paddle, .switch-paddle::after, .success, #time, #duration, #add, .createButton, {
+>>>>>>> 1a77c0d45ced1728ad29c017d8cd18b97ecdff28
   border-radius: 5000px;
 }
 
