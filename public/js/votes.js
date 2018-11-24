@@ -60,10 +60,11 @@ fetch('/api/pollOption/' + pollOptionId, {
         $('#userVote').hide()
         $('#castVote').show()
         $('#castRoute').show()
+        $('#castRoute').append('<h1> Thank you for voting! </h1>')
         // // Create New Poll
-        $('#castRoute').append('<a class="button small expanded" href="/createpolls">Create Polls</a>')
+        $('#castRoute').append('<a class="button pollOptions" href="/createpolls">Create Polls</a>')
         // // Go To My Poll
-        $('#castRoute').append('<a class="button small expanded" href="/mypolls">My Polls</a>')
+        $('#castRoute').append('<a class="button pollOptions" href="/mypolls">My Polls</a>')
         // // Go To Community Polls
-        $('#castRoute').append('<a class="button small expanded" href="/active_polls">Community Polls</a>')
+        $('#castRoute').append('<a class="button pollOptions" href="/active_polls">Community Polls</a>')
 })
