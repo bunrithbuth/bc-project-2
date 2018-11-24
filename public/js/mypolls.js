@@ -24,28 +24,46 @@ fetch('/api/myPolls/' + _user.id)
                 `
             })
         } else if (polls.type === "stars") {
+            let currentRating = Math.round(polls.pollOptions[0].starRating *2)/2
+            console.log(currentRating)
+            let starResult = ""
+            for (let i = 1; i < 6; i++) {
+                 if (i <= currentRating) {
+                    starResult += '<i class="fas fa-star"></i>'
+                 } else if (i == currentRating + 0.5) {
+                    starResult += '<i class="fas fa-star-half-alt"></i>' 
+                 } else {
+                    starResult += '<i class="far fa-star"></i>' 
+                 }     
+            }
             pollDiv = `
             <div data-optionId="${polls.pollOptions[0].id}" class="stars">
-                <input class="star star-5" id="star-5" type="radio" name="star">
-                <label class="star star-5" for="star-5"></label>
-                <input class="star star-4" id="star-4" type="radio" name="star">
-                <label class="star star-4" for="star-4"></label>
-                <input class="star star-3" id="star-3" type="radio" name="star">
-                <label class="star star-3" for="star-3"></label>
-                <input class="star star-2" id="star-2" type="radio" name="star">
-                <label class="star star-2" for="star-2"></label>
-                <input class="star star-1" id="star-1" type="radio" name="star">
-                <label class="star star-1" for="star-1"></label>
+                <div>
+                Rating:
+                ${starResult}
+                </div>
+                <div class="rate">
+                    <input type="radio" id="star5${polls.id}" name="rate${polls.id}" value="5" />
+                    <label for="star5${polls.id}" title="text">5 stars</label>
+                    <input type="radio" id="star4${polls.id}" name="rate${polls.id}" value="4" />
+                    <label for="star4${polls.id}" title="text">4 stars</label>
+                    <input type="radio" id="star3${polls.id}" name="rate${polls.id}" value="3" />
+                    <label for="star3${polls.id}" title="text">3 stars</label>
+                    <input type="radio" id="star2${polls.id}" name="rate${polls.id}" value="2" />
+                    <label for="star2${polls.id}" title="text">2 stars</label>
+                    <input type="radio" id="star1${polls.id}" name="rate${polls.id}" value="1" />
+                    <label for="star1${polls.id}" title="text">1 star</label>
+                </div>
             </div>`
         } else {
             pollDiv = `
-            <div data-optionId="${polls.pollOptions[0].id}" class="left">${polls.pollOptions[0].name}</div>
-            <div data-optionId="${polls.pollOptions[1].id}" class="right">${polls.pollOptions[1].name}</div>
+            <input type="radio" name="options" value="${polls.pollOptions[0].id}" class="left"> ${polls.pollOptions[0].name} <br>
+            <input type="radio" name="options" value="${polls.pollOptions[1].id}" class="left"> ${polls.pollOptions[1].name} <br>  
             `
         }
             cardContainer.insertAdjacentHTML('afterbegin',
             `<div class="medium-6 cell">
-            <div data-pollId="${polls.id}" class="card">
+            <div data-pollType="${polls.type}" data-pollId="${polls.id}" class="card">
                 <div class="card-divider">
                     <img class="avatar" src="${_user.photoURL}">
                     <div>
@@ -54,14 +72,14 @@ fetch('/api/myPolls/' + _user.id)
                 </div>
                 <div class="card-section">
                     ${pollDiv.trim()}
-                </div>  
-                <div class="button-group">
-                <a class="secondary button details">View Details</a>
-                <a class="warning button vote">Vote</a>
-                <a class="alert button delete">Delete</a>
+                    <div class="button-group">
+                        <a class="secondary button details">View Details</a>
+                        <a class="warning button vote">Vote</a>
+                        <a class="alert button delete">Delete</a>
+                    </div>
                 </div>
+                </div>  
             </div>
-        </div>
             `)
 
     //Delete eventlistener and fetch Delete method
@@ -79,11 +97,22 @@ fetch('/api/myPolls/' + _user.id)
       let voteBtn = document.getElementsByClassName('vote') 
       for (let i = 0; i < voteBtn.length; i++) {
           voteBtn[i].addEventListener('click', function() {
-              console.log(this.parentElement.previousElementSibling.children[0].getAttribute('data-optionId'))
-            // fetch('/api/poll/' + this.parentElement.parentElement.getAttribute('data-pollID'), {
-            //     method: 'PUT'
-            //   })
-            //   .then(res => location.reload())
+
+            
+            //   console.log(this.parentElement.previousElementSibling.querySelector('input[name = "rate"]:checked').value)
+            //   console.log(this.parentElement.parentElement.getAttribute('data-pollType'))
+            //   console.log(this.parentElement.previousElementSibling.querySelector('.stars').getAttribute('data-optionId'))
+            fetch('/api/pollOption/' + this.parentElement.previousElementSibling.querySelector('.stars').getAttribute('data-optionId'), {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                },
+                body: JSON.stringify({
+                        userId: _user.id,
+                        starRating: this.parentElement.previousElementSibling.querySelector('input[name = "rate"]:checked').value,
+                })
+              })
+              .then(res => console.log(res))
            })   
       } 
       
