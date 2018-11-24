@@ -383,7 +383,7 @@ module.exports = function(app) {
 
     app.put('/api/pollOption/:id', (req, res) => {
         const _id = req.params.id
-        console.log("UserID is" + req.body.userId)
+        console.log("UserID is" + req.body.userId + "star rating is " + req.body.starRating)
         db.pollOption.findOne({
             where: {
                 id : _id
@@ -393,7 +393,7 @@ module.exports = function(app) {
             let currentStarRatingCount
             if (req.body.starRating != null) {
                 currentStarRatingCount = _pollOption.starRatingCount + 1
-                currentStarRating = (req.body.starRating + _pollOption.starRating) / (currentStarRatingCount)
+                currentStarRating = (parseInt(req.body.starRating) + parseInt(_pollOption.starRating)) / parseInt(currentStarRatingCount)
             } else {
                 currentStarRating = _pollOption.starRating
                 currentStarRatingCount = _pollOption.starRatingCount

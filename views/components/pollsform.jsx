@@ -20,13 +20,11 @@ const PollsForm = () =>
           </div>
         <div className="grid-x grid-padding-x full fluid align-center">
           <div className="stars medium-10 cell text-center">
-          <span className="user-rating">
-            <input disabled type="radio" name="rating" value="5" /><span className="star"></span>
-            <input disabled type="radio" name="rating" value="4" /><span className="star"></span>
-            <input disabled type="radio" name="rating" value="3" /><span className="star"></span>
-            <input disabled type="radio" name="rating" value="2" /><span className="star"></span>
-            <input disabled type="radio" name="rating" value="1" /><span className="star"></span>
-          </span>
+          <i class="far fa-star"></i>
+          <i class="far fa-star"></i>
+          <i class="far fa-star"></i>
+          <i class="far fa-star"></i>
+          <i class="far fa-star"></i>
           </div>
           <div id="multiple" className="medium-10 cell">
           <div id="multipleInput">

@@ -7,58 +7,59 @@ const Script = require('./components/script')
 const Publish = (props) =>
     <html lang='en'>
         <Head />
-        <body>
+        <body className="publish">
             <Nav />
-                <div id="cardContainer" className="grid-x grid-padding-x">
-                    <div className="medium-12 cell">
-                        <div class="card">
-                        </div>
-                    </div>
-                </div>
+            <div className="grid-container">
                 <div id="cardContainer" className="grid-x grid-padding-x">
                     <div id="userVote" className="medium-12 cell" value={props.poll.id}>
-                        <div class="card" >
-                                <h3>{props.poll.name}</h3>
-                            <div class="card-divider">
-                                {props.poll.type === 'twoChoices' ? <div id={props.poll.id} className="twoChoices" value={props.poll.id}>
-                                    <input className="radio radio-1 options" id="radio-1" value="1" type="radio" name="radio" />
+                        <div class="card voteContainer" >
+                            <div className="card-divider">
+                            <div className="avatarContainer text-right">
+                                <img className="avatar" src="" alt="profile avatar" />
+                            </div>
+                                <h1>{props.poll.name}</h1>
+                            </div>
+                            <div className="card-section">
+                                {props.poll.type === 'twoChoices' ? <div className="twoChoices">
+                                    <input className="radio radio-1 options" id="radio-1" value={props.poll.pollOptions[0].id} type="radio" name="radio" />
                                     <label className="radio radio-1" htmlFor="radio-1">{props.poll.pollOptions[0].name}</label>
-                                    <input className="radio radio-2 options" id="radio-2" value="1" type="radio" name="radio" />
+                                    <input className="radio radio-2 options" id="radio-2" value={props.poll.pollOptions[1].id} type="radio" name="radio" />
                                     <label className="radio radio-2" htmlFor="radio-2">{props.poll.pollOptions[1].name}</label></div> : <h2></h2>}
-                                {props.poll.type === 'stars' ? <div id={props.poll.id} div className="stars" value={props.poll.id}>
-                                    <input className="star star-1 options" id="star-1" value="1" type="radio" name="star" />
-                                    <label className="star star-1" htmlFor="star-1"></label>
-                                    <input className="star star-2 options" id="star-2" value="2" type="radio" name="star" />
-                                    <label className="star star-2" htmlFor="star-2"></label>
-                                    <input className="star star-3 options" id="star-3" value="3" type="radio" name="star" />
-                                    <label className="star star-3" htmlFor="star-3"></label>
-                                    <input className="star star-4 options" id="star-4" value="4" type="radio" name="star" />
-                                    <label className="star star-4" htmlFor="star-4"></label>
-                                    <input className="star star-5 options" id="star-5" value="5" type="radio" name="star" />
-                                    <label className="star star-5" htmlFor="star-5"></label></div> : <h2></h2>}
+                                {props.poll.type === 'stars' ? <div className="stars">
+                                <div data-pollOptionId={props.poll.pollOptions[0].id} className="rate">
+                                    <input type="radio" id="star5" name="rate" value="5" />
+                                    <label for="star5" title="text">5 stars</label>
+                                    <input type="radio" id="star4" name="rate" value="4" />
+                                    <label for="star4" title="text">4 stars</label>
+                                    <input type="radio" id="star3" name="rate" value="3" />
+                                    <label for="star3" title="text">3 stars</label>
+                                    <input type="radio" id="star2" name="rate" value="2" />
+                                    <label for="star2" title="text">2 stars</label>
+                                    <input type="radio" id="star1" name="rate" value="1" />
+                                    <label for="star1" title="text">1 star</label>
+                                </div> </div> : <h2></h2>}
                                 {props.poll.type === 'multiple' ? <div id={props.poll.id} className="mutiple" value={props.poll.id}> 
-                                    {props.poll.pollOptions.map(i => <a><input className="radio radiomc-0" id="radiomc-0" type="radio" name="radiomc" value="1" />
-                                    <label className="radio radiomc-0 options" htmlFor="radiomc-0">{i.name}</label></a>)}
+                                    {props.poll.pollOptions.map(i => <a><input className="radio"  id={'radiomc-' + i.id} type="radio" name="radio" value={i.id} />
+                                    <label className="radio" htmlFor={'radio-' + i.id}>{i.name}</label></a>)}
                                     </div> : <h2></h2>}
                             </div>
-                            
+                        <button id="submit" data-type={props.poll.type} type="submit" className="createButton button">Submit Vote</button>
                         </div>
-                        <button id="submit" type="submit" className="createButton button">Submit Vote</button>
-                    </div>
-                    
+                    </div>  
                 </div>
-                <div id="cardContainer" className="grid-x grid-padding-x">
+            </div>
+                {/* <div id="cardContainer" className="grid-x grid-padding-x">
                     <div id="castVote" className="medium-12 cell">
-                        <div class="card">
-                            <div class="card-divider">
+                        <div className="card">
+                            <div className="card-divider">
                                 <div id="castRoute"></div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             <Footer />
             <Script />
-            <script src='./js/votes.js' />
+            <script src='/js/votes.js' />
 
         </body>
     </html>
