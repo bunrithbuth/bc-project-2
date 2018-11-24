@@ -447,7 +447,7 @@ module.exports = function(app) {
             }).then(() => {
                 if (req.body.starRating != null) {
                     let avg = Math.round(currentStarRating / currentStarRatingCount * 2) / 2
-                    res.json({average: avg, starRatingCount: currentStarRatingCount })
+                    res.json({type: 'star', average: avg, starRatingCount: currentStarRatingCount })
                 }else{
                     res.json({status: 'not a star rating'})
                 }
