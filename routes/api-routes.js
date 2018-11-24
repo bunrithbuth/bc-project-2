@@ -8,6 +8,7 @@ module.exports = function(app) {
     
     app.get('/api/hasvoted/:pollid/:userid', (req, res) => {
         let _pollId = req.params.pollid
+        let _userid = req.params.userid
         db.pollOption.findAll({
             where: {
                 pollId: _pollId
@@ -24,7 +25,8 @@ module.exports = function(app) {
             
             db.userVote.findAll({
                 where: {
-                    pollOptionId: {in: [_pollOptionId]}
+                    pollOptionId: {in: [_pollOptionId]},
+                    userId: _userid,
                 }
             }).then(function(pollOption) {
                  res.json(pollOption)
@@ -412,35 +414,45 @@ module.exports = function(app) {
     app.put('/api/pollOption/:id', (req, res) => {
         const _id = req.params.id
         console.log("UserID is" + req.body.userId + "star rating is " + req.body.starRating)
+
+        let currentStarRating
+        let currentStarRatingCount
+
         db.pollOption.findOne({
             where: {
                 id : _id
             }
         }).then((_pollOption) => {
-            let currentStarRating
-            let currentStarRatingCount
             if (req.body.starRating != null) {
-                currentStarRatingCount = _pollOption.starRatingCount + 1
-                currentStarRating = (parseInt(req.body.starRating) + parseInt(_pollOption.starRating)) / parseInt(currentStarRatingCount)
+                currentStarRatingCount = parseInt(_pollOption.starRatingCount) + 1
+                currentStarRating = parseInt(_pollOption.starRating) + parseInt(req.body.starRating)
             } else {
-                currentStarRating = _pollOption.starRating
-                currentStarRatingCount = _pollOption.starRatingCount
+                currentStarRating = parseInt(_pollOption.starRating)
+                currentStarRatingCount = parseInt(_pollOption.starRatingCount)
             }
+
             db.pollOption.update({
                 starRating: currentStarRating,
                 starRatingCount: currentStarRatingCount,
-                votes: _pollOption.votes + 1 
-            }, {where: {id: _id}})
-        })
-        .then(() => {
-            db.userVote.create({
-                userId: req.body.userId,
-                pollOptionId: _id,
-                starRating: req.body.starRating,
-                vote: 1
+                votes: parseInt(_pollOption.votes) + 1 
+                }, {where: {id: _id}})
             })
-        }).then(() => res.json())
-        .catch(e => console.log(e))
+            .then(() => {
+                db.userVote.create({
+                    userId: req.body.userId,
+                    pollOptionId: _id,
+                    starRating: req.body.starRating,
+                    vote: 1
+                })
+            }).then(() => {
+                if (req.body.starRating != null) {
+                    let avg = Math.round(currentStarRating / currentStarRatingCount * 2) / 2
+                    res.json({average: avg, starRatingCount: currentStarRatingCount })
+                }else{
+                    res.json({status: 'not a star rating'})
+                }
+            })
+            .catch(e => console.log(e))
     })
 };
 

@@ -25,6 +25,10 @@ font-family: 'Armata', sans-serif; */
   color: white;
 }
 
+.about {
+  padding: 10px;
+}
+
 #nav1, #nav2, #nav3 {
   background-color: #2c3840;
 }
@@ -86,10 +90,21 @@ body {
 }
 
 /* NO TOUCHY */
+<<<<<<< HEAD
 .pollOptions, .button, .switch-paddle, .switch-paddle::after, .success, #time, #duration, #add, .createButton, .details, .vote, .delete {
+=======
+.pollOptions, .switch-paddle, .switch-paddle::after, .success, #time, #duration, #add, .createButton, {
+>>>>>>> 1a77c0d45ced1728ad29c017d8cd18b97ecdff28
   border-radius: 5000px;
 }
 
+.aboutPhoto {
+  height:100px;
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+  width:100px;
+}
 /* For star rating component */
 .fa-star {
   font-size: 2.4rem;

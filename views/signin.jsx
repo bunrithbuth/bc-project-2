@@ -8,13 +8,15 @@ const SignIn = () =>
     <html lang='en'>
             <Head />
             <Nav />
-            <Script />
         <body>
             
 
             <div id="firebaseui-auth-container"></div>
             <div id="loader">Loading...</div>
             <Footer />
+            
+            <Script />
+            <script src="/js/signin.js" />
 
         </body>
     </html>

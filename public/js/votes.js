@@ -50,6 +50,7 @@ fetch('/api/pollOption/' + pollOptionId, {
             "Content-Type": "application/json; charset=utf-8",
         },
         body: JSON.stringify(userVote)
+<<<<<<< HEAD
       })
       .then(res => console.log(res))
     
@@ -58,6 +59,32 @@ fetch('/api/pollOption/' + pollOptionId, {
             $('#castRoute').show()
             // Create New Poll
             $('#castRoute').append('<a class="button small expanded grid-x grid-padding-x" href="/createpolls">Create Polls</a>')
+=======
+    })
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(results) {
+        console.log(results)
+    })
+    // fetch('/api/pollOption/:id', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    //     body: JSON.stringify({
+    //         starRating: document.querySelector('.options').value,
+    //         starRatingCount: 1,
+    //         votes: 1,
+    //         userVote: userVoteArr
+    //     })
+    //   })
+
+    //     .then(r => {
+            // $('#userVote').hide()
+            // $('#castVote').show()
+            // $('#castRoute').show()
+            // // Create New Poll
+            // $('#castRoute').append('<a class="button small expanded" href="/creatpolls">Create Polls</a>')
+>>>>>>> 1a77c0d45ced1728ad29c017d8cd18b97ecdff28
             // // Go To My Poll
             $('#castRoute').append('<a class="button small expanded grid-x grid-padding-x" href="/mypolls">My Polls</a>')
             // // Go To Community Polls
