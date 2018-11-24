@@ -50,8 +50,13 @@ fetch('/api/pollOption/' + pollOptionId, {
             "Content-Type": "application/json; charset=utf-8",
         },
         body: JSON.stringify(userVote)
-      })
-      .then(res => console.log(res))
+    })
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(results) {
+        console.log(results)
+    })
     // fetch('/api/pollOption/:id', {
     //     method: 'POST',
     //     headers: { 'Content-Type': 'application/json; charset=utf-8' },

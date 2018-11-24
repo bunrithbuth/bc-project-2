@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
         starRating: {
-            type: DataTypes.FLOAT(2,1),
+            type: DataTypes.INTEGER,
             allowNull: true, 
         },
         vote: {
