@@ -5,9 +5,18 @@ module.exports = function (app) {
         res.render('index')
     })
 
-    app.get('/migration', (req, res) => {
-        res.render('migration')
+    app.get('/polls', (req, res) => {
+        res.render('communityPolls')
     })
+
+    app.get('/active_polls', (req, res) => {
+        res.render('communityPolls')
+    })
+
+    app.get('/expired_polls', (req, res) => {
+        res.render('communityPolls', {status: 'expired'})
+    })
+
     app.get('/createpolls', (req, res) => {
         res.render('createPolls')
     })
@@ -24,7 +33,11 @@ module.exports = function (app) {
         res.render('signin');
     })
 
-    app.get('/viewpolls', (req, res) => {
-        res.render('viewpolls')
+    app.get('/mypolls', (req, res) => {
+        res.render('mypolls')
+    })
+
+    app.get('/aboutUs', (req, res) => {
+        res.render('aboutUs')
     })
 };

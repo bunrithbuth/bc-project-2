@@ -21,8 +21,12 @@ const Content = props =>
       <div className="middle-content-section">
         <img src="./assets/pollLogoBig.png" id="logo" />
         <h1>Deez Polls</h1>
-        <button className="button large" id="hpbutton1">Create a Poll!</button>
-        <button className="button large" id="hpbutton2">View Community Polls!</button>
+        <a href="/createpolls">
+          <button className="button large" id="hpbutton1">Create a Poll!</button>
+        </a>
+        <a href="/polls">
+          <button className="button large" id="hpbutton2">View Community Polls!</button>
+        </a>
       </div>
 
       <div className="bottom-content-section" data-magellan data-threshold="0">
@@ -36,7 +40,9 @@ const Content = props =>
         <h3>Our Recent Community Polls!</h3>
         <div className="masonry-css">
           <div className="masonry-css-item">
-            <img src="https://placehold.it/300x300" className="" height="" width="" alt=""/>
+            <a href="/createpolls">
+              <img src="/assets/createpoll.png" className="createpoll" height="" width="" alt=""/>
+            </a>
           </div>  
         </div>
         {/* other shit gets appended by get from js stuff */}

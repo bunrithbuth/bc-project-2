@@ -1,13 +1,39 @@
 const db = require("../models");
 const moment = require('node-moment')
-
 const SQLZ = require('sequelize')
 const Op = SQLZ.Op
-
+var path = require("path");
 
 module.exports = function(app) {
+    
+    app.get('/api/hasvoted/:pollid/:userid', (req, res) => {
+        let _pollId = req.params.pollid
+        db.pollOption.findAll({
+            where: {
+                pollId: _pollId
+            }
+        }).then(function(pollOption) {
+            console.log(pollOption)
+            let _pollOptionId = []
+            for (const key in pollOption) {
+                    const element = pollOption[key];
+                    _pollOptionId.push(element.dataValues.id);
+            }
+
+            console.log(_pollOptionId)
+            
+            db.userVote.findAll({
+                where: {
+                    pollOptionId: {in: [_pollOptionId]}
+                }
+            }).then(function(pollOption) {
+                 res.json(pollOption)
+            });
+        });
+    })
+
     app.get('/api/poll', (req, res) => {
-        db.polls.findAll({}).then(function(poll) {
+        db.poll.findAll({}).then(function(poll) {
             res.json(poll);
         });
     })
@@ -35,6 +61,20 @@ module.exports = function(app) {
             res.json(poll);
         });
     })
+    
+    app.get('/api/poll/:id', (req, res) => {
+        db.poll.findAll({
+            where: {
+                id: req.params.id
+            },
+            include: [
+                { model: db.pollOption }
+            ]
+        }).then(function (poll) {
+            console.log(poll)
+            res.json(poll);
+        });
+    })
 
     app.get('/api/user/:id', (req, res) => {
         const _id = req.params.id
@@ -44,7 +84,7 @@ module.exports = function(app) {
                 id: _id
             }
         }).then(function(_user) {
-            console.log(_user)
+            // console.log(_user)
             if(_user == null){
                 res.json({name: 'userid not found'})
 
@@ -55,12 +95,11 @@ module.exports = function(app) {
     })
 
     app.post('/api/signin', (req,res) => {
-        console.log(req.body)
         var tempUser = req.body;
         db.user.findOne({ where: {email: tempUser.email} })
         .then(function (user){
             if(user == null){
-                console.log('new User generated')
+                // console.log('new User generated')
                 db.user.create({
                     name: tempUser.name,
                     email: tempUser.email,
@@ -99,6 +138,7 @@ module.exports = function(app) {
             uId: _uId,
             expiration: moment.utc().add(parseInt(req.body.time), req.body.duration)
         }).then( _poll => {
+            
             console.log(req.body.pollOption)
             req.body.pollOption.forEach(req_pollOption => {              
                 console.log(req_pollOption.name)
@@ -109,16 +149,67 @@ module.exports = function(app) {
                     starRating: 0,
                     starRatingCount: 0,
                     votes: 0
-                }).then(data => res.json(data));
+                });
+
             })
+            res.json(_poll)
         }) 
     })
 
-    app.get('/api/poll/active', (req, res) => {
+    app.get('/api/active', (req, res) => {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.gte]: moment().format("MM/DD/YYYY")
+                    [Op.gte]: moment.utc().format("MM/DD/YYYY")
+                },
+                isPrivate: 0,
+            },
+            order: [['expiration', 'ASC']]
+        }).then(function(poll) {
+            res.json(poll);
+        });
+    })
+
+    const _perpage = 2
+    app.get('/api/active/:page', (req, res) => {
+        const _page = req.params.page
+
+        db.poll.findAll({
+            where: {
+                expiration: {
+                    [Op.gte]: moment.utc().format("MM/DD/YYYY HH:MM:SS")
+                },
+                isPrivate: 0,
+            },
+            offset: ((_page * _perpage) - _perpage),
+            limit: _perpage,
+            order: [['expiration', 'ASC']],
+        }).then(function(poll) {
+            console.log("HEREEEEEeeeee")
+            console.log(poll)
+            res.json(poll);
+        });
+    })
+
+    app.get('/api/count/active', (req, res) => {
+        db.poll.count({
+            where: {
+                expiration: {
+                    [Op.gte]: moment.utc().format("MM/DD/YYYY HH:MM:SS")
+                },
+                isPrivate: 0,
+            }
+        }).then(function(_count) {
+            res.json({count: _count, perpage: _perpage});
+        });
+    })
+
+
+    app.get('/api/expired', (req, res) => {
+        db.poll.findAll({
+            where: {
+                expiration: {
+                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
                 },
                 isPrivate: 0
             }
@@ -127,17 +218,39 @@ module.exports = function(app) {
         });
     })
 
-    app.get('/api/poll/expired', (req, res) => {
+    app.get('/api/expired/:page', (req, res) => {
+        const _page = req.params.page
+
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.lt]: moment().format("MM/DD/YYYY")
-                }
-            }
+                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                },
+                isPrivate: 0,
+            },
+            offset: ((_page * _perpage) - _perpage),
+            limit: _perpage,
+            order: [['expiration', 'ASC']],
         }).then(function(poll) {
+            console.log("HEREEEEEeeeee")
+            console.log(poll)
             res.json(poll);
         });
     })
+
+    app.get('/api/count/expired', (req, res) => {
+        db.poll.count({
+            where: {
+                expiration: {
+                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                },
+                isPrivate: 0,
+            }
+        }).then(function(_count) {
+            res.json({count: _count, perpage: _perpage});
+        });
+    })
+
 
 
     app.get('/poll/:id', (req, res) => {
@@ -169,14 +282,15 @@ module.exports = function(app) {
                         if(id_poll.isPrivate === true){
                             res.json({isPrivate: 1})
                         }else{
-                            res.json(id_poll)
+                            res.render('publish', {poll: id_poll.dataValues})
                         }
                     }
                 })
             }else{
-                res.json(uid_poll)
+                res.render('publish', {poll: uid_poll.dataValues})
             }     
         })
+        
     })
 
     app.get('/api/poll/:id/option', (req, res) => {
@@ -294,4 +408,40 @@ module.exports = function(app) {
         })
         res.render('index')
     })
+
+    app.put('/api/pollOption/:id', (req, res) => {
+        const _id = req.params.id
+        console.log("UserID is" + req.body.userId + "star rating is " + req.body.starRating)
+        db.pollOption.findOne({
+            where: {
+                id : _id
+            }
+        }).then((_pollOption) => {
+            let currentStarRating
+            let currentStarRatingCount
+            if (req.body.starRating != null) {
+                currentStarRatingCount = _pollOption.starRatingCount + 1
+                currentStarRating = (parseInt(req.body.starRating) + parseInt(_pollOption.starRating)) / parseInt(currentStarRatingCount)
+            } else {
+                currentStarRating = _pollOption.starRating
+                currentStarRatingCount = _pollOption.starRatingCount
+            }
+            db.pollOption.update({
+                starRating: currentStarRating,
+                starRatingCount: currentStarRatingCount,
+                votes: _pollOption.votes + 1 
+            }, {where: {id: _id}})
+        })
+        .then(() => {
+            db.userVote.create({
+                userId: req.body.userId,
+                pollOptionId: _id,
+                starRating: req.body.starRating,
+                vote: 1
+            })
+        }).then(() => res.json())
+        .catch(e => console.log(e))
+    })
 };
+
+

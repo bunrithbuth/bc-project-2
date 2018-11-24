@@ -1,14 +1,13 @@
-
-fetch('/api/poll/active')
+fetch('/api/active')
   .then(function(response) {
     return response.json();
   })
   .then(function(myJson) {
+    console.log(myJson)
     let max = 20
     myJson.length < max ? max = myJson.length : null
     for (i = 0 ; i < max ; i++) {
         const element = myJson[i];
-        //console.log(element)
 
         fetch(`/api/poll/${element.id}/option`)
             .then(function(response) {
@@ -68,13 +67,18 @@ fetch('/api/poll/active')
                                     <div class="masonry-css-item">
                                         <a href="/poll/${element.id}">
                                         <div class="callout">
-                                            <h4 style="padding: 0px;">${element.name}</h4>
+                                            <h5 style="padding: 0px;">${element.name}</h5>
+                                            <h6>
+                                                ${myJson2[0].name}
+                                            </h6>
+                                            <h6>
+                                                ${myJson2[1].name}
+                                            </h6>
+                                            <h6>
+                                                ${myJson2[2].name}
+                                            </h6>
                                             <p>
                                                 &#0151; ${myJson3.name}
-                                            </p>
-                                            <p>
-                                                <span>Rating: </span>
-                                                <span style="font-size: 24px;">&#9734;   3.5</span>
                                             </p>
                                         </div>
                                         </a>
@@ -83,7 +87,6 @@ fetch('/api/poll/active')
                             break;
                         }
                     })
-
             })
         }
   });

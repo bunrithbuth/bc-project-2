@@ -3,7 +3,7 @@
    Once the user signs in, their current session is saved to firebase.auth().currentUser
    */
 
-var config = {
+  var config = {
     apiKey: "AIzaSyDzwxpyn4S-n67J4Xwtv7tBUrMcF34nIdk",
     authDomain: "taco-bigguy4u.firebaseapp.com",
     databaseURL: "https://taco-bigguy4u.firebaseio.com",
@@ -94,10 +94,8 @@ function checkNewUser() {
         email: firebase.auth().currentUser.email,
         photoURL: firebase.auth().currentUser.photoURL
     }
-    console.log(firebase.auth().currentUser)
     $.post("/api/signin", temp).then(function (data) {
         temp.id = data.id
-        console.log(temp)
         localStorage.setItem("user", JSON.stringify(temp));
 
     });
@@ -162,4 +160,3 @@ $(document).ready(function () {
         updateUserProfile();
     }
 })
-
