@@ -18,73 +18,6 @@ const submit = document.getElementById('submit')
 
 //Submit eventlistener
 submit.addEventListener('click', function() {
-<<<<<<< HEAD
-//     let optionCount = document.getElementsByClassName('radio').length
-//     event.preventDefault()
-//     let userVoteArr = []
-//     // User Votes Table Update
-//     if (submit.getAttribute('class') === 'star') {
-//         // Star vote
-//         userVoteArr = [
-//             {
-//                 userId: JSON.parse(localStorage.getItem("user")).id,
-//                 pollId: document.querySelector('#userVote').value,
-//                 starRating: document.querySelector('#star-' + (i + 1)).value,
-//                 starRatingCount: 0,
-//                 votes: document.querySelector('#star-' + (i + 1)).value
-//             }
-//         ]
-//     } else if (submit.getAttribute('class') === 'twoChoices') {
-//         // twoChoices vote
-//         for (let i = 0; i < optionCount; i++) {
-//             userVoteArr.push(
-//                 {
-//                     userId: JSON.parse(localStorage.getItem("user")).id,
-//                     pollId: document.querySelector('#userVote').value,
-//                     starRating: document.querySelector('#radio-' + (i + 1)).value,
-//                     starRatingCount: 0,
-//                     votes: document.querySelector('#radio-' + (i + 1)).value
-//                 }
-//             )
-//         }
-//     } else {
-//         // multiple vote
-//         for (let i = 0; i < optionCount; i++) {
-//             userVoteArr.push(
-//                 {
-//                     userId: JSON.parse(localStorage.getItem("user")).id,
-//                     pollId: document.querySelector('#userVote').value,
-//                     starRating: document.querySelector('#radio-0').value,
-//                     starRatingCount: 0,
-//                     votes: document.querySelector('#radio-0').value
-//                 }
-//             )
-//         }
-//     }
-
-// //Fetch POST request to the database   
-//     fetch('/api/pollOption/:id', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json; charset=utf-8' },
-//         body: JSON.stringify({
-//             starRating: document.querySelector('.options').value,
-//             starRatingCount: 1,
-//             votes: 1,
-//             userVote: userVoteArr
-//         })
-//       })
-//         .then(r => {
-        
-            $('#userVote').hide()
-            $('#castVote').show()
-            $('#castRoute').show()
-            // Create New Poll
-            $('#castRoute').append('<a class="button small expanded" href="/creatpolls">Create Polls</a>')
-            // Go To My Poll
-            $('#castRoute').append('<a class="button small expanded" href="/mypolls">My Polls</a>')
-            // Go To Community Polls
-            $('#castRoute').append('<a class="button small expanded" href="/communityPolls">Community Polls</a>')
-=======
     event.preventDefault()
     let userVote = {}
     let pollOptionId
@@ -119,28 +52,14 @@ fetch('/api/pollOption/' + pollOptionId, {
         body: JSON.stringify(userVote)
       })
       .then(res => console.log(res))
-    // fetch('/api/pollOption/:id', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    //     body: JSON.stringify({
-    //         starRating: document.querySelector('.options').value,
-    //         starRatingCount: 1,
-    //         votes: 1,
-    //         userVote: userVoteArr
-    //     })
-    //   })
-
-    //     .then(r => {
-            // $('#userVote').hide()
-            // $('#castVote').show()
-            // $('#castRoute').show()
-            // // Create New Poll
-            // $('#castRoute').append('<a class="button small expanded" href="/creatpolls">Create Polls</a>')
+    
+            $('#userVote').hide()
+            $('#castVote').show()
+            $('#castRoute').show()
+            // Create New Poll
+            $('#castRoute').append('<a class="button small expanded grid-x grid-padding-x" href="/createpolls">Create Polls</a>')
             // // Go To My Poll
-            // $('#castRoute').append('<a class="button small expanded" href="/mypolls">My Polls</a>')
+            $('#castRoute').append('<a class="button small expanded grid-x grid-padding-x" href="/mypolls">My Polls</a>')
             // // Go To Community Polls
-            // $('#castRoute').append('<a class="button small expanded" href="/communityPolls">Community Polls</a>')
->>>>>>> 6802323565ad176e70401cb3c27758d3b92b1597
-        // })
-        // .catch(e => console.error(e))
+            $('#castRoute').append('<a class="button small expanded grid-x grid-padding-x" href="/active_polls">Community Polls</a>')
 })
