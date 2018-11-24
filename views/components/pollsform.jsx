@@ -32,7 +32,8 @@ const PollsForm = () =>
             <input id="option2" className="input-group-rounded options" type="text" placeholder="Option 2" />
             <input id="option3" className="input-group-rounded options" type="text" placeholder="Option 3" />
           </div>
-          <button id="add" className="button"><i className="fas fa-plus"></i> Add more options</button>
+          <button id="add" className="button pollOptions"><i className="fas fa-plus"></i> Add more options</button>
+          <button id="remove" className="button pollOptions"><i className="fas fa-minus"></i> Remove options</button>
           </div>
           {/* Need to fix this */}
           <div id="twoChoices" className="medium-10 cell">
