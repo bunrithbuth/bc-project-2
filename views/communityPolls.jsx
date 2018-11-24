@@ -43,7 +43,7 @@ const Page = props =>
                     </nav>
                 </div>
             </div>
-            <Footer />
+
             <Script />
             <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js' />
             {props.status === 'expired' ? <script src='/js/communityPollsExpired.js' /> : <script src='/js/communityPolls.js' />}
