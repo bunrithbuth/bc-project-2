@@ -5,6 +5,33 @@ const Op = SQLZ.Op
 var path = require("path");
 
 module.exports = function(app) {
+    
+    app.get('/api/hasvoted/:pollid/:userid', (req, res) => {
+        let _pollId = req.params.pollid
+        db.pollOption.findAll({
+            where: {
+                pollId: _pollId
+            }
+        }).then(function(pollOption) {
+            console.log(pollOption)
+            let _pollOptionId = []
+            for (const key in pollOption) {
+                    const element = pollOption[key];
+                    _pollOptionId.push(element.dataValues.id);
+            }
+
+            console.log(_pollOptionId)
+            
+            db.userVote.findAll({
+                where: {
+                    pollOptionId: {in: [_pollOptionId]}
+                }
+            }).then(function(pollOption) {
+                 res.json(pollOption)
+            });
+        });
+    })
+
     app.get('/api/poll', (req, res) => {
         db.poll.findAll({}).then(function(poll) {
             res.json(poll);
@@ -34,6 +61,7 @@ module.exports = function(app) {
             res.json(poll);
         });
     })
+    
     app.get('/api/poll/:id', (req, res) => {
         db.poll.findAll({
             where: {
@@ -383,19 +411,35 @@ module.exports = function(app) {
 
     app.put('/api/pollOption/:id', (req, res) => {
         const _id = req.params.id
-        db.pollOption.update({
-            starRating: req.body.starRating,
-            starRatingCount: req.body.starRatingCount,
-            votes: req.body.votes  
-        }, {where: {id: _id}})
+        console.log("UserID is" + req.body.userId + "star rating is " + req.body.starRating)
+        db.pollOption.findOne({
+            where: {
+                id : _id
+            }
+        }).then((_pollOption) => {
+            let currentStarRating
+            let currentStarRatingCount
+            if (req.body.starRating != null) {
+                currentStarRatingCount = _pollOption.starRatingCount + 1
+                currentStarRating = (parseInt(req.body.starRating) + parseInt(_pollOption.starRating)) / parseInt(currentStarRatingCount)
+            } else {
+                currentStarRating = _pollOption.starRating
+                currentStarRatingCount = _pollOption.starRatingCount
+            }
+            db.pollOption.update({
+                starRating: currentStarRating,
+                starRatingCount: currentStarRatingCount,
+                votes: _pollOption.votes + 1 
+            }, {where: {id: _id}})
+        })
         .then(() => {
             db.userVote.create({
                 userId: req.body.userId,
                 pollOptionId: _id,
                 starRating: req.body.starRating,
-                vote: req.body.vote
+                vote: 1
             })
-        })
+        }).then(() => res.json())
         .catch(e => console.log(e))
     })
 };
