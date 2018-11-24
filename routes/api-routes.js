@@ -449,7 +449,42 @@ module.exports = function(app) {
                     let avg = Math.round(currentStarRating / currentStarRatingCount * 2) / 2
                     res.json({type: 'star', average: avg, starRatingCount: currentStarRatingCount })
                 }else{
-                    res.json({status: 'not a star rating'})
+                    db.pollOption.findOne({
+                        where: {
+                            id : _id
+                        }
+                    }).then((_pollOption) => {
+                        
+                        db.poll.findOne({
+                            where: {
+                                id: _pollOption.dataValues.pollId
+                            },
+                            include: [
+                                { model: db.pollOption }
+                            ]
+                        }).then(function(_poll) {
+                            let name = []
+                            let votes = []
+                            let sum = 0;
+                            
+                            (_poll.dataValues.pollOptions).forEach(_pollOption => { 
+                                // console.log(_pollOption.dataValues.id)
+                                //  console.log(_pollOption.dataValues.name)
+                                // console.log(_pollOption.dataValues.votes)
+                                name.push(_pollOption.dataValues.name)
+                                votes.push(parseInt(_pollOption.dataValues.votes))
+                                sum += parseInt(_pollOption.dataValues.votes)
+                            })
+
+                            let percentage = []
+                            votes.forEach(_votes => {
+                                percentage.push(((_votes/sum)*100).toFixed(2))
+                            })
+                            // console.log(percentage)
+                            
+                            res.json({type: 'not star', sum: sum, name: name, votes: votes, percentage: percentage})
+                        })
+                    })
                 }
             })
             .catch(e => console.log(e))

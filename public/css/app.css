@@ -413,3 +413,9 @@ body {
     text-align: left;
   }
 }
+
+.center-div
+{
+     margin: 0 auto;
+     width: 100px; 
+}

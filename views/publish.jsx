@@ -50,8 +50,8 @@ const Publish = (props) =>
             </div>
             <div className="grid-container">
                 <div id="cardContainer" className="grid-x grid-padding-x">
-                    <div id="castVote" className="medium-12 cell">
-                        <div className="card">
+                    <div id="castVote" className="large-12 cell">
+                        <div className="card large-12 cell">
                             <div className="card-divider">
                                 <div id="castRoute"></div>
                             </div>

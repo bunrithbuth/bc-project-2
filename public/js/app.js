@@ -137,6 +137,12 @@ document.getElementById('add').addEventListener('click', (event) => {
     newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);    
 })
 
+document.getElementById('remove').addEventListener('click', (event) => {
+    event.preventDefault()
+    let optionCount = document.getElementsByClassName('options').length
+    let newOption = document.getElementById('option' + optionCount);
+    newOption.remove(`<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);
+})
 
 // function getPoll(r) {
 //     console.log(r.pollId)
