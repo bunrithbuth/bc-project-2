@@ -90,7 +90,7 @@ body {
 }
 
 /* NO TOUCHY */
-.pollOptions, .switch-paddle, .switch-paddle::after, .success, #time, #duration, #add, .createButton, {
+.pollOptions, .button, .switch-paddle, .switch-paddle::after, .success, #time, #duration, #add, .createButton, .details, .vote, .delete {
   border-radius: 5000px;
 }
 
@@ -409,4 +409,10 @@ body {
   .expireLabel {
     text-align: left;
   }
+}
+
+.center-div
+{
+     margin: 0 auto;
+     width: 100px; 
 }

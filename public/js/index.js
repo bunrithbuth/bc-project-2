@@ -1,3 +1,6 @@
+let sr = 0;
+let src = 0;
+
 fetch('/api/active')
   .then(function(response) {
     return response.json();
@@ -15,6 +18,10 @@ fetch('/api/active')
             })
             .then(function(myJson2) {
                 console.log(myJson2)
+                sr = parseInt(myJson2[0].starRating)
+                src = parseInt(myJson2[0].starRatingCount)
+
+                console.log (sr + ', ' + src)
 
                 fetch(`/api/user/${element.userId}`)
                     .then(function(response) {
@@ -25,6 +32,7 @@ fetch('/api/active')
 
                         switch(element.type){
                             case 'stars':
+                                console.log(Math.round(parseInt(sr) / parseInt(src) * 2) / 2)
                                 $('.masonry-css').append(`
                                     <div class="masonry-css-item">
                                         <a href="/poll/${element.id}">
@@ -35,7 +43,7 @@ fetch('/api/active')
                                             </p>
                                             <p>
                                                 <span>Rating: </span>
-                                                <span style="font-size: 24px;">&#9734;   3.5</span>
+                                                <span style="font-size: 24px;">&#9734;   ${Math.round(sr / src * 2) / 2}</span>
                                             </p>
                                         </div>
                                         </a>
