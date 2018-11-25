@@ -9,9 +9,21 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         console.log("Not Logged In")
     }
+    document.getElementById('copy-link').setAttribute('value', window.location.href)
 })
 
 const submit = document.getElementById('submit')
+const share = document.getElementById('share')
+
+share.addEventListener('click', function() {
+    console.log(window.location.href)
+    document.getElementById('copy-link').select()
+    document.execCommand("copy")
+    share.innerText = "Copied!!"
+    setTimeout(function(){ 
+        share.innerHTML = '<i class="fas fa-clipboard"></i>'
+     }, 1500)
+})
 
 
 // PollOptions and user vote tables
@@ -58,12 +70,12 @@ fetch('/api/pollOption/' + pollOptionId, {
         console.log(results)
     })
         $('#userVote').hide()
-        $('#castVote').show()
-        $('#castRoute').show()
+        // $('#castVote').show()
+        // $('#castRoute').show()
         // // Create New Poll
-        $('#castRoute').append('<a class="button small expanded pollOptions" href="/createpolls">Create Polls</a>')
-        // // Go To My Poll
-        $('#castRoute').append('<a class="button small expanded pollOptions" href="/mypolls">My Polls</a>')
-        // // Go To Community Polls
-        $('#castRoute').append('<a class="button small expanded pollOptions" href="/active_polls">Community Polls</a>')
+        // $('#castRoute').append('<a class="button small expanded pollOptions" href="/createpolls">Create Polls</a>')
+        // // // Go To My Poll
+        // $('#castRoute').append('<a class="button small expanded pollOptions" href="/mypolls">My Polls</a>')
+        // // // Go To Community Polls
+        // $('#castRoute').append('<a class="button small expanded pollOptions" href="/active_polls">Community Polls</a>')
 })

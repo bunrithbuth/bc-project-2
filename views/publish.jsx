@@ -43,6 +43,10 @@ const Publish = (props) =>
                                     <label className="radio" htmlFor={'radio-' + i.id}>{i.name}</label></a>)}
                                     </div> : <h2></h2>}
                             </div>
+                        {/* <div>
+                            <input id="copy-link" type="text" readOnly value="" />
+                        <button id="share" className="createButton button"><i class="fas fa-clipboard"></i></button>
+                        </div> */}
                         <button id="submit" data-type={props.poll.type} type="submit" className="createButton button">Submit Vote</button>
                         </div>
                     </div>  
@@ -51,11 +55,10 @@ const Publish = (props) =>
             <div className="grid-container">
                 <div id="cardContainer" className="grid-x grid-padding-x">
                     <div id="castVote" className="medium-12 cell">
-                        <div className="card">
-                            <div className="card-divider">
-                                <div id="castRoute"></div>
-                            </div>
-                        </div>
+                            <div>
+                                <input id="copy-link" type="text" readOnly value="" />
+                                <button id="share" className="createButton button"><i class="fas fa-clipboard"></i></button>
+                            </div>  
                     </div>
                 </div>                
             </div>
