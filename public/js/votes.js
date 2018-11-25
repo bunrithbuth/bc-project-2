@@ -70,31 +70,68 @@ submit.addEventListener('click', function() {
             userId: _user.id,
             starRating: null
         }
-    } 
+    }
 
 //Fetch PUT request to the database   
-
-fetch('/api/pollOption/' + pollOptionId, {
-        method: 'PUT',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify(userVote)
-    })
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(results) {
-        console.log(results)
-        location.reload()
-    })
-        // $('#userVote').hide()
-        // $('#castVote').show()
-        // $('#castRoute').show()
-        // // Create New Poll
-        // $('#castRoute').append('<a class="button small expanded pollOptions" href="/createpolls">Create Polls</a>')
-        // // // Go To My Poll
-        // $('#castRoute').append('<a class="button small expanded pollOptions" href="/mypolls">My Polls</a>')
-        // // // Go To Community Polls
-        // $('#castRoute').append('<a class="button small expanded pollOptions" href="/active_polls">Community Polls</a>')
+    fetch('/api/pollOption/' + pollOptionId, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify(userVote)
+        })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(results) {
+            console.log(results)
+            if (results.type == "not star") {
+                let name = results.name
+                let percentage = results.percentage
+                for (let i = 0; i < name.length; i++) {
+                    console.log(name)
+                    var outputDiv = $('<div>')
+                    var ul = $('<ul>')
+                    var optionLabel = $('<label class="radio radio-1" htmlFor="radio-1">' + name[i] + '</label>')
+                    var progBar = $('<div class="progress" role="progressbar" tabindex="0" aria-valuenow="' + parseInt(percentage[i]) + '" aria-valuemin="0" aria-valuetext="' + parseInt(percentage[i]) + '" aria-valuemax="100"></div>')
+                    var spanBar = $('<span class="progress-meter" style="width: ' + parseInt(percentage[i]) + '%">')
+                    var parText = $('<p class="progress-meter-text"> '+ parseInt(percentage[i]) + '%</p>')
+                    spanBar.append(parText)
+                    progBar.append(spanBar)
+                    optionLabel.append(progBar)
+                    ul.append(optionLabel)
+                    outputDiv.append(ul)
+                    $('#voteOutput').append(outputDiv)
+                }
+                $('.twoChoices').hide()
+                $('.mutiple').hide()
+                $('#submit').hide()
+            } else {
+                let currentRating = results.average
+                console.log(currentRating)
+                // let pollId
+                // pollId = document.querySelector('div').getAttribute('data-pollOptionId')
+                // console.log(pollId)
+                let starResult = ""
+                for (let i = 1; i < 6; i++) {
+                    if (i <= currentRating) {
+                        starResult += '<i class="fas fa-star"></i>'
+                    } else if (i == currentRating + 0.5) {
+                        starResult += '<i class="fas fa-star-half-alt"></i>'
+                    } else {
+                        starResult += '<i class="far fa-star"></i>'
+                    }
+                }
+                $('.stars').hide()
+                $('#submit').hide()
+                $('#voteOutput').append(starResult)
+                console.log(starResult)
+            }
+        })
 })
+
+
+
+
+
+
