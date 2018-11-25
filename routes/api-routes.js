@@ -489,6 +489,71 @@ module.exports = function(app) {
             })
             .catch(e => console.log(e))
     })
+
+    app.get('/api/isExpired/:pollid', (req, res) => {
+        let _id = req.params.pollid
+        db.poll.findOne({
+            where: {
+                id: _id,
+                expiration: {
+                    [Op.gte]: moment.utc().toDate()
+                }
+            },
+            include: [
+                { model: db.pollOption }
+            ]
+        }).then(function(poll) {
+            if(poll){
+                res.json({isExpired: 0})
+            }else{
+                db.poll.findOne({
+                    where: {
+                        id: _id,
+                        expiration: {
+                            [Op.lt]: moment.utc().toDate()
+                        }
+                    },
+                    include: [
+                        { model: db.pollOption }
+                    ]
+                }).then(function(poll2) {  
+                    console.log(poll2)
+                    db.pollOption.findAll({
+                        where: {
+                            pollId: poll2.id
+                        }
+                    }).then(function(_pollOptions) {
+                        if(poll2.dataValues.type === 'stars'){
+                            let avg = Math.round(_pollOptions[0].starRating / _pollOptions[0].starRatingCount * 2) / 2
+                            res.json({type: 'star', average: avg, starRatingCount: _pollOptions[0].starRatingCount })
+                        }else{
+                            let name = []
+                            let votes = []
+                            let sum = 0;
+                            
+                            (_pollOptions).forEach(_pollOption => { 
+                                // console.log(_pollOption.dataValues.id)
+                                //  console.log(_pollOption.dataValues.name)
+                                // console.log(_pollOption.dataValues.votes)
+                                name.push(_pollOption.dataValues.name)
+                                votes.push(parseInt(_pollOption.dataValues.votes))
+                                sum += parseInt(_pollOption.dataValues.votes)
+                            })
+
+                            let percentage = []
+                            votes.forEach(_votes => {
+                                percentage.push(((_votes/sum)*100).toFixed(2))
+                            })
+                            // console.log(percentage)
+
+                            res.json({isExpired: 1, type: 'not star', sum: sum, name: name, votes: votes, percentage: percentage})
+                        }
+                    })
+                })
+            }
+        })
+        
+    });
 };
 
 
