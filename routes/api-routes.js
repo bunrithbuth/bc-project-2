@@ -14,15 +14,11 @@ module.exports = function(app) {
                 pollId: _pollId
             }
         }).then(function(pollOption) {
-            console.log(pollOption)
             let _pollOptionId = []
             for (const key in pollOption) {
                     const element = pollOption[key];
                     _pollOptionId.push(element.dataValues.id);
-            }
-
-            console.log(_pollOptionId)
-            
+            }    
             db.userVote.findAll({
                 where: {
                     pollOptionId: {in: [_pollOptionId]},

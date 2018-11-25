@@ -22,8 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(response => response.json())
     .then(data => {
         if (data.length > 0) {
-            submit.setAttribute('disabled', "")
+            submit.disabled = true
             submit.innerText = "Already Voted"
+            let input = document.getElementsByTagName('input')
+            for (let i = 0; i < input.length; i++) {
+               input[i].disabled = true
+            }
         }
     })
 })
