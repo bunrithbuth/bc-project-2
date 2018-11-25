@@ -45,7 +45,7 @@ const Publish = (props) =>
                                     </div> : <h2></h2>}
                                 {props.poll.type === 'stars' ? <div className="stars">
                                 <div data-pollOptionId={props.poll.pollOptions[0].id} id={props.poll.id} className="rate">
-                                    <ul>
+                                    {/*<ul>*/}
                                     <input className="star star-1" id="star1" type="radio" name="rate" value="1" />
                                     <label className="star star-1" htmlFor="star1" title="text"></label>
                                     <input className="star star-2" id="star2" type="radio" name="rate" value="2" />
@@ -63,7 +63,7 @@ const Publish = (props) =>
                                     { (parseInt(props.poll.pollOptions[0].starRating) / parseInt(props.poll.pollOptions[0].starRatingCount)) >= 3.65 ? <i class="fas fa-star"></i> : '' }
                                     { (parseInt(props.poll.pollOptions[0].starRating) / parseInt(props.poll.pollOptions[0].starRatingCount)) >= 4.65 ? <i class="fas fa-star"></i> : '' }
                                 */}
-                                    </ul></div> </div> : <h2></h2>}
+                                    {/*</ul>*/}</div> </div> : <h2></h2>}
                                 {props.poll.type === 'multiple' ? <div id={props.poll.id} className="mutiple" value={props.poll.id}> 
                                     {props.poll.pollOptions.map(i => <ul>
                                         <a><input className="radio"  id={'radiomc-' + i.id} type="radio" name="radio" value={i.id} />
