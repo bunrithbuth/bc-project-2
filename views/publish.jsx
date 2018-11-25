@@ -20,7 +20,7 @@ const Publish = (props) =>
                                 <h1>{props.poll.name}</h1>
                             </div>
                             
-                            <div className="card-section">
+                            <div className="card-section" data-pollId={props.poll.id}>
                                 {props.poll.type === 'twoChoices' ? <div className="twoChoices" id={props.poll.id}>
                                     <ul>
                                     <input className="radio radio-1 options" id="radio-1" value={props.poll.pollOptions[0].id} type="radio" name="radio" />
@@ -65,7 +65,7 @@ const Publish = (props) =>
                                         <label className="radio" htmlFor={'radio-' + i.id}>{i.name}</label>
                                         <div class="progress" role="progressbar" tabindex="0" aria-valuenow={parseInt(i.votes) / parseInt(i.votes)} aria-valuemin="0" aria-valuetext={parseInt(i.votes)} aria-valuemax="100">
                                             <span class="progress-meter">
-                                                <p class="progress-meter-text">{parseInt(i.votes) == 0 ? 0 : parseInt(i.votes)} %</p>
+                                                <p class="progress-meter-text">{parseInt(i.votes) == 0 ? 0 : parseInt(i.votes) / parseInt(i.votes)} %</p>
                                             </span>
                                         </div></a></ul>)}
                                     </div> : <h2></h2>}

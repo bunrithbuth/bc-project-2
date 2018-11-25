@@ -52,31 +52,42 @@ submit.addEventListener('click', function() {
             userId: _user.id,
             starRating: null
         }
-    } 
+    }
 
 //Fetch PUT request to the database   
 
-fetch('/api/pollOption/' + pollOptionId, {
-        method: 'PUT',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify(userVote)
-    })
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(result) {
-        console.log(result)
-    })
-    fetch('/api/pollOption/' + pollOptionId)
+
+    fetch('/api/pollOption/' + pollOptionId, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify(userVote)
+        })
         .then(function(response) {
+            return response.json();
+        })
+        .then(function(result) {
+            console.log(result)
+        })
+    
+})
+
+let pollId
+
+pollId = document.querySelector('.card-section').getAttribute('data-pollId')
+console.log(pollId)
+
+fetch('/api/pollOption/' + pollId)
+        .then(function(response) {
+            console.log(response)
             return response.json();
         })
         .then(function(results) {
             console.log(results)
-            // let pollId
-            // pollId = document.querySelector('div').getElementById(`${pollId}`)
+            let pollId
+            pollId = document.querySelector('.card-section').getAttribute('data-pollId')
+            console.log(pollId)
             // pollId = document.querySelector('div').getAttribute('data-pollOptionId')
             if (results.type == "not star") {
                 let name = results.name
@@ -102,6 +113,9 @@ fetch('/api/pollOption/' + pollOptionId, {
             } else {
                 let currentRating = results.average
                 console.log(currentRating)
+                let pollId
+                pollId = document.querySelector('div').getAttribute('data-pollOptionId')
+                console.log(pollId)
                 let starResult = ""
                 for (let i = 1; i < 6; i++) {
                     if (i <= currentRating) {
@@ -118,6 +132,5 @@ fetch('/api/pollOption/' + pollOptionId, {
                 console.log(starResult)
             }
     })
-})
 
 
