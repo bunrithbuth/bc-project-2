@@ -14,15 +14,11 @@ module.exports = function(app) {
                 pollId: _pollId
             }
         }).then(function(pollOption) {
-            console.log(pollOption)
             let _pollOptionId = []
             for (const key in pollOption) {
                     const element = pollOption[key];
                     _pollOptionId.push(element.dataValues.id);
-            }
-
-            console.log(_pollOptionId)
-            
+            }    
             db.userVote.findAll({
                 where: {
                     pollOptionId: {in: [_pollOptionId]},
@@ -65,7 +61,8 @@ module.exports = function(app) {
     })
     
     app.get('/api/poll/:id', (req, res) => {
-        db.poll.findAll({
+        let _poll
+        db.poll.findOne({
             where: {
                 id: req.params.id
             },
@@ -73,9 +70,15 @@ module.exports = function(app) {
                 { model: db.pollOption }
             ]
         }).then(function (poll) {
-            console.log(poll)
-            res.json(poll);
-        });
+            _poll = poll
+            db.user.findOne({
+                where: {
+                    id: poll.userId
+                }
+            }).then(function (user){
+                res.json({_poll, user});
+            })
+        })
     })
 
     app.get('/api/user/:id', (req, res) => {
@@ -207,7 +210,6 @@ module.exports = function(app) {
         });
     })
 
-
     app.get('/api/expired', (req, res) => {
         db.poll.findAll({
             where: {
@@ -332,21 +334,6 @@ module.exports = function(app) {
         })
     })
 
-    // app.get('/api/user_votes/:poll_id', (req, res) => {
-    //     db.polls.findAll({}).then(function(polls) {
-    //         res.json(polls);
-    //     });
-    // })
-
-    // app.post('/api/user_votes/:poll_id', (req, res) => {
-    //     db.user_votes.create({
-    //         user_name: 'mearat',
-    //         poll_options_id: (_pollEntry).id,
-    //         star_rating: 3.5,
-    //         vote: null
-    //     })
-    //  //need to update poll_options as well
-    // })
 
     app.get('/api/migrate', (req, res) => { 
 
@@ -413,8 +400,6 @@ module.exports = function(app) {
 
     app.put('/api/pollOption/:id', (req, res) => {
         const _id = req.params.id
-        console.log("UserID is" + req.body.userId + "star rating is " + req.body.starRating)
-
         let currentStarRating
         let currentStarRatingCount
 
@@ -430,65 +415,83 @@ module.exports = function(app) {
                 currentStarRating = parseInt(_pollOption.starRating)
                 currentStarRatingCount = parseInt(_pollOption.starRatingCount)
             }
-
             db.pollOption.update({
                 starRating: currentStarRating,
                 starRatingCount: currentStarRatingCount,
                 votes: parseInt(_pollOption.votes) + 1 
-                }, {where: {id: _id}})
-            })
-            .then(() => {
-                db.userVote.create({
-                    userId: req.body.userId,
-                    pollOptionId: _id,
-                    starRating: req.body.starRating,
-                    vote: 1
+                },{
+                    where: {id: _id},
+                    returning: true
                 })
-            }).then(() => {
-                if (req.body.starRating != null) {
-                    let avg = Math.round(currentStarRating / currentStarRatingCount * 2) / 2
-                    res.json({type: 'star', average: avg, starRatingCount: currentStarRatingCount })
-                }else{
-                    db.pollOption.findOne({
-                        where: {
-                            id : _id
-                        }
-                    }).then((_pollOption) => {
-                        
-                        db.poll.findOne({
-                            where: {
-                                id: _pollOption.dataValues.pollId
-                            },
-                            include: [
-                                { model: db.pollOption }
-                            ]
-                        }).then(function(_poll) {
-                            let name = []
-                            let votes = []
-                            let sum = 0;
-                            
-                            (_poll.dataValues.pollOptions).forEach(_pollOption => { 
-                                // console.log(_pollOption.dataValues.id)
-                                //  console.log(_pollOption.dataValues.name)
-                                // console.log(_pollOption.dataValues.votes)
-                                name.push(_pollOption.dataValues.name)
-                                votes.push(parseInt(_pollOption.dataValues.votes))
-                                sum += parseInt(_pollOption.dataValues.votes)
-                            })
-
-                            let percentage = []
-                            votes.forEach(_votes => {
-                                percentage.push(((_votes/sum)*100).toFixed(2))
-                            })
-                            // console.log(percentage)
-
-                            res.json({type: 'not star', sum: sum, name: name, votes: votes, percentage: percentage})
-                        })
+                .then((data) => {
+                    console.log("Here" + data)
+                    db.userVote.create({
+                        userId: req.body.userId,
+                        pollOptionId: _id,
+                        starRating: req.body.starRating,
+                        vote: 1
                     })
-                }
-            })
-            .catch(e => console.log(e))
+                })
+                .then(()=> res.json())
+                .catch(e => console.log(e))
+         })
     })
+            // if (req.body.starRating != null) {
+            //         // let avg = Math.round(currentStarRating / currentStarRatingCount * 2) / 2
+            //         res.json({type: 'star'})
+            //     }else{
+            //         db.pollOption.findOne({
+            //             where: {
+            //                 id : _id
+            //             }
+            //         }).then((_pollOption) => {
+            //             db.poll.findOne({
+            //                 where: {
+            //                     id: _pollOption.dataValues.pollId
+            //                 },
+            //                 include: [
+            //                     { model: db.pollOption }
+            //                 ]
+            //             }).then(function(_poll) {
+            //                 let name = []
+            //                 let votes = []
+            //                 let sum = 0;
+            //                 (_poll.dataValues.pollOptions).forEach(_pollOption => { 
+            //                     console.log("Vote" + _pollOption.dataValues.votes)
+            //                     console.log(_pollOption.dataValues.name)
+            //                     name.push(_pollOption.dataValues.name)
+            //                     votes.push(parseInt(_pollOption.dataValues.votes))
+            //                     sum += parseInt(_pollOption.dataValues.votes)
+            //                 })
+
+            //                 let percentage = []
+            //                 votes.forEach(_votes => {
+            //                     percentage.push(((_votes/sum)*100).toFixed(2))
+            //                 })
+            //                 // console.log(percentage)
+
+            //             res.json({type: 'not star'})
+            //             })
+            //         })
+            
+            //         console.log(_poll.dataValues.pollOptions)
+            //         let name = []
+            //         let votes = []
+            //         let sum = 0;
+            //         (_poll.dataValues.pollOptions).forEach(_pollOption => { 
+            //             console.log("Vote" + _pollOption.dataValues.votes)
+            //             console.log(_pollOption.dataValues.name)
+            //             name.push(_pollOption.dataValues.name)
+            //             votes.push(parseInt(_pollOption.dataValues.votes))
+            //             sum += parseInt(_pollOption.dataValues.votes)
+            //         })
+
+            //         let percentage = []
+            //         votes.forEach(_votes => {
+            //             percentage.push(((_votes/sum)*100).toFixed(2))
+            //         })
+            //     res.json({type: _poll.dataValues.type, sum: sum, name: name, votes: votes, percentage: percentage})
+     
 
     app.get('/api/isExpired/:pollid', (req, res) => {
         let _id = req.params.pollid
@@ -534,7 +537,7 @@ module.exports = function(app) {
                             (_pollOptions).forEach(_pollOption => { 
                                 // console.log(_pollOption.dataValues.id)
                                 //  console.log(_pollOption.dataValues.name)
-                                // console.log(_pollOption.dataValues.votes)
+                                console.log(_pollOption.dataValues.votes)
                                 name.push(_pollOption.dataValues.name)
                                 votes.push(parseInt(_pollOption.dataValues.votes))
                                 sum += parseInt(_pollOption.dataValues.votes)
