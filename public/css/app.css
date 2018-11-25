@@ -17,14 +17,6 @@ font-family: 'Armata', sans-serif; */
   padding: 0px;
 }
 
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  color: white;
-}
-
 .about {
   padding: 10px;
 }
@@ -55,9 +47,16 @@ h1, h2, h3, h4, h5 {
   font-family: 'Cabin', sans-serif;
 }
 
+html {
+  height: 100%;
+}
+
 body {
+  position: relative;
   min-height: 100%;
   font-family: 'Cabin', sans-serif;
+  margin: 0;
+  padding-bottom: 135px;
 }
 
 #main {
@@ -69,14 +68,40 @@ body {
   padding: 10px;
 }
 
+#copy-link {
+  max-width: 80%;
+  text-overflow: ellipsis;
+  border-radius: 5000px 0px 0px 5000px;
+  display: inline-block;
+  height: 2.4rem;
+  font-size: 1rem;
+  border: 1px solid grey;
+  margin: 0px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+#share {
+  min-width: 20%;
+  height: 2.4rem;
+  font-size: 1rem;
+  display: inline-block;
+  margin: 0px;
+  border-radius: 0px 5000px 5000px 0px;
+  border: 1px solid grey;
+  vertical-align: middle;
+  text-align: center;
+}
 
 .footer {
   padding: 10px;
-  position: relative;
+  position: absolute;
   width: 100%;
   bottom: 0;
   left: 0;
+  color: white;
   background-color: #2c3840;
+  height: 135px;
 }
 
 .avatar {
