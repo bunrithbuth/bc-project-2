@@ -91,9 +91,9 @@ submit.addEventListener('click', function() {
             } else {
                 let currentRating = results.average
                 console.log(currentRating)
-                let pollId
-                pollId = document.querySelector('div').getAttribute('data-pollOptionId')
-                console.log(pollId)
+                // let pollId
+                // pollId = document.querySelector('div').getAttribute('data-pollOptionId')
+                // console.log(pollId)
                 let starResult = ""
                 for (let i = 1; i < 6; i++) {
                     if (i <= currentRating) {
