@@ -55,8 +55,6 @@ submit.addEventListener('click', function() {
     }
 
 //Fetch PUT request to the database   
-
-
     fetch('/api/pollOption/' + pollOptionId, {
             method: 'PUT',
             headers: {
@@ -67,28 +65,8 @@ submit.addEventListener('click', function() {
         .then(function(response) {
             return response.json();
         })
-        .then(function(result) {
-            console.log(result)
-        })
-    
-})
-
-let pollId
-
-pollId = document.querySelector('.card-section').getAttribute('data-pollId')
-console.log(pollId)
-
-fetch('/api/pollOption/' + pollId)
-        .then(function(response) {
-            console.log(response)
-            return response.json();
-        })
         .then(function(results) {
             console.log(results)
-            let pollId
-            pollId = document.querySelector('.card-section').getAttribute('data-pollId')
-            console.log(pollId)
-            // pollId = document.querySelector('div').getAttribute('data-pollOptionId')
             if (results.type == "not star") {
                 let name = results.name
                 let percentage = results.percentage
@@ -131,6 +109,11 @@ fetch('/api/pollOption/' + pollId)
                 $('#voteOutput').append(starResult)
                 console.log(starResult)
             }
-    })
+        })
+})
+
+
+
+
 
 

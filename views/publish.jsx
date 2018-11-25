@@ -25,18 +25,22 @@ const Publish = (props) =>
                                     <ul>
                                     <input className="radio radio-1 options" id="radio-1" value={props.poll.pollOptions[0].id} type="radio" name="radio" />
                                     <label className="radio radio-1" htmlFor="radio-1">{props.poll.pollOptions[0].name}</label>
+                                {/*
                                     <div className="progress" role="progressbar" tabindex="0" aria-valuenow={Math.round((parseInt(props.poll.pollOptions[0].votes) / (parseInt(props.poll.pollOptions[1].votes) + parseInt(props.poll.pollOptions[0].votes))) * 100)} aria-valuemin="0" aria-valuetext={Math.round((parseInt(props.poll.pollOptions[0].votes) / (parseInt(props.poll.pollOptions[1].votes) + parseInt(props.poll.pollOptions[0].votes))) * 100) + ' percent'} aria-valuemax="100">
                                     <span className="progress-meter" style={ { width: Math.round((parseInt(props.poll.pollOptions[0].votes) / (parseInt(props.poll.pollOptions[1].votes) + parseInt(props.poll.pollOptions[0].votes))) * 100) + '%'} }>
                                         <p className="progress-meter-text">{parseInt(props.poll.pollOptions[0].votes) == 0 ? 0 : Math.round((parseInt(props.poll.pollOptions[0].votes) / (parseInt(props.poll.pollOptions[1].votes) + parseInt(props.poll.pollOptions[0].votes))) * 100)} %</p>
                                     </span>
                                     </div>
+                                */}
                                     <input className="radio radio-2 options" id="radio-2" value={props.poll.pollOptions[1].id} type="radio" name="radio" />
                                     <label className="radio radio-2" htmlFor="radio-2">{props.poll.pollOptions[1].name}</label>
+                                {/*
                                     <div className="progress" role="progressbar" tabindex="0" aria-valuenow={Math.round((parseInt(props.poll.pollOptions[1].votes) / (parseInt(props.poll.pollOptions[1].votes) + parseInt(props.poll.pollOptions[0].votes))) * 100)} aria-valuemin="0" aria-valuetext={Math.round((parseInt(props.poll.pollOptions[1].votes) / (parseInt(props.poll.pollOptions[1].votes) + parseInt(props.poll.pollOptions[0].votes))) * 100) + ' percent'} aria-valuemax="100">
                                     <span className="progress-meter" style={ { width: Math.round((parseInt(props.poll.pollOptions[1].votes) / (parseInt(props.poll.pollOptions[1].votes) + parseInt(props.poll.pollOptions[0].votes))) * 100) + '%'} }>
                                         <p className="progress-meter-text">{parseInt(props.poll.pollOptions[1].votes) == 0 ? 0 : Math.round((parseInt(props.poll.pollOptions[1].votes) / (parseInt(props.poll.pollOptions[1].votes) + parseInt(props.poll.pollOptions[0].votes))) * 100)} %</p>
                                     </span>
                                     </div>
+                                */}
                                     </ul>
                                     </div> : <h2></h2>}
                                 {props.poll.type === 'stars' ? <div className="stars">
@@ -52,22 +56,26 @@ const Publish = (props) =>
                                     <label className="star star-4" htmlFor="star4" title="text"></label>
                                     <input className="star star-5" id="star5" type="radio" name="rate" value="5" />
                                     <label className="star star-5" htmlFor="star5" title="text"></label>
-                                    <br></br>
+                                {/*<br></br>
                                     { (parseInt(props.poll.pollOptions[0].starRating) / parseInt(props.poll.pollOptions[0].starRatingCount)) >= 1 ? <i class="fas fa-star"></i> : '' }
                                     { (parseInt(props.poll.pollOptions[0].starRating) / parseInt(props.poll.pollOptions[0].starRatingCount)) >= 1.65 ? <i class="fas fa-star"></i> : '' }
                                     { (parseInt(props.poll.pollOptions[0].starRating) / parseInt(props.poll.pollOptions[0].starRatingCount)) >= 2.65 ? <i class="fas fa-star"></i> : '' }
                                     { (parseInt(props.poll.pollOptions[0].starRating) / parseInt(props.poll.pollOptions[0].starRatingCount)) >= 3.65 ? <i class="fas fa-star"></i> : '' }
                                     { (parseInt(props.poll.pollOptions[0].starRating) / parseInt(props.poll.pollOptions[0].starRatingCount)) >= 4.65 ? <i class="fas fa-star"></i> : '' }
+                                */}
                                     </ul></div> </div> : <h2></h2>}
                                 {props.poll.type === 'multiple' ? <div id={props.poll.id} className="mutiple" value={props.poll.id}> 
                                     {props.poll.pollOptions.map(i => <ul>
                                         <a><input className="radio"  id={'radiomc-' + i.id} type="radio" name="radio" value={i.id} />
                                         <label className="radio" htmlFor={'radio-' + i.id}>{i.name}</label>
+                                    {/*
                                         <div class="progress" role="progressbar" tabindex="0" aria-valuenow={parseInt(i.votes) / parseInt(i.votes)} aria-valuemin="0" aria-valuetext={parseInt(i.votes)} aria-valuemax="100">
                                             <span class="progress-meter">
                                                 <p class="progress-meter-text">{parseInt(i.votes) == 0 ? 0 : parseInt(i.votes) / parseInt(i.votes)} %</p>
                                             </span>
-                                        </div></a></ul>)}
+                                         </div>
+                                    */}
+                                        </a></ul>)}
                                     </div> : <h2></h2>}
                                 <div id="voteOutput"></div>
                             </div>
