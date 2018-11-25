@@ -69,7 +69,7 @@ fetch('/api/pollOption/' + pollOptionId, {
     .then(function(results) {
         console.log(results)
     })
-        $('#userVote').hide()
+        // $('#userVote').hide()
         // $('#castVote').show()
         // $('#castRoute').show()
         // // Create New Poll

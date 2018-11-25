@@ -50,7 +50,7 @@ const Content = props =>
 
     </div>
 
-<div className="full-width-testimonial">
+<div className="full-width-testimonial testimonials">
   <div className="full-width-testimonial-section">
 
     <div className="full-width-testimonial-icon text-center">

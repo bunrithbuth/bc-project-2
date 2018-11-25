@@ -48,11 +48,6 @@ function pageChange(num) {
                         })
                         .then(function(myJson3) {
                             console.log(myJson3)
-                            let starRt = "N/A"
-
-                            if(element.starRating !== undefined){
-                                starRt = element.starRating
-                            }
 
                             switch(element.type){
                                 case 'stars':
@@ -66,7 +61,7 @@ function pageChange(num) {
                                                 </p>
                                                 <p>
                                                     <span>Rating: </span>
-                                                    <span style="font-size: 24px;">&#9734;   ${starRt}</span>
+                                                    <span style="font-size: 24px;">&#9734;   3.5</span>
                                                 </p>
                                                 <h6>
                                                     expires in:

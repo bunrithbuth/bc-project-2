@@ -162,7 +162,7 @@ module.exports = function(app) {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.gte]: moment.utc().format("MM/DD/YYYY")
+                    [Op.gte]: moment.utc().toDate()
                 },
                 isPrivate: 0,
             },
@@ -179,7 +179,7 @@ module.exports = function(app) {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.gte]: moment.utc().format("MM/DD/YYYY HH:MM:SS")
+                    [Op.gte]: moment.utc().toDate()
                 },
                 isPrivate: 0,
             },
@@ -197,11 +197,12 @@ module.exports = function(app) {
         db.poll.count({
             where: {
                 expiration: {
-                    [Op.gte]: moment.utc().format("MM/DD/YYYY HH:MM:SS")
+                    [Op.gte]: moment.utc().toDate()
                 },
                 isPrivate: 0,
             }
         }).then(function(_count) {
+            console.log
             res.json({count: _count, perpage: _perpage});
         });
     })
@@ -211,7 +212,7 @@ module.exports = function(app) {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                    [Op.lt]: moment.utc().toDate()
                 },
                 isPrivate: 0
             }
@@ -226,7 +227,7 @@ module.exports = function(app) {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                    [Op.lt]: moment.utc().toDate()
                 },
                 isPrivate: 0,
             },
@@ -244,7 +245,7 @@ module.exports = function(app) {
         db.poll.count({
             where: {
                 expiration: {
-                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                    [Op.lt]: moment.utc().toDate()
                 },
                 isPrivate: 0,
             }
@@ -252,7 +253,6 @@ module.exports = function(app) {
             res.json({count: _count, perpage: _perpage});
         });
     })
-
 
 
     app.get('/poll/:id', (req, res) => {
@@ -481,7 +481,7 @@ module.exports = function(app) {
                                 percentage.push(((_votes/sum)*100).toFixed(2))
                             })
                             // console.log(percentage)
-                            
+
                             res.json({type: 'not star', sum: sum, name: name, votes: votes, percentage: percentage})
                         })
                     })

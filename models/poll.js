@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false, 
       },
       expiration: {
-          type: DataTypes.DATE,
+          type: DataTypes.DATE(6),
           allowNull: false,
           defaultValue: DataTypes.NOW
       },
