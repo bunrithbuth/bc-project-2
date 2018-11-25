@@ -193,6 +193,12 @@ body {
     padding-left: 1rem;
   }
 
+/* For poll option list */
+
+.radio {
+  color: white;
+  -webkit-text-stroke: 0.5px black;
+}
 
 /* FOR HOMEPAGE HERO */
 
