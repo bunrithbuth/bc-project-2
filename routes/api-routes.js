@@ -525,7 +525,7 @@ module.exports = function(app) {
                     }).then(function(_pollOptions) {
                         if(poll2.dataValues.type === 'stars'){
                             let avg = Math.round(_pollOptions[0].starRating / _pollOptions[0].starRatingCount * 2) / 2
-                            res.json({type: 'star', average: avg, starRatingCount: _pollOptions[0].starRatingCount })
+                            res.json({isExpired: 1, type: 'star', average: avg, starRatingCount: _pollOptions[0].starRatingCount })
                         }else{
                             let name = []
                             let votes = []
