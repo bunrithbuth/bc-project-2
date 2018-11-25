@@ -54,7 +54,10 @@ function pageChange(num) {
                                                 </p>
                                                 <p>
                                                     <span>Rating: </span>
-                                                    <span style="font-size: 24px;">&#9734;   ${starRt}</span>
+                                                    <span style="font-size: 24px;">&#9734;  ${myJson2[0].starRating === 0 ? '0' : (Math.round((myJson2[0].starRating/myJson2[0].starRatingCount) *2)/2)} </span>
+                                                </p>
+                                                <p>
+                                                    <span style="color: red; font-weight: 700">EXPIRED </span>
                                                 </p>
                                             </div>
                                             </a>
