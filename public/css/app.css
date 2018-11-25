@@ -35,6 +35,9 @@ font-family: 'Armata', sans-serif; */
   background-size: cover;
 }
 
+#userVote {
+  margin-top: 20px;
+}
 .top-bar, .top-bar ul {
   background-color: #2c3840;
 }

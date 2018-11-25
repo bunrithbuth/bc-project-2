@@ -143,15 +143,3 @@ document.getElementById('remove').addEventListener('click', (event) => {
     let newOption = document.getElementById('option' + optionCount);
     newOption.remove(`<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);
 })
-
-// function getPoll(r) {
-//     console.log(r.pollId)
-// fetch('/api/poll/' + r.pollId)
-//   .then(function(response) {
-//     console.log(response)
-//     return response.json();
-//   })
-//   .then(function(data) {
-//       console.log(data)
-// })
-// }

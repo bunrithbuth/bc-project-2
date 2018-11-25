@@ -413,8 +413,6 @@ module.exports = function(app) {
 
     app.put('/api/pollOption/:id', (req, res) => {
         const _id = req.params.id
-        console.log("UserID is" + req.body.userId + "star rating is " + req.body.starRating)
-
         let currentStarRating
         let currentStarRatingCount
 

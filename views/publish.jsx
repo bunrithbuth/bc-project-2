@@ -11,12 +11,9 @@ const Publish = (props) =>
             <Nav />
             <div className="grid-container">
                 <div id="cardContainer" className="grid-x grid-padding-x">
-                    <div id="userVote" className="medium-12 cell" value={props.poll.id}>
+                    <div id="userVote" className="medium-12 cell" data-pollId={props.poll.id}>
                         <div class="card voteContainer" >
                             <div className="card-divider">
-                            <div className="avatarContainer text-right">
-                                <img className="avatar" src="" alt="profile avatar" />
-                            </div>
                                 <h1>{props.poll.name}</h1>
                             </div>
                             <div className="card-section">
@@ -43,10 +40,6 @@ const Publish = (props) =>
                                     <label className="radio" htmlFor={'radio-' + i.id}>{i.name}</label></a>)}
                                     </div> : <h2></h2>}
                             </div>
-                        {/* <div>
-                            <input id="copy-link" type="text" readOnly value="" />
-                        <button id="share" className="createButton button"><i class="fas fa-clipboard"></i></button>
-                        </div> */}
                         <button id="submit" data-type={props.poll.type} type="submit" className="createButton button">Submit Vote</button>
                         </div>
                     </div>  
@@ -54,7 +47,7 @@ const Publish = (props) =>
             </div>
             <div className="grid-container">
                 <div id="cardContainer" className="grid-x grid-padding-x">
-                    <div id="castVote" className="medium-12 cell">
+                    <div className="medium-12 cell">
                             <div>
                                 <input id="copy-link" type="text" readOnly value="" />
                                 <button id="share" className="createButton button"><i class="fas fa-clipboard"></i></button>

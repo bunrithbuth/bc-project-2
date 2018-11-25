@@ -36,7 +36,7 @@ if(!_user){
                     `
                 })
             } else if (polls.type === "stars") {
-                let currentRating = Math.round(polls.pollOptions[0].starRating *2)/2
+                let currentRating = Math.round((polls.pollOptions[0].starRating/polls.pollOptions[0].starRatingCount) *2)/2
                 console.log(currentRating)
                 let starResult = ""
                 for (let i = 1; i < 6; i++) {

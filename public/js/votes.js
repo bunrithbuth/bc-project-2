@@ -1,3 +1,6 @@
+const submit = document.getElementById('submit')
+const share = document.getElementById('share')
+
 //Login user local storage
 let _user
 document.addEventListener("DOMContentLoaded", () => {
@@ -5,15 +8,26 @@ document.addEventListener("DOMContentLoaded", () => {
 // Retrieve local storage for user photoURL
     if (typeof(Storage) !== "undefined") {
         _user = JSON.parse(localStorage.getItem("user"))
-        document.querySelector(".avatar").setAttribute('src', _user.photoURL)
+        if (!_user) {
+            submit.setAttribute('disabled', "")
+            submit.innerText = "Please Log In to Vote!!"
+        }
     } else {
         console.log("Not Logged In")
     }
     document.getElementById('copy-link').setAttribute('value', window.location.href)
+    let pollId = document.getElementById('userVote').getAttribute('data-pollId')
+
+    fetch(`/api/hasvoted/${pollId}/${_user.id}`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.length > 0) {
+            submit.setAttribute('disabled', "")
+            submit.innerText = "Already Voted"
+        }
+    })
 })
 
-const submit = document.getElementById('submit')
-const share = document.getElementById('share')
 
 share.addEventListener('click', function() {
     console.log(window.location.href)
@@ -68,6 +82,7 @@ fetch('/api/pollOption/' + pollOptionId, {
     })
     .then(function(results) {
         console.log(results)
+        location.reload()
     })
         // $('#userVote').hide()
         // $('#castVote').show()
