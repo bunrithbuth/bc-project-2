@@ -24,7 +24,7 @@ function pageChange(num) {
         return response.json();
     })
     .then(function(myJson) {
-        let max = 2
+        let max = 10
         myJson.length < max ? max = myJson.length : null
         for (i = 0 ; i < max ; i++) {
             const element = myJson[i];
@@ -40,7 +40,7 @@ function pageChange(num) {
                     return response.json();
                 })
                 .then(function(myJson2) {
-                    //console.log(myJson2)
+                    console.log(myJson2)
 
                     fetch(`/api/user/${element.userId}`)
                         .then(function(response) {
@@ -61,7 +61,7 @@ function pageChange(num) {
                                                 </p>
                                                 <p>
                                                     <span>Rating: </span>
-                                                    <span style="font-size: 24px;">&#9734;   3.5</span>
+                                                    <span style="font-size: 24px;">&#9734;  ${myJson2[0].starRating === 0 ? 'New!' : (Math.round((myJson2[0].starRating/myJson2[0].starRatingCount) *2)/2)} </span>
                                                 </p>
                                                 <h6>
                                                     expires in:

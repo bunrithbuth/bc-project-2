@@ -11,7 +11,10 @@ const MyPolls = () =>
         <body>
             <Nav />
             <div className="grid-container">
-                <div id="cardContainer" className="grid-x grid-padding-x"></div>
+                <center>
+                    <a id="commH1">My Polls</a>
+                </center>
+                <div id="cardContainer" className="grid-x grid-padding-x mypollcontainer"></div>
             </div>
             <Footer />
             <Script /> 
