@@ -73,17 +73,30 @@ if(!_user){
                     let percentage = 0
                     // Percentage
                     polls.pollOptions.forEach(element => {
-                        percentage = ((element/sum)*100).toFixed(2)
-                        pollDiv +=
-                    `<div data-optionId="${element.id}" >
-                    <h3 class="voteOptions">${element.name}</h3>
-                        <div class="progress" role="progressbar" tabindex="0">
-                        <span class="progress-meter" style="width: ${percentage}%">
-                            <p class="progress-meter-text">${percentage}%</p>
-                        </span>
-                        </div>
-                        </div>
-                        `
+                        percentage = ((element.votes/sum)*100).toFixed(0)
+                        if (percentage == 0) {
+                            pollDiv +=
+                            `<div data-optionId="${element.id}" >
+                            <h3 class="voteOptions">${element.name}</h3>
+                                <div class="progress" role="progressbar" tabindex="0">
+                                <span class="progress-meter" style="width: 0%">
+                                    <p class="progress-meter-text"></p>
+                                </span>
+                                </div>
+                                </div>
+                                `  
+                        } else {
+                            pollDiv +=
+                        `<div data-optionId="${element.id}" >
+                        <h3 class="voteOptions">${element.name}</h3>
+                            <div class="progress" role="progressbar" tabindex="0">
+                            <span class="progress-meter" style="width: ${percentage}%">
+                                <p class="progress-meter-text">${percentage}%</p>
+                            </span>
+                            </div>
+                            </div>
+                            `
+                        }
                     })
                 }
             } 

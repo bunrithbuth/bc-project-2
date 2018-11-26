@@ -10,7 +10,7 @@ const PollsForm = () =>
               </div>
             </div>
             <div className="medium-10 cell">
-                <input id="statement" className="input-group-rounded" type="text" placeholder="Name your poll!" />
+                <input required required id="statement" className="input-group-rounded" type="text" placeholder="Name your poll!" />
               <div className="expanded button-group align-middle">
                 <a id="multipleForm" className="button pollOptions">Multiple Options</a>
                 <a id="twoChoicesForm" className="button pollOptions">Two Options</a>
@@ -28,17 +28,17 @@ const PollsForm = () =>
           </div>
           <div id="multiple" className="medium-10 cell">
           <div id="multipleInput">
-            <input id="option1" className="input-group-rounded options" type="text" placeholder="Option 1" />
-            <input id="option2" className="input-group-rounded options" type="text" placeholder="Option 2" />
-            <input id="option3" className="input-group-rounded options" type="text" placeholder="Option 3" />
+            <input required required id="option1" className="input-group-rounded options" type="text" placeholder="Option 1" />
+            <input required id="option2" className="input-group-rounded options" type="text" placeholder="Option 2" />
+            <input required id="option3" className="input-group-rounded options" type="text" placeholder="Option 3" />
           </div>
           <button id="add" className="button pollOptions"><i className="fas fa-plus"></i> Add more options</button>
           <button id="remove" className="button pollOptions"><i className="fas fa-minus"></i> Remove options</button>
           </div>
           {/* Need to fix this */}
           <div id="twoChoices" className="medium-10 cell">
-          <input id="a" className="input-group-rounded" type="text" placeholder="Option 1" />
-          <input id="b" className="input-group-rounded" type="text" placeholder="Option 2" />
+          <input required id="a" className="input-group-rounded" type="text" placeholder="Option 1" />
+          <input required id="b" className="input-group-rounded" type="text" placeholder="Option 2" />
           </div>
           </div>
           <div className="grid-x grid-padding-x">
@@ -51,7 +51,7 @@ const PollsForm = () =>
           <div className="medium-1 cell"></div>
 
             <div className="medium-1 cell text-left switch large">
-              <input id="isPrivate" className="switch-input" type="checkbox" name="Switch" />
+              <input required id="isPrivate" className="switch-input" type="checkbox" name="Switch" />
               <label className="switch-paddle" htmlFor="isPrivate">
                 <span className="switch-active" aria-hidden="true">Yes</span>
                 <span className="switch-inactive" aria-hidden="true">No</span>
@@ -64,7 +64,7 @@ const PollsForm = () =>
               <label htmlFor="time" className="expireLabel text-left middle">Expire In: </label>
             </div>
             <div className="medium-3 cell">
-                <input id="time" type="number" min="1" />
+                <input required id="time" type="number" min="1" />
             </div>
             <div className="medium-3 cell">
                 <select id="duration">
