@@ -10,6 +10,8 @@ font-family: 'Armata', sans-serif; */
 #logo {
   width: 350px;
   padding-left: 10px;
+  -webkit-filter: drop-shadow(5px 5px 5px rgb(247, 247, 247));
+  filter:         drop-shadow(5px 5px 5px rgb(255, 255, 255));
 }
 
 #deez {
@@ -445,6 +447,13 @@ body {
   }
   .expireLabel {
     text-align: left;
+  }
+  .footer {
+    height: 200px;
+  }
+
+  body {
+    padding-bottom: 200px;
   }
 }
 
