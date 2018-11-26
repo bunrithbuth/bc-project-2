@@ -91,56 +91,75 @@ function getResult(pollId) {
     .then(result => displayResult(result))
 }
 
-function displayResult(result) {
+function displayResult(results) {
         document.getElementsByClassName('avatar')[0].setAttribute('src', result.user.photoURL)
         document.getElementById('userName').innerText = result.user.name.split(' ')[0]
-        console.log(result)
-        // if (results.type == "not star") {
-            //     getResult(pollOptionId)
-                // let name = results.name
-                // let percentage = results.percentage
-                // for (let i = 0; i < name.length; i++) {
-                //     console.log(name)
+        console.log(results)
+        if (results._poll.type == "twoChoices" || results._poll.type == "multiple") {
+                let sum = 0
+                results._poll.pollOptions.forEach(element => {
+                    sum += element.votes
+                })
+                console.log(sum)
+                if (sum == 0) {
+                    for (let i = 0; i < results._poll.pollOptions.length; i++) {
+                        $('#progress' + results._poll.pollOptions[i].id).text("0%")
+                        $('#progress' + results._poll.pollOptions[i].id).css('width', "0%")
+                    }
+                } else {
+                    let percentage = 0
+                    // Percentage
+                    results._poll.pollOptions.forEach(element => {
+                        percentage = ((element.votes/sum) * 100).toFixed(0)
+                        console.log(percentage)
+                        if (percentage == 0) {
+                            $('#progress' + element.id).text("0%")
+                            $('#progress' + element.id).css('width', percentage + "%")
+                        } else {
+                            $('#progress' + element.id).text(percentage + '%')
+                            $('#progress' + element.id).css('width', percentage + "%")
+                        }
+                    })
+                // for (let i = 0; i < results._poll.pollOptions.length; i++) {
                 //     var outputDiv = $('<div>')
                 //     var ul = $('<ul>')
-                //     var optionLabel = $('<label class="radio radio-1" htmlFor="radio-1">' + name[i] + '</label>')
-                //     var progBar = $('<div class="progress" role="progressbar" tabindex="0" aria-valuenow="' + parseInt(percentage[i]) + '" aria-valuemin="0" aria-valuetext="' + parseInt(percentage[i]) + '" aria-valuemax="100"></div>')
-                //     var spanBar = $('<span class="progress-meter" style="width: ' + parseInt(percentage[i]) + '%">')
-                //     var parText = $('<p class="progress-meter-text"> '+ parseInt(percentage[i]) + '%</p>')
+                //     var optionLabel = $('<label class="radio radio-1" htmlFor="radio-1">' + results._poll.pollOptions[i].name + '</label>')
+                //     var progBar = $('<div class="progress" role="progressbar" tabindex="0" aria-valuenow="' + results._poll.pollOptions[i].votes / sum + '" aria-valuemin="0" aria-valuetext="' + results._poll.pollOptions[i].votes + '" aria-valuemax="100"></div>')
+                //     var spanBar = $('<span class="progress-meter" style="width: ' + results._poll.pollOptions[i].votes / sum + '%">')
+                //     var parText = $('<p class="progress-meter-text"> '+ results._poll.pollOptions[i].votes / sum + '%</p>')
                 //     spanBar.append(parText)
                 //     progBar.append(spanBar)
                 //     optionLabel.append(progBar)
                 //     ul.append(optionLabel)
                 //     outputDiv.append(ul)
                 //     $('#voteOutput').append(outputDiv)
+                //     console.log(outputDiv)
                 // }
-                // $('.twoChoices').hide()
-                // $('.mutiple').hide()
-            //     // $('#submit').hide()
-            // } else {
-            //     let currentRating = results.average
-            //     console.log(currentRating)
-            //     // let pollId
-            //     // pollId = document.querySelector('div').getAttribute('data-pollOptionId')
-            //     // console.log(pollId)
-            //     let starResult = ""
-            //     for (let i = 1; i < 6; i++) {
-            //         if (i <= currentRating) {
-            //             starResult += '<i class="fas fa-star"></i>'
-            //         } else if (i == currentRating + 0.5) {
-            //             starResult += '<i class="fas fa-star-half-alt"></i>'
-            //         } else {
-            //             starResult += '<i class="far fa-star"></i>'
-            //         }
-            //     }
-            //     $('.stars').hide()
-            //     $('#submit').hide()
-            //     $('#voteOutput').append(starResult)
-            //     console.log(starResult)
-            // }
+            }
+            } else {
+                let type = results._poll.type
+                console.log(type)
+                let currentRating = results._poll.pollOptions[0].starRating
+                let currentRatingCount = results._poll.pollOptions[0].starRatingCount
+                let calc = currentRating / currentRatingCount
+                console.log(currentRating)
+                console.log(currentRatingCount)
+                console.log(calc)
+                let starResult = ""
+                for (let i = 1; i < 6; i++) {
+                    if (i <= calc ) {
+                        starResult += '<i class="fas fa-star"></i>'
+                    } else if (i == calc + 0.5) {
+                        starResult += '<i class="fas fa-star-half-alt"></i>'
+                    } else {
+                        starResult += '<i class="far fa-star"></i>'
+                    }
+                }
+                console.log(starResult)
+                $('#voteOutput').append(starResult)
+            }
         
 }
-
 
 {/* <p className="progress-meter-text"></p> */}
 

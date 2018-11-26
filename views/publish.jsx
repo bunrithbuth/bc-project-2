@@ -22,6 +22,7 @@ const Publish = (props) =>
                             </div>
                             
                             <div className="card-section" data-pollId={props.poll.id}>
+                            <div id="voteOutput"></div>
                                 {props.poll.type === 'twoChoices' ? <div className="twoChoices" id={props.poll.id}>
                                 <div className="optionContainer">
                                     <input className="radio radio-1 options" id="radio-1" value={props.poll.pollOptions[0].id} type="radio" name="radio" />
@@ -55,17 +56,18 @@ const Publish = (props) =>
                                 */}
                                     </div> : <h2></h2>}
                                 {props.poll.type === 'stars' ? <div className="stars">
+                                
                                 <div data-pollOptionId={props.poll.pollOptions[0].id} id={props.poll.id} className="rate">
-                                    <input className="star star-1" id="star1" type="radio" name="rate" value="1" />
-                                    <label className="star star-1" htmlFor="star1" title="text"></label>
-                                    <input className="star star-2" id="star2" type="radio" name="rate" value="2" />
-                                    <label className="star star-2" htmlFor="star2" title="text" ></label>
-                                    <input className="star star-3" id="star3" type="radio" name="rate" value="3" />
-                                    <label className="star star-3" htmlFor="star3" title="text"></label>
-                                    <input className="star star-4" id="star4" type="radio" name="rate" value="4" />
-                                    <label className="star star-4" htmlFor="star4" title="text"></label>
                                     <input className="star star-5" id="star5" type="radio" name="rate" value="5" />
                                     <label className="star star-5" htmlFor="star5" title="text"></label>
+                                    <input className="star star-4" id="star4" type="radio" name="rate" value="4" />
+                                    <label className="star star-4" htmlFor="star4" title="text" ></label>
+                                    <input className="star star-3" id="star3" type="radio" name="rate" value="3" />
+                                    <label className="star star-3" htmlFor="star3" title="text"></label>
+                                    <input className="star star-2" id="star2" type="radio" name="rate" value="2" />
+                                    <label className="star star-2" htmlFor="star2" title="text"></label>
+                                    <input className="star star-1" id="star1" type="radio" name="rate" value="1" />
+                                    <label className="star star-1" htmlFor="star1" title="text"></label>
                                 {/*<br></br>
                                     { (parseInt(props.poll.pollOptions[0].starRating) / parseInt(props.poll.pollOptions[0].starRatingCount)) >= 1 ? <i class="fas fa-star"></i> : '' }
                                     { (parseInt(props.poll.pollOptions[0].starRating) / parseInt(props.poll.pollOptions[0].starRatingCount)) >= 1.65 ? <i class="fas fa-star"></i> : '' }
@@ -85,7 +87,6 @@ const Publish = (props) =>
                                         </div>
                                     </div>)}
                                     </div> : <h2></h2>}
-                                <div id="voteOutput"></div>
                             </div>
                         <button id="submit" data-type={props.poll.type} type="submit" className="createButton button">Submit Vote</button>
                         </div>
