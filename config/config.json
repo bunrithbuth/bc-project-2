@@ -1,0 +1,27 @@
+{
+    "development": {
+      "username": CLEARDB_USERNAME,
+      "password": CLEARDB_PASSWORD,
+      "database": "bc_project_2",
+      "host": CLEARDB_DATABASE_URL,
+      "port": 3306,
+      "dialect": "mysql"
+    },
+    "test": {
+      "username": CLEARDB_USERNAME,
+      "password": CLEARDB_PASSWORD,
+      "database": "bc_project_2",
+      "host": CLEARDB_DATABASE_URL,
+      "port": 3306,
+      "dialect": "mysql"
+    },
+    "production": {
+      "username": CLEARDB_USERNAME,
+      "password": CLEARDB_PASSWORD,
+      "database": CLEARDB_DATABASE_URL,
+      "host": "127.0.0.1",
+      "port": 3306,
+      "dialect": "mysql"
+    }
+  }
+  
