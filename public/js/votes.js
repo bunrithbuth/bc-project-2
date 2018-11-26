@@ -88,12 +88,12 @@ submit.addEventListener('click', function() {
 function getResult(pollId) {
     fetch('/api/poll/' + pollId)
     .then(response => response.json())
-    .then(result => displayResult(result))
+    .then(results => displayResult(results))
 }
 
 function displayResult(results) {
-        document.getElementsByClassName('avatar')[0].setAttribute('src', result.user.photoURL)
-        document.getElementById('userName').innerText = result.user.name.split(' ')[0]
+        document.getElementsByClassName('avatar')[0].setAttribute('src', results.user.photoURL)
+        document.getElementById('userName').innerText = results.user.name.split(' ')[0]
         console.log(results)
         if (results._poll.type == "twoChoices" || results._poll.type == "multiple") {
                 let sum = 0
