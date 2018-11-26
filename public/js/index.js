@@ -6,7 +6,6 @@ fetch('/api/active')
     return response.json();
   })
   .then(function(myJson) {
-    console.log(myJson)
     let max = 20
     myJson.length < max ? max = myJson.length : null
     for (i = 0 ; i < max ; i++) {
@@ -17,22 +16,17 @@ fetch('/api/active')
                 return response.json();
             })
             .then(function(myJson2) {
-                console.log(myJson2)
                 sr = parseInt(myJson2[0].starRating)
                 src = parseInt(myJson2[0].starRatingCount)
-
-                console.log (sr + ', ' + src)
 
                 fetch(`/api/user/${element.userId}`)
                     .then(function(response) {
                         return response.json();
                     })
                     .then(function(myJson3) {
-                        console.log(myJson3)
 
                         switch(element.type){
                             case 'stars':
-                                console.log(Math.round(parseInt(sr) / parseInt(src) * 2) / 2)
                                 $('.masonry-css').append(`
                                     <div class="masonry-css-item">
                                         <a href="/poll/${element.id}">

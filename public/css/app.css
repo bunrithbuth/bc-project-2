@@ -2,7 +2,41 @@
 font-family: 'Bitter', serif;
 font-family: 'Quattrocento', serif;
 font-family: 'Armata', sans-serif; */
+#voteOutput {
+  background-color: rgba(83, 81, 81, 0.8);
+  text-align: center;
+  color: white;
+  padding-top: 10px;
+  display: none;
+}
 
+#voteCount {
+  text-align: end;
+  color: white;
+}
+
+#expired {
+  color: red;
+}
+
+.stars {
+  text-align: center;
+}
+.pollName {
+  margin: 0 auto;
+}
+.progress, .progress-meter {
+  border-radius: 5000px;
+}
+
+p.progress-meter-text {
+  text-align: center;
+}
+
+input[name=radio]:checked + label {
+  transition-duration: 1s;
+  text-shadow: 2px 2px 2px #000000;
+}
 #home {
   padding: 20px;
 }
@@ -10,6 +44,8 @@ font-family: 'Armata', sans-serif; */
 #logo {
   width: 350px;
   padding-left: 10px;
+  -webkit-filter: drop-shadow(5px 5px 5px rgb(247, 247, 247));
+  filter:         drop-shadow(5px 5px 5px rgb(255, 255, 255));
 }
 
 #deez {
@@ -149,11 +185,11 @@ body {
   border: 0;
 }
 
-.rate {
+/* .rate {
   float: left;
   height: 46px;
   padding: 0 10px;
-}
+} */
 .rate:not(:checked) > input {
   position:absolute;
   top:-9999px;
@@ -445,6 +481,13 @@ body {
   }
   .expireLabel {
     text-align: left;
+  }
+  .footer {
+    height: 200px;
+  }
+
+  body {
+    padding-bottom: 200px;
   }
 }
 

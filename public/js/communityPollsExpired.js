@@ -20,7 +20,6 @@ function pageChange(num) {
         myJson.length < max ? max = myJson.length : null
         for (i = 0 ; i < max ; i++) {
             const element = myJson[i];
-            console.log(element)
 
             fetch(`/api/poll/${element.id}/option`)
                 .then(function(response) {
@@ -34,7 +33,6 @@ function pageChange(num) {
                             return response.json();
                         })
                         .then(function(myJson3) {
-                            console.log(myJson3)
 
                             let starRt = "N/A"
 
@@ -117,10 +115,7 @@ function pageChange(num) {
                     return response.json();
                 })
                 .then(function(myJson) {
-                    console.log('count ' + myJson.count)
-                    console.log('perpage ' + myJson.perpage)
                     let pages = Math.ceil(myJson.count/myJson.perpage)
-                    console.log('pages ' + pages)
 
                     $('.pagination').empty()
 
@@ -155,8 +150,6 @@ function pageChange(num) {
 
                         range.unshift(1)
                         range.push(pages)
-                        
-                        console.log(range)
 
                         range.forEach(i => {
                             if(i !== "..."){

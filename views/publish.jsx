@@ -18,7 +18,9 @@ const Publish = (props) =>
                                 <img className="avatar" src="" alt="profile avatar" />
                                 <p id="userName"></p>
                             </div>
-                                <h1>{props.poll.name}</h1>
+                            <div className="pollName">
+                                <h2>{props.poll.name}</h2>
+                            </div>
                             </div>
                             
                             <div className="card-section" data-pollId={props.poll.id}>
@@ -87,6 +89,7 @@ const Publish = (props) =>
                                         </div>
                                     </div>)}
                                     </div> : <h2></h2>}
+                                <div id="voteCount"></div>
                             </div>
                         <button id="submit" data-type={props.poll.type} type="submit" className="createButton button">Submit Vote</button>
                         </div>
@@ -95,6 +98,7 @@ const Publish = (props) =>
             </div>
             <div className="grid-container" style= {{marginBottom: 30 + 'px'}}>
                 <div id="cardContainer" className="grid-x grid-padding-x">
+                    <div className="medium-12 cell text-center" id="expired"></div>
                     <div className="medium-12 cell">
                             <div>
                                 <input id="copy-link" type="text" readOnly value="" />

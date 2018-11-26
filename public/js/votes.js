@@ -11,13 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof(Storage) !== "undefined") {
         _user = JSON.parse(localStorage.getItem("user"))
         if (!_user) {
-            submit.setAttribute('disabled', "")
+            submit.disabled = true
             submit.innerText = "Please Log In to Vote!!"
         }
         fetch(`/api/hasvoted/${pollId}/${_user.id}`)
         .then(response => response.json())
         .then(data => {
             if (data.length > 0) {
+                $(`input[value=${data[0].pollOptionId}]`).prop('checked', true)
                 submit.disabled = true
                 submit.innerText = "Voted!!!"
                 let input = document.getElementsByTagName('input')
@@ -34,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 share.addEventListener('click', function() {
-    console.log(window.location.href)
     document.getElementById('copy-link').select()
     document.execCommand("copy")
     share.innerText = "Copied!!"
@@ -55,8 +55,6 @@ submit.addEventListener('click', function() {
     if (submit.getAttribute('data-type') === 'stars') {
         pollOptionId = document.querySelector('.rate').getAttribute('data-pollOptionId')
         const stars = document.querySelector('input[name = "rate"]:checked').value
-        console.log(stars)
-        console.log(pollOptionId)
         // Star vote
         userVote = {
             userId: _user.id,
@@ -65,7 +63,6 @@ submit.addEventListener('click', function() {
     } else if (submit.getAttribute('data-type') === 'twoChoices' || submit.getAttribute('data-type') === 'multiple') {
         // twoChoices and multiple vote
         pollOptionId = document.querySelector('input[name = "radio"]:checked').value
-        console.log(pollOptionId)
         userVote = {
             userId: _user.id,
             starRating: null
@@ -88,63 +85,50 @@ submit.addEventListener('click', function() {
 function getResult(pollId) {
     fetch('/api/poll/' + pollId)
     .then(response => response.json())
-    .then(results => displayResult(results))
+    .then(results => {
+        isExpired(results)
+        displayResult(results)
+    })
+}
+
+function isExpired(results) {
+        if (moment.utc(results._poll.expiration) <= moment.utc())  {
+            submit.disabled = true
+            $('#expired').html("<h3>Poll Expired, Please See The Result!</h3>")
+        }
 }
 
 function displayResult(results) {
         document.getElementsByClassName('avatar')[0].setAttribute('src', results.user.photoURL)
         document.getElementById('userName').innerText = results.user.name.split(' ')[0]
-        console.log(results)
         if (results._poll.type == "twoChoices" || results._poll.type == "multiple") {
                 let sum = 0
                 results._poll.pollOptions.forEach(element => {
                     sum += element.votes
                 })
-                console.log(sum)
+                $('#voteCount').text("Vote Count: " + sum)
+                let percentage = 0
                 if (sum == 0) {
                     for (let i = 0; i < results._poll.pollOptions.length; i++) {
-                        $('#progress' + results._poll.pollOptions[i].id).text("0%")
                         $('#progress' + results._poll.pollOptions[i].id).css('width', "0%")
                     }
                 } else {
-                    let percentage = 0
                     // Percentage
                     results._poll.pollOptions.forEach(element => {
                         percentage = ((element.votes/sum) * 100).toFixed(0)
-                        console.log(percentage)
                         if (percentage == 0) {
-                            $('#progress' + element.id).text("0%")
                             $('#progress' + element.id).css('width', percentage + "%")
                         } else {
-                            $('#progress' + element.id).text(percentage + '%')
+                            $('#progress' + element.id).html(`<p class="progress-meter-text">${percentage}%</p>`)
                             $('#progress' + element.id).css('width', percentage + "%")
                         }
                     })
-                // for (let i = 0; i < results._poll.pollOptions.length; i++) {
-                //     var outputDiv = $('<div>')
-                //     var ul = $('<ul>')
-                //     var optionLabel = $('<label class="radio radio-1" htmlFor="radio-1">' + results._poll.pollOptions[i].name + '</label>')
-                //     var progBar = $('<div class="progress" role="progressbar" tabindex="0" aria-valuenow="' + results._poll.pollOptions[i].votes / sum + '" aria-valuemin="0" aria-valuetext="' + results._poll.pollOptions[i].votes + '" aria-valuemax="100"></div>')
-                //     var spanBar = $('<span class="progress-meter" style="width: ' + results._poll.pollOptions[i].votes / sum + '%">')
-                //     var parText = $('<p class="progress-meter-text"> '+ results._poll.pollOptions[i].votes / sum + '%</p>')
-                //     spanBar.append(parText)
-                //     progBar.append(spanBar)
-                //     optionLabel.append(progBar)
-                //     ul.append(optionLabel)
-                //     outputDiv.append(ul)
-                //     $('#voteOutput').append(outputDiv)
-                //     console.log(outputDiv)
-                // }
             }
             } else {
-                let type = results._poll.type
-                console.log(type)
                 let currentRating = results._poll.pollOptions[0].starRating
                 let currentRatingCount = results._poll.pollOptions[0].starRatingCount
+                $('#voteCount').text("Vote Count: " + currentRatingCount)
                 let calc = currentRating / currentRatingCount
-                console.log(currentRating)
-                console.log(currentRatingCount)
-                console.log(calc)
                 let starResult = ""
                 for (let i = 1; i < 6; i++) {
                     if (i <= calc ) {
@@ -155,12 +139,14 @@ function displayResult(results) {
                         starResult += '<i class="far fa-star"></i>'
                     }
                 }
-                console.log(starResult)
-                $('#voteOutput').append(starResult)
+                $('#voteOutput').show()
+                $('#voteOutput').append(`
+                ${starResult}
+                <h3>Current Star Rating</h3> 
+                `)
             }
         
 }
 
-{/* <p className="progress-meter-text"></p> */}
 
 
