@@ -98,6 +98,7 @@ const Publish = (props) =>
             </div>
             <div className="grid-container" style= {{marginBottom: 30 + 'px'}}>
                 <div id="cardContainer" className="grid-x grid-padding-x">
+                    <div className="medium-12 cell text-center" id="expired"></div>
                     <div className="medium-12 cell">
                             <div>
                                 <input id="copy-link" type="text" readOnly value="" />

@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.json())
         .then(data => {
             if (data.length > 0) {
-                console.log(data[0].pollOptionId)
                 $(`input[value=${data[0].pollOptionId}]`).prop('checked', true)
                 submit.disabled = true
                 submit.innerText = "Voted!!!"
@@ -36,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 share.addEventListener('click', function() {
-    console.log(window.location.href)
     document.getElementById('copy-link').select()
     document.execCommand("copy")
     share.innerText = "Copied!!"
@@ -57,8 +55,6 @@ submit.addEventListener('click', function() {
     if (submit.getAttribute('data-type') === 'stars') {
         pollOptionId = document.querySelector('.rate').getAttribute('data-pollOptionId')
         const stars = document.querySelector('input[name = "rate"]:checked').value
-        console.log(stars)
-        console.log(pollOptionId)
         // Star vote
         userVote = {
             userId: _user.id,
@@ -67,7 +63,6 @@ submit.addEventListener('click', function() {
     } else if (submit.getAttribute('data-type') === 'twoChoices' || submit.getAttribute('data-type') === 'multiple') {
         // twoChoices and multiple vote
         pollOptionId = document.querySelector('input[name = "radio"]:checked').value
-        console.log(pollOptionId)
         userVote = {
             userId: _user.id,
             starRating: null
@@ -99,14 +94,13 @@ function getResult(pollId) {
 function isExpired(results) {
         if (moment.utc(results._poll.expiration) <= moment.utc())  {
             submit.disabled = true
-            submit.innerText = "Poll is expired"
+            $('#expired').html("<h3>Poll Expired, Please See The Result!</h3>")
         }
 }
 
 function displayResult(results) {
         document.getElementsByClassName('avatar')[0].setAttribute('src', results.user.photoURL)
         document.getElementById('userName').innerText = results.user.name.split(' ')[0]
-        console.log(results)
         if (results._poll.type == "twoChoices" || results._poll.type == "multiple") {
                 let sum = 0
                 results._poll.pollOptions.forEach(element => {
@@ -145,7 +139,7 @@ function displayResult(results) {
                         starResult += '<i class="far fa-star"></i>'
                     }
                 }
-                console.log(starResult)
+                $('#voteOutput').show()
                 $('#voteOutput').append(`
                 ${starResult}
                 <h3>Current Star Rating</h3> 

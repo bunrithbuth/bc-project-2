@@ -7,11 +7,16 @@ font-family: 'Armata', sans-serif; */
   text-align: center;
   color: white;
   padding-top: 10px;
+  display: none;
 }
 
 #voteCount {
   text-align: end;
   color: white;
+}
+
+#expired {
+  color: red;
 }
 
 .stars {

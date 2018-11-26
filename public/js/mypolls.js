@@ -16,7 +16,6 @@ if(!_user){
         return response.json();
     })
     .then(function(data) {
-        console.log(data)
 
         let cardContainer = document.getElementById('cardContainer')
     
@@ -31,7 +30,6 @@ if(!_user){
                 } else {
                     currentRating = Math.round((polls.pollOptions[0].starRating/polls.pollOptions[0].starRatingCount) *2)/2
                 }
-                console.log(currentRating)
                 let starResult = ""
                 for (let i = 1; i < 6; i++) {
                     if (i <= currentRating) {
@@ -55,7 +53,6 @@ if(!_user){
                 polls.pollOptions.forEach(element => {
                     sum += element.votes
                 })
-                console.log(sum)
                 if (sum == 0) {
                     polls.pollOptions.forEach(element => {
                     pollDiv +=
@@ -129,8 +126,6 @@ if(!_user){
 
 function deletePoll(id) {
     event.preventDefault()
-
-    console.log('id is ' + id)
     fetch('/api/poll/' + id, {
         method: 'DELETE'
     })
