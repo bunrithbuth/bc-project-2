@@ -65,7 +65,7 @@ const About = () =>
           </div>
           <div class="cell">
             <div class="card">
-              <img className="aboutPhoto" src="assets/user-512.png" />
+              <img className="aboutPhoto" src="assets/snguy.jpg" />
               <div class="card-section">
                 <h4>Steve Nguy</h4>
                 <p>Stuff about Steve</p>
