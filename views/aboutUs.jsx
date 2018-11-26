@@ -19,7 +19,7 @@ const About = () =>
       <div className="grid-container">
         <div className="grid-x grid-padding-x small-up-2 medium-up-3">
           <div className="cell">
-            <div className="card">
+            <div className="card text-center">
               <img className="aboutPhoto" src="assets/ben.jpg" />
               <div className="card-section">
               <h4>Ben Oh</h4>
@@ -28,7 +28,7 @@ const About = () =>
             </div>
           </div>
           <div className="cell">
-            <div className="card">
+            <div className="card text-center">
               <img className="aboutPhoto" src="assets/bunrith.jpg" />
               <div className="card-section">
                 <h4>Bunrith Buth</h4>
@@ -37,7 +37,7 @@ const About = () =>
             </div>
           </div>
           <div className="cell">
-            <div className="card">
+            <div className="card text-center">
               <img className="aboutPhoto" src="assets/jin.jpg" />
               <div className="card-section">
                 <h4>Jin Choi</h4>
@@ -46,7 +46,7 @@ const About = () =>
             </div>
           </div>
           <div className="cell">
-            <div className="card">
+            <div className="card text-center">
               <img className="aboutPhoto" src="assets/jon.jpg" />
               <div className="card-section">
                 <h4>Jon Song</h4>
@@ -55,7 +55,7 @@ const About = () =>
             </div>
           </div>
           <div className="cell">
-            <div className="card">
+            <div className="card text-center">
               <img className="aboutPhoto" src="assets/mearat.jpg" />
               <div className="card-section">
                 <h4>Mearat Hou</h4>
@@ -64,7 +64,7 @@ const About = () =>
             </div>
           </div>
           <div className="cell">
-            <div className="card">
+            <div className="card text-center">
               <img className="aboutPhoto" src="assets/snguy.jpg" />
               <div className="card-section">
                 <h4>Steve Nguy</h4>
@@ -73,7 +73,7 @@ const About = () =>
             </div>
           </div>
           <div className="cell">
-            <div className="card">
+            <div className="card text-center">
               <img className="aboutPhoto" src="assets/user-512.png" />
               <div className="card-section">
                 <h4>Thomas Nguyen</h4>
