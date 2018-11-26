@@ -28,7 +28,7 @@ const PollsForm = () =>
           </div>
           <div id="multiple" className="medium-10 cell">
           <div id="multipleInput">
-            <input required required id="option1" className="input-group-rounded options" type="text" placeholder="Option 1" />
+            <input required id="option1" className="input-group-rounded options" type="text" placeholder="Option 1" />
             <input required id="option2" className="input-group-rounded options" type="text" placeholder="Option 2" />
             <input required id="option3" className="input-group-rounded options" type="text" placeholder="Option 3" />
           </div>
