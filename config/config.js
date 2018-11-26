@@ -4,7 +4,6 @@ module.exports = {
       "password": process.env.CLEARDB_PASSWORD,
       "database": "bc_project_2",
       "host": process.env.CLEARDB_DATABASE_URL,
-      "port": 3306,
       "dialect": "mysql"
     },
     "test": {
@@ -12,7 +11,6 @@ module.exports = {
       "password": process.env.CLEARDB_PASSWORD,
       "database": "bc_project_2",
       "host": process.env.CLEARDB_DATABASE_URL,
-      "port": 3306,
       "dialect": "mysql"
     },
     "production": {
@@ -20,7 +18,6 @@ module.exports = {
       "password": process.env.CLEARDB_PASSWORD,
       "database": "bc_project_2",
       "host": process.env.CLEARDB_DATABASE_URL,
-      "port": 3306,
       "dialect": "mysql"
     }
   }
