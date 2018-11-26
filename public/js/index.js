@@ -43,7 +43,7 @@ fetch('/api/active')
                                             </p>
                                             <p>
                                                 <span>Rating: </span>
-                                                <span style="font-size: 24px;">&#9734;   ${Math.round(sr / src * 2) / 2}</span>
+                                                <span style="font-size: 24px;">&#9734;   ${ !(sr === 0) ? Math.round(sr / src * 2) / 2 : 'New!'}</span>
                                             </p>
                                         </div>
                                         </a>
