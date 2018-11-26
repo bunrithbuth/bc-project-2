@@ -1,4 +1,4 @@
-{
+module.exports = { 
     "development": {
       "username": process.env.CLEARDB_USERNAME,
       "password": process.env.CLEARDB_PASSWORD,
