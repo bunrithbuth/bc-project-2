@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.json())
         .then(data => {
             if (data.length > 0) {
+                console.log(data[0].pollOptionId)
+                $(`input[value=${data[0].pollOptionId}]`).prop('checked', true)
                 submit.disabled = true
                 submit.innerText = "Voted!!!"
                 let input = document.getElementsByTagName('input')
@@ -88,47 +90,68 @@ submit.addEventListener('click', function() {
 function getResult(pollId) {
     fetch('/api/poll/' + pollId)
     .then(response => response.json())
-    .then(result => {
-        isExpired(result)
-        displayResult(result)
+    .then(results => {
+        isExpired(results)
+        displayResult(results)
     })
 }
 
-function isExpired(result) {
-        if (moment.utc(result._poll.expiration) <= moment.utc())  {
+function isExpired(results) {
+        if (moment.utc(results._poll.expiration) <= moment.utc())  {
             submit.disabled = true
             submit.innerText = "Poll is expired"
         }
 }
 
-function displayResult(result) {
-        document.getElementsByClassName('avatar')[0].setAttribute('src', result.user.photoURL)
-        document.getElementById('userName').innerText = result.user.name.split(' ')[0]
-        console.log(result)
-        if (result._poll.type == "stars") {
-            // Code for star rating here
-        } else {
-            // Code for twoChoices and multiple here
-
-            let sum = 0
-            // Sum
-            result._poll.pollOptions.forEach(element => {
-                sum += element.votes
-            })
-
-            if (sum == 0) {
-                // Display empty progress bar
-            } else {
-                let percentage = 0
-                // Percentage
-                result._poll.pollOptions.forEach(element => {
-                    percentage = ((element/sum)*100).toFixed(2)
-                    //Push this to its own corresponding progress bar
-                    $('#progress' + element.id).html(`<p className="progress-meter-text">${percentage}</p>`)
-                    $('#progress' + element.id).attr('style', 'width:' + percentage)
+function displayResult(results) {
+        document.getElementsByClassName('avatar')[0].setAttribute('src', results.user.photoURL)
+        document.getElementById('userName').innerText = results.user.name.split(' ')[0]
+        console.log(results)
+        if (results._poll.type == "twoChoices" || results._poll.type == "multiple") {
+                let sum = 0
+                results._poll.pollOptions.forEach(element => {
+                    sum += element.votes
                 })
-            }           
-        }
+                $('#voteCount').text("Vote Count: " + sum)
+                let percentage = 0
+                if (sum == 0) {
+                    for (let i = 0; i < results._poll.pollOptions.length; i++) {
+                        $('#progress' + results._poll.pollOptions[i].id).css('width', "0%")
+                    }
+                } else {
+                    // Percentage
+                    results._poll.pollOptions.forEach(element => {
+                        percentage = ((element.votes/sum) * 100).toFixed(0)
+                        if (percentage == 0) {
+                            $('#progress' + element.id).css('width', percentage + "%")
+                        } else {
+                            $('#progress' + element.id).html(`<p class="progress-meter-text">${percentage}%</p>`)
+                            $('#progress' + element.id).css('width', percentage + "%")
+                        }
+                    })
+            }
+            } else {
+                let currentRating = results._poll.pollOptions[0].starRating
+                let currentRatingCount = results._poll.pollOptions[0].starRatingCount
+                $('#voteCount').text("Vote Count: " + currentRatingCount)
+                let calc = currentRating / currentRatingCount
+                let starResult = ""
+                for (let i = 1; i < 6; i++) {
+                    if (i <= calc ) {
+                        starResult += '<i class="fas fa-star"></i>'
+                    } else if (i == calc + 0.5) {
+                        starResult += '<i class="fas fa-star-half-alt"></i>'
+                    } else {
+                        starResult += '<i class="far fa-star"></i>'
+                    }
+                }
+                console.log(starResult)
+                $('#voteOutput').append(`
+                ${starResult}
+                <h3>Current Star Rating</h3> 
+                `)
+            }
+        
 }
 
 
