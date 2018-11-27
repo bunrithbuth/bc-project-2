@@ -503,3 +503,7 @@ body {
   padding-top: 40px;
   padding-bottom: 20px;
 }
+
+img.createpoll {
+  border: 1px solid rgba(10, 10, 10, 0.25);
+}
