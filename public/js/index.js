@@ -1,6 +1,3 @@
-let sr = 0;
-let src = 0;
-
 fetch('/api/active')
   .then(function(response) {
     return response.json();
@@ -16,14 +13,14 @@ fetch('/api/active')
                 return response.json();
             })
             .then(function(myJson2) {
-                sr = parseInt(myJson2[0].starRating)
-                src = parseInt(myJson2[0].starRatingCount)
 
                 fetch(`/api/user/${element.userId}`)
                     .then(function(response) {
                         return response.json();
                     })
                     .then(function(myJson3) {
+                        let sr = parseInt(myJson2[0].starRating)
+                        let src = parseInt(myJson2[0].starRatingCount)
 
                         switch(element.type){
                             case 'stars':
