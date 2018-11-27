@@ -20,7 +20,7 @@ const Content = props =>
 
       <div className="middle-content-section">
         <img src="./assets/pollLogoBig.png" id="logo" />
-        <h1>Deez Polls</h1>
+        <h1 className="colorBlack">Deez Polls</h1>
         <a href="/createpolls">
           <button className="button large" id="hpbutton1">Create a Poll!</button>
         </a>
