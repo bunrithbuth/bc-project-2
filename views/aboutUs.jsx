@@ -74,10 +74,10 @@ const About = () =>
           </div>
           <div className="cell">
             <div className="card text-center">
-              <img className="aboutPhoto" src="assets/user-512.png" />
+              <img className="aboutPhoto" src="assets/thomas.jpg" />
               <div className="card-section">
                 <h4>Thomas Nguyen</h4>
-                <p>Whne Thomas isn't coding, he likes to chase tornados, impersonate Thor, throw thimbles, and dodge Thwomps</p>
+                <p>When Thomas isn't coding, he likes to chase tornados, impersonate Thor, throw thimbles, and dodge Thwomps</p>
               </div>
             </div>
           </div>
