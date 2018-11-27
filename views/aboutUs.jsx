@@ -20,7 +20,7 @@ const About = () =>
         <div className="grid-x grid-padding-x small-up-2 medium-up-3">
           <div className="cell">
             <div className="card text-center">
-              <img className="aboutPhoto" src="assets/ben.jpg" />
+              <img className="aboutPhoto" src="assets/Ben.jpg" />
               <div className="card-section">
               <h4>Ben Oh</h4>
                 <p>When Ben isn't coding, he likes to eat burgers, go to the beach, blow bubbles, and play basketball.</p>
@@ -29,16 +29,16 @@ const About = () =>
           </div>
           <div className="cell">
             <div className="card text-center">
-              <img className="aboutPhoto" src="assets/bunrith.jpg" />
+              <img className="aboutPhoto" src="assets/Bunrith.jpg" />
               <div className="card-section">
                 <h4>Bunrith Buth</h4>
-                <p>When Mearat isn't coding, he likes to watch baseball, chew bubblegum, keep bees, and listen to kpop.</p>
+                <p>When Bunrith isn't coding, he likes to watch baseball, chew bubblegum, keep bees, and listen to kpop.</p>
               </div>
             </div>
           </div>
           <div className="cell">
             <div className="card text-center">
-              <img className="aboutPhoto" src="assets/jin.jpg" />
+              <img className="aboutPhoto" src="assets/Jin.jpg" />
               <div className="card-section">
                 <h4>Jin Choi</h4>
                 <p>When Jin isn't coding, he likes to throw javelins, make jam, drink juice, and eat jalapenos.</p>
@@ -47,7 +47,7 @@ const About = () =>
           </div>
           <div className="cell">
             <div className="card text-center">
-              <img className="aboutPhoto" src="assets/jon.jpg" />
+              <img className="aboutPhoto" src="assets/Jon.jpg" />
               <div className="card-section">
                 <h4>Jon Song</h4>
                 <p>When Jon isn't coding, he likes to joust, juggle, eat juiper berries, and look at Jupiter.</p>
@@ -56,7 +56,7 @@ const About = () =>
           </div>
           <div className="cell">
             <div className="card text-center">
-              <img className="aboutPhoto" src="assets/mearat.jpg" />
+              <img className="aboutPhoto" src="assets/Mearat.jpg" />
               <div className="card-section">
                 <h4>Mearat Hou</h4>
                 <p>When Mearat isn't coding, he likes to cook meat, judge muggles, go to museums, and knit mufflers.</p>
