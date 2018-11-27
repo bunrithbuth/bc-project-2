@@ -16,10 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         console.log("Not Logged In")
     }
-
-    multiple.style.display = "none"
-    twoChoices.style.display = "none"
-    stars.style.display = "none"
+   
 })
 
 //Submit eventlistener
