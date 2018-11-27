@@ -171,7 +171,7 @@ module.exports = function(app) {
         });
     })
 
-    const _perpage = 2
+    const _perpage = 6
     app.get('/api/active/:page', (req, res) => {
         const _page = req.params.page
 
