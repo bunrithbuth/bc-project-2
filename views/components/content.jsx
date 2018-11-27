@@ -64,10 +64,10 @@ const Content = props =>
     </div>
 
     <div className="full-width-testimonial-content">
-      <h5 className="full-width-testimonial-text">YuR GuRL Had a DiFfiCuLt TimE ChoOsinG BetWeEn CoaChellA or SavInG MonEy bY GoiNg To oHiO wItH My FaMilY.
+      <h5 className="full-width-testimonial-text">This app is great! Ever since I started using this app my friends no longer argue about making decisions!
       </h5>
       <p className="full-width-testimonial-source">Bougee Britt</p>
-      <span className="full-width-testimonial-source-context">Had a Miserable Time with the Fam</span>
+      <span className="full-width-testimonial-source-context">This app is the bestest</span>
     </div>
 
   </div>
