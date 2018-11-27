@@ -507,3 +507,7 @@ body {
 img.createpoll {
   border: 1px solid rgba(10, 10, 10, 0.25);
 }
+
+.colorBlack {
+    color: black;
+}
