@@ -17,6 +17,7 @@ const SignIn = () =>
             <Footer />
 
         </body>
+        <script src='./js/signin.js' />
     </html>
 
 module.exports = SignIn

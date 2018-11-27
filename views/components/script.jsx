@@ -13,7 +13,6 @@ const Script = props =>
                 <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
                 <script src="/js/global.js" />
-                <script src="/js/signin.js" />
 
         </Fragment>
 
