@@ -6,9 +6,12 @@ const multiple = document.getElementById('multiple')
 const twoChoices = document.getElementById('twoChoices')
 
 
-//Hiding all the polloptions input forms when content loaded
-document.addEventListener("DOMContentLoaded", () => {
 
+document.addEventListener("DOMContentLoaded", () => {
+//Hiding all the polloptions input forms when content loaded
+    multiple.style.display = "none"
+    twoChoices.style.display = "none"
+    stars.style.display = "none"    
 // Retrieve local storage for user photoURL
     if (typeof(Storage) !== "undefined") {
         let user = JSON.parse(localStorage.getItem("user"))
