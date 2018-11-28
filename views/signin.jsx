@@ -19,6 +19,7 @@ const SignIn = () =>
             <script src="/js/signin.js" />
 
         </body>
+        <script src='./js/signin.js' />
     </html>
 
 module.exports = SignIn

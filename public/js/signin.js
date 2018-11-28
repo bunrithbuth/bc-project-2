@@ -95,9 +95,9 @@ function checkNewUser() {
         photoURL: firebase.auth().currentUser.photoURL
     }
     $.post("/api/signin", temp).then(function (data) {
-        temp.id = data.id
+        temp.id = data.id;
+        temp.photURL = data.photoURL;
         localStorage.setItem("user", JSON.stringify(temp));
-
     });
 }
 

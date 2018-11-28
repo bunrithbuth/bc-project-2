@@ -15,6 +15,7 @@ const Script = props =>
                 <script src="/js/global.js" />
                 {/* <script src="/js/signin.js" /> */}
 
+
         </Fragment>
 
 module.exports = Script

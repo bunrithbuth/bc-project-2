@@ -1,22 +1,34 @@
 const React = require('react')
+const Nav = require('./components/nav')
+const Footer = require('./components/footer')
+const Head = require('./components/head')
+const Script = require('./components/script')
 
 const Manage = () =>
     <html lang='en'>
-        <head>
-            <meta charSet='UTF-8' />
-            <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-            <meta httpEquiv='X-UA-Compatible' content='ie=edge' />
-            <script
-                src="https://code.jquery.com/jquery-3.3.1.js"
-                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-                crossOrigin="anonymous"></script>
-            <script src='/js/polls.js' />
-            
-        </head>
+        <Head />
         <body>
-            <p>Sample text</p>
-            <div className="polls"></div>
+            <Nav />
+            <center>
+                <div className="account"></div>
+                <div className="change">
+                    <div className="grid-container">
+                        <div className="grid-x grid-padding-x full fluid align-center"></div>
+                        <div className="row collapse">
+                            <div className="small-10 columns">
+                                <input type="text" id="photoURL" placeholder="Image URL" />
+                            </div>
+                            <div className="small-2 columns">
+                                <a id="update" class="button postfix">Submit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </center>
+            <Footer />
+            <Script />
         </body>
+        <script src='./js/myAccount.js' />
     </html>
 
 module.exports = Manage

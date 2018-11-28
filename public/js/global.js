@@ -9,15 +9,17 @@ let user = {
           $('.top-bar-right li').append(`
             <a class="top-bar-right" id="nav3" onclick="user.logout()">Log Out</a>
           `);
-        }
-      },
-      logout () {
-        localStorage.clear();
-        $('.top-bar-right li').empty();
-          $('.top-bar-right li').append(`
+      $('.manager').css('display', 'inline-block')
+    }
+  },
+  logout() {
+    localStorage.clear();
+    $('.top-bar-right li').empty();
+    $('.top-bar-right li').append(`
             <a class="top-bar-right" id="nav3" href="/signin">Log In</a>
           `);
-      }
+    $('.manager').css('display', 'none')
+  }
 };
 
 user.authUser();

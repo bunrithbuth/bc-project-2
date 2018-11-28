@@ -427,6 +427,27 @@ module.exports = function(app) {
                 .catch(e => console.log(e))
          })
     })
+
+
+    app.put('/api/user/:id', (req, res) =>{
+        const id = req.params.id;
+        console.log(req.body)
+
+        db.user.findOne({
+            where: {
+                id: id
+            }
+        }).then(function(_user) {
+            _user.update({
+                photoURL : req.body.photoURL
+            })
+        }).then(() => res.json())
+    
+    })
+    
 };
+
+
+
 
 
