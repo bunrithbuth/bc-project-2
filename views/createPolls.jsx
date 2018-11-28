@@ -19,6 +19,11 @@ const CreatePolls = () =>
         </head>
         <body>
             <Nav />
+             <div className="grid-container">
+                <center>
+                    <a id="commH1">Create Poll Form</a>
+                </center>
+            </div>
             <PollsForm />
             <Footer />
             <Script />
