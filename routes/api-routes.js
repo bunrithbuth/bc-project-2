@@ -8,23 +8,21 @@ module.exports = function(app) {
     
     app.get('/api/hasvoted/:pollid/:userid', (req, res) => {
         let _pollId = req.params.pollid
+        let _userid = req.params.userid
         db.pollOption.findAll({
             where: {
                 pollId: _pollId
             }
         }).then(function(pollOption) {
-            console.log(pollOption)
             let _pollOptionId = []
             for (const key in pollOption) {
                     const element = pollOption[key];
                     _pollOptionId.push(element.dataValues.id);
-            }
-
-            console.log(_pollOptionId)
-            
+            }    
             db.userVote.findAll({
                 where: {
-                    pollOptionId: {in: [_pollOptionId]}
+                    pollOptionId: {in: [_pollOptionId]},
+                    userId: _userid,
                 }
             }).then(function(pollOption) {
                  res.json(pollOption)
@@ -63,7 +61,8 @@ module.exports = function(app) {
     })
     
     app.get('/api/poll/:id', (req, res) => {
-        db.poll.findAll({
+        let _poll
+        db.poll.findOne({
             where: {
                 id: req.params.id
             },
@@ -71,9 +70,15 @@ module.exports = function(app) {
                 { model: db.pollOption }
             ]
         }).then(function (poll) {
-            console.log(poll)
-            res.json(poll);
-        });
+            _poll = poll
+            db.user.findOne({
+                where: {
+                    id: poll.userId
+                }
+            }).then(function (user){
+                res.json({_poll, user});
+            })
+        })
     })
 
     app.get('/api/user/:id', (req, res) => {
@@ -128,8 +133,6 @@ module.exports = function(app) {
             _uId = guid()
         }
 
-        console.log('THIS IS WHAT WILL BE POSTED: ' + JSON.stringify(req.body))
-        console.log(moment.utc().add(parseInt(req.body.time), req.body.duration))
         db.poll.create({
             type: req.body.type,
             name: req.body.name,
@@ -139,9 +142,7 @@ module.exports = function(app) {
             expiration: moment.utc().add(parseInt(req.body.time), req.body.duration)
         }).then( _poll => {
             
-            console.log(req.body.pollOption)
             req.body.pollOption.forEach(req_pollOption => {              
-                console.log(req_pollOption.name)
                 db.pollOption.create({
                     pollId: (_poll).id,
                     name: req_pollOption.name,
@@ -160,7 +161,7 @@ module.exports = function(app) {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.gte]: moment.utc().format("MM/DD/YYYY")
+                    [Op.gte]: moment.utc().toDate()
                 },
                 isPrivate: 0,
             },
@@ -170,14 +171,14 @@ module.exports = function(app) {
         });
     })
 
-    const _perpage = 2
+    const _perpage = 12
     app.get('/api/active/:page', (req, res) => {
         const _page = req.params.page
 
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.gte]: moment.utc().format("MM/DD/YYYY HH:MM:SS")
+                    [Op.gte]: moment.utc().toDate()
                 },
                 isPrivate: 0,
             },
@@ -185,8 +186,6 @@ module.exports = function(app) {
             limit: _perpage,
             order: [['expiration', 'ASC']],
         }).then(function(poll) {
-            console.log("HEREEEEEeeeee")
-            console.log(poll)
             res.json(poll);
         });
     })
@@ -195,7 +194,7 @@ module.exports = function(app) {
         db.poll.count({
             where: {
                 expiration: {
-                    [Op.gte]: moment.utc().format("MM/DD/YYYY HH:MM:SS")
+                    [Op.gte]: moment.utc().toDate()
                 },
                 isPrivate: 0,
             }
@@ -204,12 +203,11 @@ module.exports = function(app) {
         });
     })
 
-
     app.get('/api/expired', (req, res) => {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                    [Op.lt]: moment.utc().toDate()
                 },
                 isPrivate: 0
             }
@@ -224,7 +222,7 @@ module.exports = function(app) {
         db.poll.findAll({
             where: {
                 expiration: {
-                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                    [Op.lt]: moment.utc().toDate()
                 },
                 isPrivate: 0,
             },
@@ -242,7 +240,7 @@ module.exports = function(app) {
         db.poll.count({
             where: {
                 expiration: {
-                    [Op.lt]: moment.utc().format("MM/DD/YYYY")
+                    [Op.lt]: moment.utc().toDate()
                 },
                 isPrivate: 0,
             }
@@ -250,7 +248,6 @@ module.exports = function(app) {
             res.json({count: _count, perpage: _perpage});
         });
     })
-
 
 
     app.get('/poll/:id', (req, res) => {
@@ -330,21 +327,6 @@ module.exports = function(app) {
         })
     })
 
-    // app.get('/api/user_votes/:poll_id', (req, res) => {
-    //     db.polls.findAll({}).then(function(polls) {
-    //         res.json(polls);
-    //     });
-    // })
-
-    // app.post('/api/user_votes/:poll_id', (req, res) => {
-    //     db.user_votes.create({
-    //         user_name: 'mearat',
-    //         poll_options_id: (_pollEntry).id,
-    //         star_rating: 3.5,
-    //         vote: null
-    //     })
-    //  //need to update poll_options as well
-    // })
 
     app.get('/api/migrate', (req, res) => { 
 
@@ -366,7 +348,6 @@ module.exports = function(app) {
             photoURL: null
         })
         .then( _users => {
-            console.log(moment().add(1,'days').format('YYYY-MM-DD'))
             db.poll.create({
                 type: 'star',
                 name: 'bun test poll',
@@ -411,36 +392,40 @@ module.exports = function(app) {
 
     app.put('/api/pollOption/:id', (req, res) => {
         const _id = req.params.id
-        console.log("UserID is" + req.body.userId + "star rating is " + req.body.starRating)
+        let currentStarRating
+        let currentStarRatingCount
+
         db.pollOption.findOne({
             where: {
                 id : _id
             }
         }).then((_pollOption) => {
-            let currentStarRating
-            let currentStarRatingCount
             if (req.body.starRating != null) {
-                currentStarRatingCount = _pollOption.starRatingCount + 1
-                currentStarRating = (parseInt(req.body.starRating) + parseInt(_pollOption.starRating)) / parseInt(currentStarRatingCount)
+                currentStarRatingCount = parseInt(_pollOption.starRatingCount) + 1
+                currentStarRating = parseInt(_pollOption.starRating) + parseInt(req.body.starRating)
             } else {
-                currentStarRating = _pollOption.starRating
-                currentStarRatingCount = _pollOption.starRatingCount
+                currentStarRating = parseInt(_pollOption.starRating)
+                currentStarRatingCount = parseInt(_pollOption.starRatingCount)
             }
             db.pollOption.update({
                 starRating: currentStarRating,
                 starRatingCount: currentStarRatingCount,
-                votes: _pollOption.votes + 1 
-            }, {where: {id: _id}})
-        })
-        .then(() => {
-            db.userVote.create({
-                userId: req.body.userId,
-                pollOptionId: _id,
-                starRating: req.body.starRating,
-                vote: 1
-            })
-        }).then(() => res.json())
-        .catch(e => console.log(e))
+                votes: parseInt(_pollOption.votes) + 1 
+                },{
+                    where: {id: _id},
+                    returning: true
+                })
+                .then((data) => {
+                    db.userVote.create({
+                        userId: req.body.userId,
+                        pollOptionId: _id,
+                        starRating: req.body.starRating,
+                        vote: 1
+                    })
+                })
+                .then(()=> res.json())
+                .catch(e => console.log(e))
+         })
     })
 
 

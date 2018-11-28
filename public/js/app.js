@@ -6,9 +6,12 @@ const multiple = document.getElementById('multiple')
 const twoChoices = document.getElementById('twoChoices')
 
 
-//Hiding all the polloptions input forms when content loaded
-document.addEventListener("DOMContentLoaded", () => {
 
+document.addEventListener("DOMContentLoaded", () => {
+//Hiding all the polloptions input forms when content loaded
+    multiple.style.display = "none"
+    twoChoices.style.display = "none"
+    stars.style.display = "none"    
 // Retrieve local storage for user photoURL
     if (typeof(Storage) !== "undefined") {
         let user = JSON.parse(localStorage.getItem("user"))
@@ -16,10 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         console.log("Not Logged In")
     }
-
-    multiple.style.display = "none"
-    twoChoices.style.display = "none"
-    stars.style.display = "none"
+   
 })
 
 //Submit eventlistener
@@ -137,15 +137,9 @@ document.getElementById('add').addEventListener('click', (event) => {
     newOption.insertAdjacentHTML('beforeend', `<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);    
 })
 
-
-// function getPoll(r) {
-//     console.log(r.pollId)
-// fetch('/api/poll/' + r.pollId)
-//   .then(function(response) {
-//     console.log(response)
-//     return response.json();
-//   })
-//   .then(function(data) {
-//       console.log(data)
-// })
-// }
+document.getElementById('remove').addEventListener('click', (event) => {
+    event.preventDefault()
+    let optionCount = document.getElementsByClassName('options').length
+    let newOption = document.getElementById('option' + optionCount);
+    newOption.remove(`<input id="option${optionCount}" class="input-group-rounded options" type="text" placeholder="Option ${optionCount}">`);
+})

@@ -3,7 +3,6 @@ fetch('/api/active')
     return response.json();
   })
   .then(function(myJson) {
-    console.log(myJson)
     let max = 20
     myJson.length < max ? max = myJson.length : null
     for (i = 0 ; i < max ; i++) {
@@ -14,14 +13,14 @@ fetch('/api/active')
                 return response.json();
             })
             .then(function(myJson2) {
-                console.log(myJson2)
 
                 fetch(`/api/user/${element.userId}`)
                     .then(function(response) {
                         return response.json();
                     })
                     .then(function(myJson3) {
-                        console.log(myJson3)
+                        let sr = parseInt(myJson2[0].starRating)
+                        let src = parseInt(myJson2[0].starRatingCount)
 
                         switch(element.type){
                             case 'stars':
@@ -35,7 +34,7 @@ fetch('/api/active')
                                             </p>
                                             <p>
                                                 <span>Rating: </span>
-                                                <span style="font-size: 24px;">&#9734;   3.5</span>
+                                                <span style="font-size: 24px;">&#9734;   ${ !(sr === 0) ? Math.round(sr / src * 2) / 2 : 'New!'}</span>
                                             </p>
                                         </div>
                                         </a>

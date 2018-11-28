@@ -20,7 +20,7 @@ const Content = props =>
 
       <div className="middle-content-section">
         <img src="./assets/pollLogoBig.png" id="logo" />
-        <h1>Deez Polls</h1>
+        <h1 className="colorBlack">Deez Polls</h1>
         <a href="/createpolls">
           <button className="button large" id="hpbutton1">Create a Poll!</button>
         </a>
@@ -50,7 +50,7 @@ const Content = props =>
 
     </div>
 
-<div className="full-width-testimonial">
+<div className="full-width-testimonial testimonials">
   <div className="full-width-testimonial-section">
 
     <div className="full-width-testimonial-icon text-center">
@@ -64,10 +64,10 @@ const Content = props =>
     </div>
 
     <div className="full-width-testimonial-content">
-      <h5 className="full-width-testimonial-text">YuR GuRL Had a DiFfiCuLt TimE ChoOsinG BetWeEn CoaChellA or SavInG MonEy bY GoiNg To oHiO wItH My FaMilY.
+      <h5 className="full-width-testimonial-text">This app is great! Ever since I started using this app my friends no longer argue about making decisions!
       </h5>
       <p className="full-width-testimonial-source">Bougee Britt</p>
-      <span className="full-width-testimonial-source-context">Had a Miserable Time with the Fam</span>
+      <span className="full-width-testimonial-source-context">This app is the bestest</span>
     </div>
 
   </div>
